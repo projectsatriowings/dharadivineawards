@@ -24,7 +24,6 @@ import DonorSupport from './components/DonorSupport';
 import CorporateCSR from './components/CorporateCSR';
 import AwardNominations from './components/AwardNominations';
 import ThankYouPage from './components/ThankYouPage';
-import AdminPortalPage from '@/app/page';
 
 const dashboardCategories = [
   { id: 'seva', label: 'Participation & Seva' },
