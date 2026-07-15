@@ -18,9 +18,18 @@ export default function DivineCursor() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
+    // Inject CSS to hide default cursor globally
+    const styleEl = document.createElement('style');
+    styleEl.innerHTML = `
+      body, a, button, [role="button"], select, input, textarea {
+        cursor: none !important;
+      }
+    `;
+    document.head.appendChild(styleEl);
+
     let animationFrameId;
     let particles = [];
-    let mouse = { x: 0, y: 0, active: false };
+    let mouse = { x: 0, y: 0, active: false, hovering: false };
 
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -34,10 +43,24 @@ export default function DivineCursor() {
     window.addEventListener('resize', resizeCanvas);
 
     const handleMouseMove = (e) => {
-      // Direct viewport coordinates since canvas is portals-rendered at body level
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       mouse.active = true;
+
+      // Check if hovering over clickable/interactive element
+      const target = e.target;
+      if (target) {
+        const isClickable = 
+          target.tagName === 'A' || 
+          target.tagName === 'BUTTON' || 
+          target.closest('a') || 
+          target.closest('button') || 
+          target.closest('.cursor-pointer') ||
+          target.closest('.btn') ||
+          window.getComputedStyle(target).cursor === 'pointer';
+        
+        mouse.hovering = !!isClickable;
+      }
 
       // Spawn 1-2 particles per mouse movement
       if (Math.random() < 0.6) {
@@ -60,7 +83,7 @@ export default function DivineCursor() {
         y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed - 0.4, // float upwards slightly
-        size: 2 + Math.random() * 4,
+        size: 2 + Math.random() * 3,
         alpha: 1,
         decay: 0.015 + Math.random() * 0.015,
         // Saffron/gold colors matching the theme
@@ -108,27 +131,13 @@ export default function DivineCursor() {
       ctx.restore();
     }
 
+    let cursorPulse = 0;
+
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      cursorPulse += 0.05;
 
-      // Draw custom glowing cursor halo
-      if (mouse.active) {
-        ctx.save();
-        ctx.beginPath();
-        const gradient = ctx.createRadialGradient(
-          mouse.x, mouse.y, 0,
-          mouse.x, mouse.y, 16
-        );
-        gradient.addColorStop(0, 'rgba(226, 184, 87, 0.25)'); // Saffron/gold glow center
-        gradient.addColorStop(0.5, 'rgba(245, 138, 39, 0.08)');
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = gradient;
-        ctx.arc(mouse.x, mouse.y, 16, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      // Update and draw particles
+      // Update and draw particles first (so they sit behind the custom cursor tip)
       particles = particles.filter(p => {
         p.x += p.vx;
         p.y += p.vy;
@@ -162,6 +171,52 @@ export default function DivineCursor() {
         return true;
       });
 
+      // Draw custom glowing cursor pointer & aura
+      if (mouse.active) {
+        const targetRadius = mouse.hovering ? 20 + Math.sin(cursorPulse) * 2 : 12;
+        const targetInnerSize = mouse.hovering ? 6 : 4;
+        
+        ctx.save();
+        
+        // 1. Draw glowing outer halo
+        ctx.beginPath();
+        const gradient = ctx.createRadialGradient(
+          mouse.x, mouse.y, 0,
+          mouse.x, mouse.y, targetRadius
+        );
+        gradient.addColorStop(0, 'rgba(226, 184, 87, 0.35)');
+        gradient.addColorStop(0.5, 'rgba(245, 138, 39, 0.12)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = gradient;
+        ctx.arc(mouse.x, mouse.y, targetRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 2. Draw custom interactive ring if hovering
+        if (mouse.hovering) {
+          ctx.beginPath();
+          ctx.arc(mouse.x, mouse.y, 14, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(226, 184, 87, 0.45)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+
+        // 3. Draw bright golden center dot
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, targetInnerSize / 2, 0, Math.PI * 2);
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = '#F58A27';
+        ctx.fillStyle = '#E2B857';
+        ctx.fill();
+
+        // Subtle dark outline on the center dot to ensure it pops on pure white
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = 'rgba(64, 28, 12, 0.4)';
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        
+        ctx.restore();
+      }
+
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -171,6 +226,7 @@ export default function DivineCursor() {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
+      styleEl.remove();
       cancelAnimationFrame(animationFrameId);
     };
   }, [mounted]);
