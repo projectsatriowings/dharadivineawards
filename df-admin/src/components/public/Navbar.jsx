@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Phone, Mail, ChevronDown } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, mobileMenuOpen, setMobileMenuOpen }) {
+export default function Navbar({ activeTab, setActiveTab, mobileMenuOpen, setMobileMenuOpen, showInstallBtn, onInstall }) {
   const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
   const [aboutOpen, setAboutOpen] = useState(false);
