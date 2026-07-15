@@ -15,6 +15,7 @@ import MediaCoverage from './components/MediaCoverage';
 import GeneralEnquiries from './components/GeneralEnquiries';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import DivineCursor from './components/DivineCursor';
 
 // Subdomain components
 import EventRegistration from './components/EventRegistration';
@@ -1031,6 +1032,7 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <DivineCursor />
       {/* Brand Entrance Preloader Overlay */}
       <div className={`preloader-overlay ${showPreloader ? 'active' : 'fade-out'}`}>
         <div className="preloader-content">
