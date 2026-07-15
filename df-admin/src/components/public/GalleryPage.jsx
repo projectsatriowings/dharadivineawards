@@ -15,7 +15,7 @@ const defaultGalleryImages = [
   ...highlightNumbers.map(num => ({
     "src": `/images/Highlights1/Dhara Divine Awards - Highlight (${num}).png`,
     "category": "Highlights",
-    "caption": `Dhara Divine Awards - Highlight Moment ${num}`,
+    "caption": "Dhara Divine Awards - Moments",
     "isHighlight": true
   })),
   {
