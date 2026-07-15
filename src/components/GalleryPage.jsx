@@ -2,139 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Image, Search, ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { fetchGallery, API_BASE } from '../utils/api';
 
+const highlightNumbers = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+  41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59,
+  67, 68, 69, 70, 71, 72, 73, 74, 76, 77, 78, 79, 80, 81, 82, 84, 85, 86, 87, 88, 89, 90,
+  91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+  111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127
+];
+
 const defaultGalleryImages = [
-  {
-    "src": "/images/Highlights/photo_6244363913147388088_y.jpg",
+  ...highlightNumbers.map(num => ({
+    "src": `/images/Highlights1/Dhara Divine Awards - Highlight (${num}).png`,
     "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 1",
+    "caption": `Dhara Divine Awards - Highlight Moment ${num}`,
     "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388089_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 2",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388090_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 3",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388091_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 4",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388092_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 5",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388093_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 6",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388094_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 7",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388095_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 8",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388096_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 9",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388097_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 10",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388098_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 11",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388099_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 12",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388100_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 13",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388101_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 14",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388102_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 15",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388103_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 16",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388104_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 17",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388105_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 18",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388106_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 19",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Highlights/photo_6244363913147388107_y.jpg",
-    "category": "Highlights",
-    "caption": "Dhara Divine Awards - Highlight Moment 20",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Home section/Sri Sendalangara Shenbaga Mannar Sampath Kumara Ramanuja Jeeyar Swamigal.jpg",
-    "category": "Highlights",
-    "caption": "Sri Sendalangara Shenbaga Mannar Sampath Kumara Ramanuja Jeeyar Swamigal",
-    "isHighlight": true
-  },
-  {
-    "src": "/images/Home section/Shri.S.Vinoth Ragavendran M.E - Founder - President.jpg",
-    "category": "Highlights",
-    "caption": "Shri S. Vinoth Ragavendran M.E. - Founder & President",
-    "isHighlight": true
-  },
+  })),
   {
     "src": "/images/Section 1/1.Shri.S. Ravi (Sivachariyar).jpg",
     "category": "1. Spiritual Piller",
