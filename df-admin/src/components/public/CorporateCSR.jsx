@@ -939,7 +939,7 @@ export default function CorporateCSR({ onSubmitSuccess }) {
                     <strong style={{ fontSize: '12px', color: 'var(--ink-soft)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Registered Office:</strong>
                     <p style={{ margin: '4px 0 0', fontSize: '13.5px', color: 'var(--ink-soft)', lineHeight: '1.4' }}>
                       Dhara Foundations,<br />
-                      No 44A, 3rd Street, Judge Colony, Tambaram Sanatorium,<br />
+                      # 44A, 3rd Street, Judge Colony, Tambaram Sanatorium,<br />
                       Chennai, Tamil Nadu - 600047
                     </p>
                   </div>

@@ -77,7 +77,7 @@ export default function GeneralEnquiries({ onSubmitSuccess }) {
                   <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-sans">Office Address</h4>
                   <p className="text-sm font-sans text-neutral-700 mt-1 leading-relaxed">
                     Dhara Foundations HQ,<br />
-                    No 44A, 3rd Street, Judge Colony, Tambaram Sanatorium,<br />
+                    # 44A, 3rd Street, Judge Colony, Tambaram Sanatorium,<br />
                     Chennai, Tamil Nadu - 600047
                   </p>
                 </div>

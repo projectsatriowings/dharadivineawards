@@ -97,7 +97,7 @@ function getEmailLayout(title: string, bodyContent: string): string {
         </div>
         <div class="footer">
           <p>© 2026 Dhara Foundations. All rights reserved.</p>
-          <p>No 44A, 3rd Street, Judge Colony, Tambaram Sanatorium, Chennai – 600047</p>
+          <p># 44A, 3rd Street, Judge Colony, Tambaram Sanatorium, Chennai – 600047</p>
           <p>Email: info@dharafoundations.in | Helpline: 044-22236641</p>
         </div>
       </div>

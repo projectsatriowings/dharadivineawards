@@ -71,7 +71,7 @@ export default function Footer({ setActiveTab, handleNavClick }) {
                       <path d="M12 22s7-7.5 7-12.5A7 7 0 0 0 5 9.5C5 14.5 12 22 12 22z" strokeWidth="1.8"/>
                     </svg>
                   </span>
-                  <span className="contact-text">No 44A, 3rd Street, Judge Colony, Tambaram Sanatorium, Chennai – 600047</span>
+                  <span className="contact-text"># 44A, 3rd Street, Judge Colony, Tambaram Sanatorium, Chennai – 600047</span>
                 </li>
                 <li>
                   <a href="mailto:info@dharafoundations.in" className="flex items-center gap-3 text-white/80 hover:text-[var(--color-saffron-glow)] transition-colors cursor-pointer w-full no-underline">
