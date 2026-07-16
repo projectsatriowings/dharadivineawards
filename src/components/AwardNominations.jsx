@@ -13,42 +13,29 @@ export default function AwardNominations({ onSubmitSuccess }) {
     nomineeEmail: '',
     nomineePhone: '',
     nomineeLocation: '',
-    category: 'seva_ratna',
+    category: 'Sivacharyas',
     sevaSummary: '',
     impactMetrics: '',
     references: '',
     nomineeWorkImage: ''
   });
 
-  const categories = {
-    seva_ratna: {
-      title: 'Seva Ratna',
-      subtitle: 'Lifetime Achievement in Social Service',
-      desc: 'Honoring individuals who have dedicated 15+ years to selfless community service and uplifting marginalized sectors.'
-    },
-    sanskriti_vibhushan: {
-      title: 'Sanskriti Vibhushan',
-      subtitle: 'Ancient Heritage & Arts Restoration',
-      desc: 'Recognizing outstanding dedication to preserving traditional arts, ancient literature, scriptural documentation, or historical temple architecture.'
-    },
-    prakriti_mitra: {
-      title: 'Prakriti Mitra',
-      subtitle: 'Environmental Restoration Leadership',
-      desc: 'Given to grassroots leaders restoring water bodies, implementing mass organic farming, afforestation, or waste management models.'
-    },
-    arogya_shiromani: {
-      title: 'Arogya Shiromani',
-      subtitle: 'Community Healthcare & Yoga Leadership',
-      desc: 'Acknowledging medical professionals or institutions who provide free healthcare, organize health campaigns, or promote yoga and holistic health in rural sectors.'
-    },
-    vidya_prabha: {
-      title: 'Vidya Prabha',
-      subtitle: 'Educational Upliftment Award',
-      desc: 'Saluting teachers or organizers establishing path-breaking educational projects for street children, rural girls, or tribal communities.'
-    }
-  };
-
   const groupedCategories = {
+    "I. SPIRITUAL PILLARS": [
+      "Sivacharyas",
+      "Bhattacharyas",
+      "Sakthi Worship",
+      "Madhva",
+      "Sivanadiyars",
+      "Kaumaram",
+      "Ayyappa Devotees",
+      "Siddhar Worship",
+      "Karuppasamy Worship",
+      "Vallalar Sanmargam",
+      "Shridi Sai Devotees",
+      "Volunteers in Temple service",
+      "Priests"
+    ],
     "II. INSTITUTIONS/ORGANISATIONS": [
       "Hospitals",
       "Restaurants",
@@ -124,6 +111,10 @@ export default function AwardNominations({ onSubmitSuccess }) {
         alert('Please fill in the nominee name and location.');
         return;
       }
+      if (!formData.nomineeWorkImage) {
+        alert("Please upload an image showing the nominee's work as evidence.");
+        return;
+      }
       setStep(3);
     }
   };
@@ -138,14 +129,8 @@ export default function AwardNominations({ onSubmitSuccess }) {
       alert('Please fill in the Seva Summary of the nominee.');
       return;
     }
-    if (!formData.nomineeWorkImage) {
-      alert("Please upload an image showing the nominee's work as evidence.");
-      return;
-    }
 
-    const categoryTitle = categories[formData.category]
-      ? categories[formData.category].title
-      : formData.category;
+    const categoryTitle = formData.category;
 
     const submission = {
       ...formData,
@@ -168,7 +153,7 @@ export default function AwardNominations({ onSubmitSuccess }) {
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       <div className="text-center mb-12">
-        <span className="text-sun-gold font-semibold uppercase tracking-wider text-sm font-sans">Honoring Selfless Souls</span>
+        <span className="text-sun-gold font-semibold uppercase tracking-wider text-sm font-sans font-semibold">Honoring Selfless Souls</span>
         <h2 className="text-4xl font-serif text-forest-teal-dark mt-2 mb-4">Divine Awards 2025 Nominations</h2>
         <p className="text-neutral-600 max-w-2xl mx-auto font-sans">
           Do you know a silent hero who does outstanding seva without seeking recognition? Nominate them today to shine a light on their noble deeds.
@@ -355,11 +340,6 @@ export default function AwardNominations({ onSubmitSuccess }) {
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-forest-teal text-sm font-sans bg-white"
               >
-                <optgroup label="I. KEY DIVINE AWARDS">
-                  {Object.entries(categories).map(([key, cat]) => (
-                    <option key={key} value={key}>{cat.title} ({cat.subtitle})</option>
-                  ))}
-                </optgroup>
                 {Object.entries(groupedCategories).map(([groupTitle, list]) => (
                   <optgroup key={groupTitle} label={groupTitle}>
                     {list.map((cat) => (
@@ -372,53 +352,7 @@ export default function AwardNominations({ onSubmitSuccess }) {
 
             <div className="p-4 bg-[#FDFBF7] rounded-2xl border border-sage-accent/40 text-xs font-sans text-neutral-600">
               <strong className="text-forest-teal-dark block mb-1">Category Criteria:</strong>
-              {categories[formData.category]
-                ? categories[formData.category].desc
-                : `Honoring and recognizing exceptional service, leadership, and positive impact achieved in the field of "${formData.category}".`}
-            </div>
-
-            <div className="pt-4 flex justify-between">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="py-3 px-6 rounded-xl border border-neutral-300 text-neutral-600 hover:bg-neutral-50 font-sans font-semibold text-sm transition-all duration-300 flex items-center space-x-2 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleNext}
-                className="py-3 px-6 rounded-xl bg-gradient-to-r from-[var(--color-saffron-glow)] to-[var(--color-saffron-glow-dark)] text-[#281006] hover:brightness-105 font-sans font-bold text-sm transition-all duration-300 flex items-center space-x-2 cursor-pointer group shadow-md"
-              >
-                <span>Continue</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {step === 3 && (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <h3 className="text-xl font-serif text-forest-teal-dark border-b border-neutral-100 pb-3 flex items-center">
-              <FileText className="w-5 h-5 text-sun-gold mr-2" />
-              Step 3: Seva Contribution Summary
-            </h3>
-
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-forest-teal mb-2 font-sans">
-                Contribution Description / Seva Summary *
-              </label>
-              <textarea
-                name="sevaSummary"
-                required
-                rows="5"
-                placeholder="Detail the selfless acts, activities, or systemic impacts that the nominee has accomplished. Include historical timelines, populations served, and why they deserve this prestigious honor..."
-                value={formData.sevaSummary}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-forest-teal text-sm font-sans"
-              ></textarea>
+              Honoring and recognizing exceptional service, leadership, and positive impact achieved in the field of "{formData.category}".
             </div>
 
             <div>
@@ -490,6 +424,50 @@ export default function AwardNominations({ onSubmitSuccess }) {
                   )}
                 </div>
               </div>
+            </div>
+
+            <div className="pt-4 flex justify-between">
+              <button
+                type="button"
+                onClick={handleBack}
+                className="py-3 px-6 rounded-xl border border-neutral-300 text-neutral-600 hover:bg-neutral-50 font-sans font-semibold text-sm transition-all duration-300 flex items-center space-x-2 cursor-pointer"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                className="py-3 px-6 rounded-xl bg-gradient-to-r from-[var(--color-saffron-glow)] to-[var(--color-saffron-glow-dark)] text-[#281006] hover:brightness-105 font-sans font-bold text-sm transition-all duration-300 flex items-center space-x-2 cursor-pointer group shadow-md"
+              >
+                <span>Continue</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {step === 3 && (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <h3 className="text-xl font-serif text-forest-teal-dark border-b border-neutral-100 pb-3 flex items-center">
+              <FileText className="w-5 h-5 text-sun-gold mr-2" />
+              Step 3: Seva Contribution Summary
+            </h3>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-forest-teal mb-2 font-sans">
+                Contribution Description / Seva Summary *
+              </label>
+              <textarea
+                name="sevaSummary"
+                required
+                rows="5"
+                placeholder="Detail the selfless acts, activities, or systemic impacts that the nominee has accomplished. Include historical timelines, populations served, and why they deserve this prestigious honor..."
+                value={formData.sevaSummary}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-forest-teal text-sm font-sans"
+              ></textarea>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
