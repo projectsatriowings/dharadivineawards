@@ -142,7 +142,7 @@ export default function App() {
   const [dashboardCategory, setDashboardCategory] = useState('seva');
   const [subdomain, setSubdomain] = useState('');
   const [homeActiveVideoId, setHomeActiveVideoId] = useState(null);
-  const [heroVideoMuted, setHeroVideoMuted] = useState(true);
+  const [heroVideoMuted, setHeroVideoMuted] = useState(false);
 
   // Thank You State
   const [successData, setSuccessData] = useState(null);
