@@ -430,13 +430,13 @@ export default function EventsActivities() {
   const sections = [
     {
       id: "sec-1",
-      title: "Spiritual Pillar",
+      title: "Spiritual Pillars",
       subtitle: "Honoring Sivachariyars, Bhattachariyars, Sivanadiyars, and dedicated exponents of sacred Sanatana worship traditions.",
       videos: section1Videos
     },
     {
       id: "sec-2",
-      title: "Institutions and Organisation",
+      title: "Institutions and Organisations",
       subtitle: "Recognizing excellence across education, healthcare, annadhanam, spiritual media, traditional crafts, and philanthropy.",
       videos: section2Videos
     },

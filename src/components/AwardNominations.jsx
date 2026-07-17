@@ -13,6 +13,7 @@ export default function AwardNominations({ onSubmitSuccess }) {
     nomineeEmail: '',
     nomineePhone: '',
     nomineeLocation: '',
+    pillar: 'I. SPIRITUAL PILLARS',
     category: 'Sivacharyas',
     sevaSummary: '',
     impactMetrics: '',
@@ -332,22 +333,38 @@ export default function AwardNominations({ onSubmitSuccess }) {
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-forest-teal mb-2 font-sans">Award Category</label>
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-forest-teal text-sm font-sans bg-white"
-              >
-                {Object.entries(groupedCategories).map(([groupTitle, list]) => (
-                  <optgroup key={groupTitle} label={groupTitle}>
-                    {list.map((cat) => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-forest-teal mb-2 font-sans">Award Pillar</label>
+                <select
+                  name="pillar"
+                  value={formData.pillar || 'I. SPIRITUAL PILLARS'}
+                  onChange={(e) => {
+                    const newPillar = e.target.value;
+                    const firstCategory = groupedCategories[newPillar][0];
+                    setFormData(prev => ({ ...prev, pillar: newPillar, category: firstCategory }));
+                  }}
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-forest-teal text-sm font-sans bg-white"
+                >
+                  {Object.keys(groupedCategories).map((groupTitle) => (
+                    <option key={groupTitle} value={groupTitle}>{groupTitle}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-forest-teal mb-2 font-sans">Award Category</label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-forest-teal text-sm font-sans bg-white"
+                >
+                  {(groupedCategories[formData.pillar || 'I. SPIRITUAL PILLARS'] || []).map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             <div className="p-4 bg-[#FDFBF7] rounded-2xl border border-sage-accent/40 text-xs font-sans text-neutral-600">

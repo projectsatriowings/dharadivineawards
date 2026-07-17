@@ -392,10 +392,10 @@ export default function GalleryPage() {
 
   const sectionDescriptions = {
     'Highlights': 'Key moments from sacred assemblies, chief guest felicitations, and the grand Dhara Divine Awards ceremony.',
-    '1. Spiritual Pillars': 'Sivachariyars, Bhattachariyars, Sivanadiyars, and Spiritual Masters who uphold sacred traditions.',
-    '2. Institutions and Organisations': 'Spiritual schools, siddha hospitals, anna dhan centers, and dedicated institutions serving society.',
-    '3. Individuals and Professionals': 'Eminent judges, doctors, scientists, authors, artists, and leaders advancing Sanatana Dharma.',
-    '4. Grass Route Eminents': 'Unsung heroes: Veda padashalas, temple sculptors, traditional artists, gho shalas, and sacred craftsmen.'
+    '1. Spiritual Pillars': "The Spiritual Pillars represent the diverse traditions, spiritual leaders, devotees, and temple communities dedicated to preserving India's sacred heritage through faith, service, and cultural values.",
+    '2. Institutions and Organisations': 'Institutions and Organisations are dedicated entities that promote spiritual, educational, healthcare, cultural, and social development while preserving traditions and serving the community with excellence and compassion.',
+    '3. Individuals and Professionals': 'Individuals and Professionals are distinguished contributors from diverse fields who inspire society through their expertise, leadership, innovation, service, and commitment to preserving spiritual, cultural, educational, and social values.',
+    '4. Grass Route Eminents': "Grass Route Eminents are dedicated individuals and traditional institutions who preserve India's spiritual heritage, temple arts, ancient craftsmanship, and cultural traditions through selfless service, devotion, and generations of skilled practice."
   };
 
   const matchesSearch = (img) => {

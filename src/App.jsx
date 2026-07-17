@@ -3,7 +3,8 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { 
   X, Award, Ticket, Handshake, Heart, Gift, 
   Briefcase, Newspaper, Image as ImageIcon, MessageSquare, ExternalLink, 
-  CheckCircle, Share2, ArrowRight, Sparkles, Volume2, VolumeX, User
+  CheckCircle, Share2, ArrowRight, Sparkles, Volume2, VolumeX, User,
+  Users, Landmark, Flame
 } from 'lucide-react';
 
 import AboutUs from './components/AboutUs';
@@ -684,32 +685,31 @@ export default function App() {
       <div className="kindness-copy">
         <div className="eyebrow" style={{ color: 'var(--color-primary-accent)', fontFamily: 'var(--font-mono)' }}>
           <svg className="sprout" viewBox="0 0 16 22" fill="none"><path d="M8 0c3.5 4.5 5.2 7.4 5.2 10.4a5.2 5.2 0 1 1-10.4 0C2.8 7.4 4.5 4.5 8 0z" fill="var(--color-saffron-glow)"/></svg>
-          Compassion in Practice
+          Dhara Divine Awards
         </div>
-        <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontSize: '32px' }}>Every act of kindness reaches someone who needs it most</h2>
-        <p style={{ color: 'var(--ink-soft)' }}>Behind every program is a simple belief — that dignity, food, shelter, and care should never depend on circumstance. We work directly with the poor, the elderly, the differently-abled, and forgotten communities across Tamil Nadu.</p>
-        <p style={{ color: 'var(--ink-soft)' }}>No gesture is too small. A meal, a pair of shoes, a rebuilt roof, a restored prayer hall — each is a step toward a more compassionate society.</p>
+        <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontSize: '32px' }}>Dhara Divine Awards</h2>
+        <p style={{ color: 'var(--ink-soft)' }}>The Dhara Divine Awards honour exceptional individuals, institutions, and organizations for their outstanding contributions to spirituality, culture, heritage, social service, education, and the preservation of India's timeless traditions.</p>
       </div>
       <div className="impact-grid">
         <div className="impact-card glassmorphism-card" style={{ borderRadius: '24px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
           <div className="impact-icon" style={{ background: 'var(--color-card-cream)' }}><svg viewBox="0 0 24 24" fill="none"><path d="M4 11h16M6 11V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4M4 11l1 8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2l1-8" stroke="var(--color-saffron-glow-dark)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
-          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Meals &amp; Essentials</h4>
-          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>Food carriers and daily essentials for government homes and underserved families.</p>
+          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Spiritual Pillars</h4>
+          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>The Spiritual Pillars represent the diverse traditions, spiritual leaders, devotees, and temple communities dedicated to preserving India's sacred heritage through faith, service, and cultural values.</p>
         </div>
         <div className="impact-card glassmorphism-card" style={{ borderRadius: '24px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
           <div className="impact-icon" style={{ background: 'var(--color-card-cream)' }}><svg viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V10l7-6 7 6v11M9 21v-6h6v6" stroke="var(--color-saffron-glow-dark)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
-          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Shelter &amp; Care Homes</h4>
-          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>Support for children's homes and care facilities for the elderly and disabled.</p>
+          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Institutions &amp; Organisations</h4>
+          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>Institutions and Organisations are dedicated entities that promote spiritual, educational, healthcare, cultural, and social development while preserving traditions and serving the community with excellence and compassion.</p>
         </div>
         <div className="impact-card glassmorphism-card" style={{ borderRadius: '24px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
           <div className="impact-icon" style={{ background: 'var(--color-card-cream)' }}><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="var(--color-saffron-glow-dark)" strokeWidth="1.6"/><path d="M5 20c0-3.8 3.2-6.5 7-6.5s7 2.7 7 6.5" stroke="var(--color-saffron-glow-dark)" strokeWidth="1.6"/></svg></div>
-          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Clothing &amp; Footwear</h4>
-          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>Festive clothing and footwear drives for children in government homes.</p>
+          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Individuals &amp; Professionals</h4>
+          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>Individuals and Professionals are distinguished contributors from diverse fields who inspire society through their expertise, leadership, innovation, service, and commitment to preserving spiritual, cultural, educational, and social values.</p>
         </div>
         <div className="impact-card glassmorphism-card" style={{ borderRadius: '24px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
           <div className="impact-icon" style={{ background: 'var(--color-card-cream)' }}><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9-9c-1.4-3 .5-6.5 4-6.5 2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 3.5 0 5.4 3.5 4 6.5-2 4.5-9 9-9 9z" stroke="var(--color-saffron-glow-dark)" strokeWidth="1.6"/></svg></div>
-          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Health &amp; Relief</h4>
-          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>Emergency relief support, including pandemic-era response for vulnerable groups.</p>
+          <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)' }}>Grass Route Eminents</h4>
+          <p style={{ color: 'var(--ink-soft)', fontSize: '13px' }}>Grass Route Eminents are dedicated individuals and traditional institutions who preserve India's spiritual heritage, temple arts, ancient craftsmanship, and cultural traditions through selfless service, devotion, and generations of skilled practice.</p>
         </div>
       </div>
     </div>
@@ -729,19 +729,19 @@ export default function App() {
     </div>
     <div className="pillars-grid">
       <div className="pillar-card glassmorphism-card" style={{ borderRadius: '28px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
-        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', itemsAlign: 'center', justifyContent: 'center' }}><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v20M5 8c0 6 3 10 7 12 4-2 7-6 7-12-2-2-5-3-7-3s-5 1-7 3z" stroke="var(--color-saffron-glow)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
+        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Landmark color="var(--color-saffron-glow)" size={22} strokeWidth={1.6} /></div>
         <div className="num" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--color-primary-accent)', fontSize: '11px', fontWeight: 'bold' }}>01 — Desiyam</div>
         <h3 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontWeight: 'bold', fontSize: '20px' }}>National Culture</h3>
         <p style={{ color: 'var(--ink-soft)', fontSize: '14px' }}>We promote and preserve India's rich cultural identity — from temple traditions to heritage arts that risk being forgotten.</p>
       </div>
       <div className="pillar-card glassmorphism-card" style={{ borderRadius: '28px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
-        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', itemsAlign: 'center', justifyContent: 'center' }}><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3 4 4.5 6.5 4.5 9.5a4.5 4.5 0 1 1-9 0C7.5 9.5 9 7 12 3z" stroke="var(--color-saffron-glow)" strokeWidth="1.6" strokeLinecap="round"/><path d="M5 20h14" stroke="var(--color-saffron-glow)" strokeWidth="1.6" strokeLinecap="round"/></svg></div>
+        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Flame color="var(--color-saffron-glow)" size={22} strokeWidth={1.6} /></div>
         <div className="num" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--color-primary-accent)', fontSize: '11px', fontWeight: 'bold' }}>02 — Spiritualism</div>
         <h3 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontWeight: 'bold', fontSize: '20px' }}>Sacred Restoration</h3>
         <p style={{ color: 'var(--ink-soft)', fontSize: '14px' }}>We support spiritual education, temple renovation, and rituals that connect communities with timeless wisdom.</p>
       </div>
       <div className="pillar-card glassmorphism-card" style={{ borderRadius: '28px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
-        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', itemsAlign: 'center', justifyContent: 'center' }}><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="var(--color-saffron-glow)" strokeWidth="1.6"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="var(--color-saffron-glow)" strokeWidth="1.6" strokeLinecap="round"/></svg></div>
+        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Users color="var(--color-saffron-glow)" size={22} strokeWidth={1.6} /></div>
         <div className="num" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--color-primary-accent)', fontSize: '11px', fontWeight: 'bold' }}>03 — Welfare</div>
         <h3 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontWeight: 'bold', fontSize: '20px' }}>Community Care</h3>
         <p style={{ color: 'var(--ink-soft)', fontSize: '14px' }}>Through rehabilitation, medical care, and outreach, we empower vulnerable people to live with purpose and pride.</p>
