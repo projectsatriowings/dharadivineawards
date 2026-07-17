@@ -741,7 +741,7 @@ export default function App() {
         <p style={{ color: 'var(--ink-soft)', fontSize: '14px' }}>We support spiritual education, temple renovation, and rituals that connect communities with timeless wisdom.</p>
       </div>
       <div className="pillar-card glassmorphism-card" style={{ borderRadius: '28px', border: '1px solid rgba(217, 203, 176, 0.5)' }}>
-        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Users color="var(--color-saffron-glow)" size={22} strokeWidth={1.6} /></div>
+        <div className="pillar-icon" style={{ background: 'var(--color-deep-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-saffron-glow)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H11a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M18 3.13a4 4 0 0 1 0 7.75" /><path d="M1 21v-2a4 4 0 0 1 3-3.87" /><path d="M6 3.13a4 4 0 0 0 0 7.75" /></svg></div>
         <div className="num" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--color-primary-accent)', fontSize: '11px', fontWeight: 'bold' }}>03 — Welfare</div>
         <h3 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontWeight: 'bold', fontSize: '20px' }}>Community Care</h3>
         <p style={{ color: 'var(--ink-soft)', fontSize: '14px' }}>Through rehabilitation, medical care, and outreach, we empower vulnerable people to live with purpose and pride.</p>
