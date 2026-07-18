@@ -460,18 +460,16 @@ export default function App() {
               <button onClick={(e) => { e.preventDefault(); setActiveTab('gallery'); }} className="btn btn-ghost-dark">Explore Divine Awards →</button>
             </div>
             <div className="hero-stats flex-wrap" style={{ justifyContent: 'flex-start', marginTop: '48px', gap: '40px', width: '100%' }}>
-              <div className="hero-stat" style={{ alignItems: 'flex-start', textAlign: 'left' }}>
-                <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>3</div>
-                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px', color: 'var(--ink-soft)', marginTop: '4px' }}>Founding Trustees</div>
-              </div>
-              <div className="hero-stat" style={{ alignItems: 'flex-start', textAlign: 'left' }}>
-                <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>40+</div>
-                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px', color: 'var(--ink-soft)', marginTop: '4px' }}>Community Programs</div>
-              </div>
-              <div className="hero-stat" style={{ alignItems: 'flex-start', textAlign: 'left' }}>
-                <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>80G</div>
-                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px', color: 'var(--ink-soft)', marginTop: '4px' }}>Tax Exemption</div>
-              </div>
+              {(siteConfig.homeStats && siteConfig.homeStats.length > 0 ? siteConfig.homeStats : [
+                { number: '3', label: 'Founding Trustees' },
+                { number: '40+', label: 'Community Programs' },
+                { number: '80G', label: 'Tax Exemption' }
+              ]).map((stat, index) => (
+                <div key={index} className="hero-stat" style={{ alignItems: 'flex-start', textAlign: 'left' }}>
+                  <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>{stat.number}</div>
+                  <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px', color: 'var(--ink-soft)', marginTop: '4px' }}>{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -507,25 +505,22 @@ export default function App() {
 {/* Redesigned floating glassmorphic trust banner */}
 <div className="trust-strip-wrapper">
   <div className="trust-strip">
-    <div className="trust-item">
-      <Sparkles className="w-3.5 h-3.5 text-[var(--color-saffron-glow)]" />
-      <span>Indian Trust Act, 1882 — <b>Registered</b></span>
-    </div>
-    <span className="hidden md:inline" style={{ color: 'var(--color-card-border)' }}>|</span>
-    <div className="trust-item">
-      <Sparkles className="w-3.5 h-3.5 text-[var(--color-saffron-glow)]" />
-      <span>80G &amp; 12A — <b>Tax Exempt</b></span>
-    </div>
-    <span className="hidden md:inline" style={{ color: 'var(--color-card-border)' }}>|</span>
-    <div className="trust-item">
-      <Sparkles className="w-3.5 h-3.5 text-[var(--color-saffron-glow)]" />
-      <span>MCA — <b>CSR Approved</b></span>
-    </div>
-    <span className="hidden md:inline" style={{ color: 'var(--color-card-border)' }}>|</span>
-    <div className="trust-item">
-      <Sparkles className="w-3.5 h-3.5 text-[var(--color-saffron-glow)]" />
-      <span>NGO Darpan — <b>TN/2024/0473120</b></span>
-    </div>
+    {(siteConfig.homeCredentials && siteConfig.homeCredentials.length > 0 ? siteConfig.homeCredentials : [
+      { prefix: 'Indian Trust Act, 1882 — ', highlight: 'Registered' },
+      { prefix: '80G & 12A — ', highlight: 'Tax Exempt' },
+      { prefix: 'MCA — ', highlight: 'CSR Approved' },
+      { prefix: 'NGO Darpan — ', highlight: 'TN/2024/0473120' }
+    ]).map((cred, index, arr) => (
+      <React.Fragment key={index}>
+        <div className="trust-item">
+          <Sparkles className="w-3.5 h-3.5 text-[var(--color-saffron-glow)]" />
+          <span>{cred.prefix}<b>{cred.highlight}</b></span>
+        </div>
+        {index < arr.length - 1 && (
+          <span className="hidden md:inline" style={{ color: 'var(--color-card-border)' }}>|</span>
+        )}
+      </React.Fragment>
+    ))}
   </div>
 </div>
 

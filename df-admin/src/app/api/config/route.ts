@@ -35,7 +35,9 @@ export async function PUT(request: Request) {
       heroVideoUrl: body.heroVideoUrl || '',
       heroVideoPoster: body.heroVideoPoster || '',
       eventYear: body.eventYear || '2026',
-      registrationTickets: body.registrationTickets || []
+      registrationTickets: body.registrationTickets || [],
+      homeStats: body.homeStats || [],
+      homeCredentials: body.homeCredentials || []
     };
 
     if (index === -1) {
