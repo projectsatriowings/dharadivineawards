@@ -21,6 +21,7 @@ export const SettingsWorkspace: React.FC = () => {
   const handleSave = async () => {
     setSaving(true);
     await updateSiteConfig({
+      ...siteConfig,
       heroVideoUrl,
       heroVideoPoster
     });
@@ -77,7 +78,7 @@ export const SettingsWorkspace: React.FC = () => {
               Image shown while the video is loading.
             </p>
           </div>
-
+          
           <div className="pt-4 border-t border-[#EAE8E3] dark:border-[#30312E]">
             <button
               onClick={handleSave}

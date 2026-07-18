@@ -33,7 +33,9 @@ export async function PUT(request: Request) {
     const newConfig = {
       id: 'global-config',
       heroVideoUrl: body.heroVideoUrl || '',
-      heroVideoPoster: body.heroVideoPoster || ''
+      heroVideoPoster: body.heroVideoPoster || '',
+      eventYear: body.eventYear || '2026',
+      registrationTickets: body.registrationTickets || []
     };
 
     if (index === -1) {

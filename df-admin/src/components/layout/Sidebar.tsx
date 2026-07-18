@@ -13,7 +13,8 @@ import {
   Image as ImageIcon,
   Calendar,
   X,
-  Settings
+  Settings,
+  Ticket
 } from 'lucide-react';
 
 interface NavItem {
@@ -48,6 +49,7 @@ export const Sidebar: React.FC = () => {
     },
     { id: 'gallery', label: 'Gallery Management', icon: <ImageIcon size={20} /> },
     { id: 'events', label: 'Events & Activities', icon: <Calendar size={20} /> },
+    { id: 'event-config', label: 'Passes & Pricing', icon: <Ticket size={20} /> },
     { id: 'settings', label: 'Site Settings', icon: <Settings size={20} /> },
   ];
 

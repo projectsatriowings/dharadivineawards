@@ -1,15 +1,57 @@
 {
   "nominations": [],
   "donations": [],
-  "delegates": [],
+  "delegates": [
+    {
+      "id": "del-1784373962090",
+      "delegate_name": "Mohammed Thalha",
+      "email": "mohammedthalha177@gmail.com",
+      "phone": "+916381265681",
+      "pass_tier": "patron",
+      "ticket_count": 1,
+      "pass_code": "DDA-2026-3923",
+      "checked_in": false,
+      "checkin_time": null,
+      "seat_zone": "Zone B - Seva Row 10"
+    }
+  ],
   "volunteers": [],
   "enquiries": [],
-  "activityLogs": [],
+  "activityLogs": [
+    {
+      "id": "log-1784373962090",
+      "timestamp": "Just now",
+      "type": "checkin",
+      "message": "New Delegate pass registered for \"Mohammed Thalha\" (Pass: DDA-2026-3923)",
+      "user": "System Callback"
+    },
+    {
+      "id": "log-1784373900763",
+      "timestamp": "Just now",
+      "type": "system",
+      "message": "Admin updated global site configuration",
+      "user": "S. Vinoth Ragavendran"
+    },
+    {
+      "id": "log-1784373868384",
+      "timestamp": "Just now",
+      "type": "system",
+      "message": "Admin updated global site configuration",
+      "user": "S. Vinoth Ragavendran"
+    },
+    {
+      "id": "log-1784373243635",
+      "timestamp": "Just now",
+      "type": "system",
+      "message": "Admin updated global site configuration",
+      "user": "S. Vinoth Ragavendran"
+    }
+  ],
   "gallery": [
     {
       "id": "home-img-0",
       "src": "/images/Devine Awards images/devine awrds-57.jpg",
-      "category": "Highlights",
+      "category": "Guest Dignitaries",
       "caption": "Grand Assembly of Chief Guests & Spiritual Dignitaries",
       "priority": 100,
       "featured": true
@@ -57,7 +99,7 @@
     {
       "id": "home-img-6",
       "src": "/images/Home section/Dhara Divine Moment.jpeg",
-      "category": "Highlights",
+      "category": "Guest Dignitaries",
       "caption": "Shri S. Vinoth Ragavendran M.E. - Founder & President",
       "priority": 94,
       "featured": true
@@ -1569,6 +1611,58 @@
       "category": "Amman Worship",
       "youtubeId": "EuHZEntcPyE",
       "featured": false
+    }
+  ],
+  "siteConfig": [
+    {
+      "id": "global-config",
+      "heroVideoUrl": "",
+      "heroVideoPoster": "",
+      "eventYear": "2026",
+      "registrationTickets": [
+        {
+          "id": "delegate",
+          "name": "Delegate Pass",
+          "price": "₹1,500",
+          "description": "Access to main awards ceremony and youth plenary sessions.",
+          "features": [
+            "Seva Pass Entry",
+            "Satvik Dinner",
+            "Preferred Seating",
+            "Delegate Kit",
+            "Networking Access",
+            "Event Souvenir"
+          ]
+        },
+        {
+          "id": "premium",
+          "name": "Premium Delegate",
+          "price": "₹3,000",
+          "description": "Full delegate access to the awards, exhibitions, and networking lounge.",
+          "features": [
+            "Premium Row Seating",
+            "Satvik Dinner",
+            "Souvenir Kit",
+            "Priority Registration",
+            "Recorded Sessions",
+            "Networking Access",
+            "Event Souvenir"
+          ]
+        },
+        {
+          "id": "patron",
+          "name": "Patron Pass",
+          "price": "₹5,000",
+          "description": "Exclusive access to VIP networking, front-row seating, and private dinner.",
+          "features": [
+            "Reserved VIP Seating",
+            "Satvik Dinner",
+            "Meet & Greet with Dignitaries",
+            "Networking Access",
+            "Event Souvenir"
+          ]
+        }
+      ]
     }
   ]
 }

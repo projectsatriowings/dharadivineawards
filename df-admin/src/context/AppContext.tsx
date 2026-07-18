@@ -15,7 +15,7 @@ import {
   initialActivityLogs
 } from '../data/mockData';
 
-export type TabType = 'overview' | 'nominations' | 'donations' | 'delegates' | 'volunteers' | 'enquiries' | 'gallery' | 'events' | 'settings';
+export type TabType = 'overview' | 'nominations' | 'donations' | 'delegates' | 'volunteers' | 'enquiries' | 'gallery' | 'events' | 'event-config' | 'settings';
 
 interface AppContextType {
   currentTab: TabType;

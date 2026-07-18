@@ -397,7 +397,7 @@ export default function App() {
       case 'thankyou':
         return <div className="animate-fade-in"><ThankYouPage /></div>;
       case 'register':
-        return <div className="animate-fade-in"><EventRegistration onSubmitSuccess={handleFormSuccess} /></div>;
+        return <div className="animate-fade-in"><EventRegistration onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>;
       case 'sponsor':
         return <div className="animate-fade-in"><Sponsorship onSubmitSuccess={handleFormSuccess} /></div>;
       case 'volunteer':
@@ -418,33 +418,8 @@ export default function App() {
 
   const renderHomeView = () => (
     <div className="animate-fade-in">
-      {/* Video Banner Section */}
-      <section className="hero-banner relative w-full bg-black flex justify-center items-center" id="home-section" style={{ maxHeight: '85vh', overflow: 'hidden' }}>
-        <video 
-            ref={heroVideoRef}
-            src="/video/hero section video.mp4" 
-            poster="/images/News/DHARA Divine Awards Ceremony.jpg" 
-            autoPlay
-            loop 
-            muted={heroVideoMuted}
-            playsInline 
-            preload="auto"
-            className="w-full h-auto max-h-[85vh] object-contain" 
-          />
-        
-        {/* Mute Toggle Bottom Right */}
-        <button 
-          onClick={() => setHeroVideoMuted(!heroVideoMuted)}
-          className="absolute bottom-6 right-6 z-20 w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/60 hover:scale-105 transition-all shadow-lg cursor-pointer"
-          title={heroVideoMuted ? "Unmute Video" : "Mute Video"}
-          aria-label={heroVideoMuted ? "Unmute Video" : "Mute Video"}
-        >
-          {heroVideoMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-        </button>
-      </section>
-
-      {/* Hero Content Section */}
-      <section className="hero-content relative w-full" style={{ padding: '80px 0', background: 'var(--color-warm-cream)' }}>
+      {/* Hero Section Split Layout */}
+      <section className="hero relative w-full flex items-center justify-center" id="home-section" style={{ minHeight: '85vh', padding: '80px 5%', background: 'var(--color-warm-cream)' }}>
         <div className="divine-glow" style={{ zIndex: 1, opacity: 0.5 }}></div>
         <div className="ember-particles" style={{ zIndex: 2 }}>
           <span style={{"left":"6%","animationDuration":"11s","animationDelay":"0s"}}></span>
@@ -459,44 +434,73 @@ export default function App() {
           <span style={{"left":"93%","animationDuration":"9s","animationDelay":"1.5s"}}></span>
         </div>
         
-        <div className="wrap relative z-10 w-full flex flex-col items-center text-center">
-          <div className="hero-copy" style={{ maxWidth: '800px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div className="eyebrow" style={{ color: 'var(--color-primary-accent)', fontFamily: 'var(--font-mono)', justifyContent: 'center' }}>
+        <div className="wrap relative z-10 w-full max-w-[1400px] flex flex-col lg:flex-row items-center gap-16 lg:gap-12">
+          
+          {/* Left Text Content */}
+          <div className="hero-copy flex-1 flex flex-col items-start text-left w-full">
+            <div className="eyebrow uppercase" style={{ color: 'var(--color-primary-accent)', fontFamily: 'var(--font-mono)', justifyContent: 'flex-start' }}>
               <svg className="sprout" viewBox="0 0 16 22" fill="none"><path d="M8 0c3.5 4.5 5.2 7.4 5.2 10.4a5.2 5.2 0 1 1-10.4 0C2.8 7.4 4.5 4.5 8 0z" fill="var(--color-saffron-glow)"/></svg>
-              Registered Public Non-profit Organization · Est. 2024
+              REGISTERED PUBLIC NON-PROFIT ORGANIZATION · EST. 2024
             </div>
-            <h1 style={{ color: 'var(--color-deep-forest-dark)', fontFamily: 'var(--font-serif)', fontWeight: '800', textAlign: 'center' }}>
-              Dhara <em style={{ fontStyle: 'italic', fontWeight: '500', background: 'linear-gradient(120deg, var(--color-saffron-glow), var(--color-primary-accent))', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>Divine</em> Awards
+            <h1 style={{ color: 'var(--color-deep-forest-dark)', fontFamily: 'var(--font-serif)', fontWeight: '800', textAlign: 'left', marginTop: '16px', marginBottom: '24px' }}>
+              Dhara <em style={{ fontStyle: 'italic', fontWeight: '500', background: 'linear-gradient(120deg, var(--color-saffron-glow), var(--color-primary-accent))', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', display: 'inline-block', paddingRight: '0.15em', marginRight: '-0.15em' }}>Divine</em> Awards
             </h1>
-            <ul className="hero-highlights font-serif" style={{ listStyle: 'none', padding: 0, margin: '24px 0 36px 0', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.25rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
-                <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '-2px' }}>✦</span>
-                <span>An annual celebration honouring selfless individuals in the path of spiritual and social service</span>
+            <ul className="hero-highlights font-serif" style={{ listStyle: 'none', padding: 0, margin: '0 0 36px 0', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '1.25rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
+                <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '2px' }}>✦</span>
+                <span className="text-left">An annual celebration honouring selfless individuals in the path of spiritual and social service</span>
               </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.25rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
-                <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '-2px' }}>✦</span>
-                <span>Recognizing excellence from grassroots volunteers to thought leaders</span>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '1.25rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
+                <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '2px' }}>✦</span>
+                <span className="text-left">Recognizing excellence from grassroots volunteers to thought leaders</span>
               </li>
             </ul>
-            <div className="hero-actions" style={{ flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
+            <div className="hero-actions" style={{ flexWrap: 'wrap', gap: '16px', justifyContent: 'flex-start', width: '100%' }}>
               <button onClick={() => setActiveTab('donate')} className="btn btn-primary sparkle-shimmer-btn">Donate Now</button>
               <button onClick={(e) => { e.preventDefault(); setActiveTab('gallery'); }} className="btn btn-ghost-dark">Explore Divine Awards →</button>
             </div>
-            <div className="hero-stats" style={{ justifyContent: 'center', marginTop: '48px', gap: '56px' }}>
-              <div className="hero-stat">
+            <div className="hero-stats flex-wrap" style={{ justifyContent: 'flex-start', marginTop: '48px', gap: '40px', width: '100%' }}>
+              <div className="hero-stat" style={{ alignItems: 'flex-start', textAlign: 'left' }}>
                 <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>3</div>
-                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', tracking: '1px', color: 'var(--ink-soft)' }}>Founding Trustees</div>
+                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px', color: 'var(--ink-soft)', marginTop: '4px' }}>Founding Trustees</div>
               </div>
-              <div className="hero-stat">
+              <div className="hero-stat" style={{ alignItems: 'flex-start', textAlign: 'left' }}>
                 <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>40+</div>
-                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', tracking: '1px', color: 'var(--ink-soft)' }}>Community Programs</div>
+                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px', color: 'var(--ink-soft)', marginTop: '4px' }}>Community Programs</div>
               </div>
-              <div className="hero-stat">
+              <div className="hero-stat" style={{ alignItems: 'flex-start', textAlign: 'left' }}>
                 <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>80G</div>
-                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', tracking: '1px', color: 'var(--ink-soft)' }}>Tax Exemption</div>
+                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px', color: 'var(--ink-soft)', marginTop: '4px' }}>Tax Exemption</div>
               </div>
             </div>
           </div>
+
+          {/* Right Video Content */}
+          <div className="hero-video-container flex-1 relative w-full lg:max-w-[50%] rounded-[2rem] overflow-hidden border-2 border-[var(--color-saffron-glow)]/30" style={{ boxShadow: '0 25px 50px -12px rgba(64, 28, 12, 0.4), 0 0 40px rgba(243, 167, 18, 0.2)' }}>
+            <video 
+              ref={heroVideoRef}
+              src="/video/hero section video.mp4" 
+              poster="/images/News/DHARA Divine Awards Ceremony.jpg" 
+              autoPlay
+              loop 
+              muted={heroVideoMuted}
+              playsInline 
+              preload="auto"
+              className="w-full h-full object-cover" 
+              style={{ aspectRatio: '16/9', display: 'block' }}
+            />
+            
+            {/* Mute Toggle Bottom Right */}
+            <button 
+              onClick={() => setHeroVideoMuted(!heroVideoMuted)}
+              className="absolute bottom-5 right-5 z-20 w-11 h-11 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/70 hover:scale-105 transition-all cursor-pointer"
+              title={heroVideoMuted ? "Unmute Video" : "Mute Video"}
+              aria-label={heroVideoMuted ? "Unmute Video" : "Mute Video"}
+            >
+              {heroVideoMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            </button>
+          </div>
+          
         </div>
       </section>
 
@@ -1119,7 +1123,7 @@ export default function App() {
           <Route path="/contact" element={<div className="animate-fade-in"><GeneralEnquiries onSubmitSuccess={handleFormSuccess} /></div>} />
           
           {/* Subdomain Pages */}
-          <Route path="/register" element={<div className="animate-fade-in"><EventRegistration onSubmitSuccess={handleFormSuccess} /></div>} />
+          <Route path="/register" element={<div className="animate-fade-in"><EventRegistration onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
           <Route path="/sponsor" element={<div className="animate-fade-in"><Sponsorship onSubmitSuccess={handleFormSuccess} /></div>} />
           <Route path="/volunteer" element={<div className="animate-fade-in"><Volunteer onSubmitSuccess={handleFormSuccess} /></div>} />
           <Route path="/donate" element={<div className="animate-fade-in"><DonorSupport onSubmitSuccess={handleFormSuccess} /></div>} />

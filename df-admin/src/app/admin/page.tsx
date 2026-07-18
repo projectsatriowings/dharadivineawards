@@ -13,6 +13,7 @@ import { VolunteersWorkspace } from '@/components/workspaces/VolunteersWorkspace
 import { EnquiriesWorkspace } from '@/components/workspaces/EnquiriesWorkspace';
 import { GalleryWorkspace } from '@/components/workspaces/GalleryWorkspace';
 import { EventsWorkspace } from '@/components/workspaces/EventsWorkspace';
+import { EventConfigWorkspace } from '@/components/workspaces/EventConfigWorkspace';
 import { SettingsWorkspace } from '@/components/workspaces/SettingsWorkspace';
 import LoginPage from './login/page';
 
@@ -31,6 +32,7 @@ const DashboardContent: React.FC = () => {
         {currentTab === 'enquiries' && <EnquiriesWorkspace />}
         {currentTab === 'gallery' && <GalleryWorkspace />}
         {currentTab === 'events' && <EventsWorkspace />}
+        {currentTab === 'event-config' && <EventConfigWorkspace />}
         {currentTab === 'settings' && <SettingsWorkspace />}
       </div>
     </main>
