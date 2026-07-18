@@ -1,105 +1,79 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion'
 
-// ─── BRAND COLORS ─────────────────────────────────────────────────────────────
-const CURSOR_CONFIG = {
-  // Arrow cursor
-  arrowColor:        'var(--color-deep-forest-dark)',
-  arrowSize:         24,
-
-  // Ambient rings (always visible, slow pulse)
-  ringColor:         'var(--color-saffron-glow)',
-  ring1Size:         18,
-  ring2Size:         30,
-  ring3Size:         44,
-  ringStrokeWidth:   1.5,
-  ring1Opacity:      0.75,
-  ring2Opacity:      0.40,
-  ring3Opacity:      0.18,
-
-  // Click burst rings (animate out on click)
-  clickBurstColor:   'var(--color-saffron-glow-dark)',
-  clickBurstCount:   3,
-
-  // Spring config for cursor following
-  springStiffness:   800,
-  springDamping:     35,
-  springMass:        0.5,
+// ─── Dhara Brand Colors ──────────────────────────────────────────────────────
+const COLORS = {
+  arrow:     '#401C0C',   // deep-forest (primary brand brown)
+  rings:     '#D9762E',   // saffron-glow-dark (ring strokes)
+  clickRing: '#F3A712',   // saffron-glow (click burst)
 }
 
 export default function CustomCursor() {
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
 
-  const springX = useSpring(cursorX, {
-    stiffness: CURSOR_CONFIG.springStiffness,
-    damping:   CURSOR_CONFIG.springDamping,
-    mass:      CURSOR_CONFIG.springMass,
-  })
-  const springY = useSpring(cursorY, {
-    stiffness: CURSOR_CONFIG.springStiffness,
-    damping:   CURSOR_CONFIG.springDamping,
-    mass:      CURSOR_CONFIG.springMass,
-  })
+  const springX = useSpring(cursorX, { stiffness: 800, damping: 35, mass: 0.5 })
+  const springY = useSpring(cursorY, { stiffness: 800, damping: 35, mass: 0.5 })
 
-  const [clicks, setClicks]         = useState([])
-  const [isHovering, setIsHovering] = useState(false)
-  const [isPointer, setIsPointer]   = useState(false)
-  const [isHidden, setIsHidden]     = useState(false)
+  const [clicks, setClicks]       = useState([])
+  const [isPointer, setIsPointer] = useState(false)
+  const [isHidden, setIsHidden]   = useState(false)
   const clickIdRef = useRef(0)
 
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return
 
     const getZoom = () => {
-      const zoom = window.getComputedStyle(document.body).zoom;
-      return (zoom && !isNaN(parseFloat(zoom))) ? parseFloat(zoom) : 1;
+      const z = window.getComputedStyle(document.body).zoom
+      return (z && !isNaN(parseFloat(z))) ? parseFloat(z) : 1
     }
 
     const onMove = (e) => {
-      const zoom = getZoom();
-      cursorX.set(e.clientX / zoom)
-      cursorY.set(e.clientY / zoom)
+      const z = getZoom()
+      cursorX.set(e.clientX / z)
+      cursorY.set(e.clientY / z)
     }
 
     const onClick = (e) => {
-      const zoom = getZoom();
-      const id = ++clickIdRef.current
-      setClicks(prev => [...prev, { id, x: e.clientX / zoom, y: e.clientY / zoom }])
-
-      setTimeout(() => {
-        setClicks(prev => prev.filter(c => c.id !== id))
-      }, 800)
+      const t = e.target
+      const c = window.getComputedStyle(t).cursor
+      const isInteractive = c === 'pointer' || t.tagName === 'BUTTON' || t.tagName === 'A' || t.closest('button') !== null || t.closest('a') !== null || t.getAttribute('role') === 'button'
+      
+      if (isInteractive) {
+        const z = getZoom()
+        const id = ++clickIdRef.current
+        setClicks(prev => [...prev, { id, x: e.clientX / z, y: e.clientY / z }])
+        setTimeout(() => setClicks(prev => prev.filter(c => c.id !== id)), 900)
+      }
     }
 
     const onMouseOver = (e) => {
-      const target = e.target
-      const computed = window.getComputedStyle(target).cursor
+      const t = e.target
+      const c = window.getComputedStyle(t).cursor
       setIsPointer(
-        computed === 'pointer' ||
-        target.tagName === 'BUTTON' ||
-        target.tagName === 'A' ||
-        target.closest('button') !== null ||
-        target.closest('a') !== null ||
-        target.getAttribute('role') === 'button'
+        c === 'pointer' ||
+        t.tagName === 'BUTTON' ||
+        t.tagName === 'A' ||
+        t.closest('button') !== null ||
+        t.closest('a') !== null ||
+        t.getAttribute('role') === 'button'
       )
     }
 
-    const onMouseLeave = () => setIsHidden(true)
-    const onMouseEnter = () => setIsHidden(false)
+    const onLeave = () => setIsHidden(true)
+    const onEnter = () => setIsHidden(false)
 
-    document.addEventListener('mousemove', onMove)
-    document.addEventListener('click',     onClick)
-    document.addEventListener('mouseover', onMouseOver)
-    document.addEventListener('mouseleave', onMouseLeave)
-    document.addEventListener('mouseenter', onMouseEnter)
-
+    document.addEventListener('mousemove',  onMove)
+    document.addEventListener('click',      onClick)
+    document.addEventListener('mouseover',  onMouseOver)
+    document.addEventListener('mouseleave', onLeave)
+    document.addEventListener('mouseenter', onEnter)
     return () => {
-      document.removeEventListener('mousemove', onMove)
-      document.removeEventListener('click',     onClick)
-      document.removeEventListener('mouseover', onMouseOver)
-      document.removeEventListener('mouseleave', onMouseLeave)
-      document.removeEventListener('mouseenter', onMouseEnter)
+      document.removeEventListener('mousemove',  onMove)
+      document.removeEventListener('click',      onClick)
+      document.removeEventListener('mouseover',  onMouseOver)
+      document.removeEventListener('mouseleave', onLeave)
+      document.removeEventListener('mouseenter', onEnter)
     }
   }, [cursorX, cursorY])
 
@@ -109,52 +83,52 @@ export default function CustomCursor() {
 
   return (
     <>
+      {/* ── Main cursor container ── */}
       <motion.div
         style={{
-          position:      'fixed',
-          left:          springX,
-          top:           springY,
-          zIndex:        99999,
+          position: 'fixed',
+          left: springX,
+          top: springY,
+          zIndex: 99999,
           pointerEvents: 'none',
-          opacity:       isHidden ? 0 : 1,
-          transform:     'translate(-2px, -2px)',
+          opacity: isHidden ? 0 : 1,
         }}
       >
-        <div style={{ position: 'absolute', top: 0, left: 0 }}>
-          <AmbientRing size={CURSOR_CONFIG.ring3Size} color={CURSOR_CONFIG.ringColor} opacity={CURSOR_CONFIG.ring3Opacity} strokeWidth={CURSOR_CONFIG.ringStrokeWidth} delay={0} isPointer={isPointer} />
-          <AmbientRing size={CURSOR_CONFIG.ring2Size} color={CURSOR_CONFIG.ringColor} opacity={CURSOR_CONFIG.ring2Opacity} strokeWidth={CURSOR_CONFIG.ringStrokeWidth} delay={0.15} isPointer={isPointer} />
-          <AmbientRing size={CURSOR_CONFIG.ring1Size} color={CURSOR_CONFIG.ringColor} opacity={CURSOR_CONFIG.ring1Opacity} strokeWidth={CURSOR_CONFIG.ringStrokeWidth + 0.5} delay={0.3} isPointer={isPointer} />
-        </div>
-
+        {/* Solid filled arrow — rounded corners via stroke */}
         <motion.svg
-          width={CURSOR_CONFIG.arrowSize}
-          height={CURSOR_CONFIG.arrowSize}
+          width="24"
+          height="24"
           viewBox="0 0 24 24"
-          style={{ display: 'block', position: 'relative', zIndex: 2 }}
-          animate={{ scale: isPointer ? 1.15 : 1 }}
-          transition={{ duration: 0.2 }}
+          style={{
+            display: 'block',
+            position: 'relative',
+            zIndex: 2,
+            marginTop: '-2px',
+            marginLeft: '-2px',
+          }}
+          animate={{ scale: isPointer ? 0.9 : 1 }}
+          transition={{ duration: 0.15 }}
         >
           <path
-            d="M 0 0 L 0 18 L 4.5 13.5 L 8 20 L 10 19 L 6.5 12.5 L 12 12.5 Z"
-            fill={CURSOR_CONFIG.arrowColor}
-            stroke="white"
-            strokeWidth="1"
-            strokeLinejoin="round"
+            d="M 1 1 L 1 22 L 7 16 L 17 16 Z"
+            fill={COLORS.arrow}
           />
         </motion.svg>
       </motion.div>
 
+      {/* ── Click burst rings ── */}
       <AnimatePresence>
         {clicks.map((click) => (
-          <ClickBurstRings key={click.id} x={click.x} y={click.y} color={CURSOR_CONFIG.clickBurstColor} />
+          <ClickRipple key={click.id} x={click.x} y={click.y} />
         ))}
       </AnimatePresence>
     </>
   )
 }
 
-function AmbientRing({ size, color, opacity, strokeWidth, delay, isPointer }) {
-  const r = (size - strokeWidth) / 2
+/* ─── Ambient sonar ring — always pulsing at cursor tip ──────────────────── */
+function SonarRing({ radius, opacity, strokeWidth, delay, isPointer }) {
+  const size = radius * 2 + 4
   return (
     <motion.svg
       width={size}
@@ -162,68 +136,72 @@ function AmbientRing({ size, color, opacity, strokeWidth, delay, isPointer }) {
       viewBox={`0 0 ${size} ${size}`}
       style={{
         position: 'absolute',
-        left: -(size / 2) + 2,
-        top:  -(size / 2) + 2,
+        left: -(radius) - 2,
+        top:  -(radius) - 2,
         zIndex: 1,
       }}
       animate={{
-        scale:   isPointer ? [1, 1.2, 1] : [1, 1.08, 1],
-        opacity: [opacity, opacity * 0.6, opacity],
+        scale:   isPointer ? [1, 1.3, 1] : [1, 1.1, 1],
+        opacity: [opacity, opacity * 0.4, opacity],
       }}
       transition={{
-        duration: 2.5,
-        delay:    delay,
-        repeat:   Infinity,
-        ease:     'easeInOut',
+        duration: 2.2,
+        delay,
+        repeat: Infinity,
+        ease: 'easeInOut',
       }}
     >
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={strokeWidth} />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke={COLORS.rings}
+        strokeWidth={strokeWidth}
+      />
     </motion.svg>
   )
 }
 
-function ClickBurstRings({ x, y, color }) {
+/* ─── Click ripple burst — 3 rings expand outward on click ───────────────── */
+function ClickRipple({ x, y }) {
   const rings = [
-    { delay: 0,    maxSize: 36, duration: 0.65 },
-    { delay: 0.1,  maxSize: 56, duration: 0.75 },
-    { delay: 0.2,  maxSize: 76, duration: 0.85 },
+    { delay: 0,    size: 36, dur: 0.55 },
+    { delay: 0.08, size: 56, dur: 0.65 },
+    { delay: 0.16, size: 78, dur: 0.75 },
   ]
 
   return (
     <>
-      {rings.map((ring, i) => (
+      {rings.map((r, i) => (
         <motion.div
           key={i}
           style={{
-            position:      'fixed',
-            left:          x,
-            top:           y,
-            zIndex:        99998,
+            position: 'fixed',
+            left: x,
+            top: y,
+            zIndex: 99998,
             pointerEvents: 'none',
-            translateX:    '-50%',
-            translateY:    '-50%',
+            translateX: '-50%',
+            translateY: '-50%',
           }}
         >
           <motion.div
             style={{
-              width:        ring.maxSize,
-              height:       ring.maxSize,
+              width: r.size,
+              height: r.size,
               borderRadius: '50%',
-              border:       `2px solid ${color}`,
-              position:     'absolute',
-              top:          '50%',
-              left:         '50%',
-              translateX:   '-50%',
-              translateY:   '-50%',
+              border: `1.8px solid ${COLORS.clickRing}`,
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              translateX: '-50%',
+              translateY: '-50%',
             }}
-            initial={{ scale: 0.1, opacity: 0.9 }}
-            animate={{ scale: 1,   opacity: 0   }}
+            initial={{ scale: 0.15, opacity: 0.85 }}
+            animate={{ scale: 1,    opacity: 0 }}
             exit={{}}
-            transition={{
-              duration: ring.duration,
-              delay:    ring.delay,
-              ease:     'easeOut',
-            }}
+            transition={{ duration: r.dur, delay: r.delay, ease: 'easeOut' }}
           />
         </motion.div>
       ))}

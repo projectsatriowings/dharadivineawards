@@ -74,7 +74,7 @@ export const EventsWorkspace: React.FC = () => {
       type,
       category,
       description,
-      image: type === 'image' ? imageUrl : undefined,
+      image: type === 'image' ? (imageUrl || '') : '',
       youtubeId: type === 'video' ? youtubeId : undefined,
       duration,
       featured
@@ -97,6 +97,27 @@ export const EventsWorkspace: React.FC = () => {
     setType('image');
     setEditingId(null);
     setShowAddModal(false);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.url) {
+        setImageUrl(data.url);
+      }
+    } catch (err) {
+      console.error('Upload failed:', err);
+      // Fallback: use local object URL
+      setImageUrl(URL.createObjectURL(file));
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleEditClick = (ev: any) => {

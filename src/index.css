@@ -28,6 +28,12 @@
     overflow-x: clip;
     scroll-behavior: smooth;
   }
+  /* Hide native cursor on desktop so custom 3D cursor shows */
+  @media (pointer: fine) {
+    *, *::before, *::after {
+      cursor: none !important;
+    }
+  }
   body {
     background-color: var(--color-warm-cream);
     font-family: var(--font-sans);

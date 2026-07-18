@@ -5,7 +5,7 @@ import { useApp } from '../../context/AppContext';
 import { Image as ImageIcon, Search, Plus, Trash2, X, Filter, Upload } from 'lucide-react';
 
 export const GalleryWorkspace: React.FC = () => {
-  const { gallery, addGalleryImage, deleteGalleryImage, globalSearchQuery } = useApp();
+  const { gallery, addGalleryImage, updateGalleryImage, deleteGalleryImage, globalSearchQuery } = useApp();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
   const [uploading, setUploading] = useState<boolean>(false);

@@ -220,7 +220,6 @@ export default function App() {
         }
       } else {
         vid.pause();
-        vid.muted = true;
       }
     }, { threshold: 0.05 });
 
@@ -232,7 +231,6 @@ export default function App() {
       heroObserverRef.current = null;
     };
   }, [heroVideoMuted, location.pathname]);
-
 
 
   // Thank You State
@@ -412,101 +410,87 @@ export default function App() {
 
   const renderHomeView = () => (
     <div className="animate-fade-in">
-      <section className="hero" id="home-section">
-  <div className="divine-glow"></div>
-  <div className="ember-particles">
-    <span style={{"left":"6%","animationDuration":"11s","animationDelay":"0s"}}></span>
-    <span style={{"left":"14%","animationDuration":"9s","animationDelay":"2s"}}></span>
-    <span style={{"left":"24%","animationDuration":"13s","animationDelay":"4s"}}></span>
-    <span style={{"left":"33%","animationDuration":"10s","animationDelay":"1s"}}></span>
-    <span style={{"left":"45%","animationDuration":"14s","animationDelay":"6s"}}></span>
-    <span style={{"left":"58%","animationDuration":"8s","animationDelay":"3s"}}></span>
-    <span style={{"left":"67%","animationDuration":"12s","animationDelay":"7s"}}></span>
-    <span style={{"left":"76%","animationDuration":"10s","animationDelay":"2.5s"}}></span>
-    <span style={{"left":"85%","animationDuration":"15s","animationDelay":"5s"}}></span>
-    <span style={{"left":"93%","animationDuration":"9s","animationDelay":"1.5s"}}></span>
-  </div>
-  <div className="wrap">
-    <div className="hero-grid">
-      <div className="hero-copy">
-        <div className="eyebrow" style={{ color: 'var(--color-primary-accent)', fontFamily: 'var(--font-mono)' }}>
-          <svg className="sprout" viewBox="0 0 16 22" fill="none"><path d="M8 0c3.5 4.5 5.2 7.4 5.2 10.4a5.2 5.2 0 1 1-10.4 0C2.8 7.4 4.5 4.5 8 0z" fill="var(--color-saffron-glow)"/></svg>
-          Registered Public Non-profit Organization · Est. 2024
-        </div>
-        <h1 style={{ color: 'var(--color-deep-forest-dark)', fontFamily: 'var(--font-serif)', fontWeight: '800' }}>
-          Dhara <em style={{ fontStyle: 'italic', fontWeight: '500', background: 'linear-gradient(120deg, var(--color-saffron-glow), var(--color-primary-accent))', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>Divine</em> Awards
-        </h1>
-        <ul className="hero-highlights font-serif text-[#786450]" style={{ listStyle: 'none', padding: 0, margin: '20px 0 30px 0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '1.15rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
-            <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '-2px' }}>✦</span>
-            <span>An annual celebration honouring selfless individuals in the path of spiritual and social service</span>
-          </li>
-          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '1.15rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
-            <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '-2px' }}>✦</span>
-            <span>Recognizing excellence from grassroots volunteers to thought leaders</span>
-          </li>
-        </ul>
-        <div className="hero-actions" style={{ flexWrap: 'wrap', gap: '12px' }}>
-          <button onClick={() => setActiveTab('donate')} className="btn btn-primary sparkle-shimmer-btn">Donate Now</button>
-          <button onClick={(e) => { e.preventDefault(); setActiveTab('gallery'); }} className="btn btn-ghost-dark">Explore Divine Awards →</button>
-        </div>
-        <div className="hero-stats">
-          <div className="hero-stat">
-            <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>3</div>
-            <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '11px', tracking: '1px' }}>Founding Trustees</div>
-          </div>
-          <div className="hero-stat">
-            <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>40+</div>
-            <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '11px', tracking: '1px' }}>Community Programs</div>
-          </div>
-          <div className="hero-stat">
-            <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>80G</div>
-            <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '11px', tracking: '1px' }}>Tax Exemption</div>
-          </div>
-        </div>
-      </div>
-      <div className="hero-visual" style={{ position: 'relative' }}>
-        <svg className="mandala-ring rotating-mandala" viewBox="0 0 400 400" fill="none" style={{ position: 'absolute', inset: '-40px', zIndex: 0, opacity: 0.25 }}>
-          <circle cx="200" cy="200" r="195" stroke="var(--color-saffron-glow)" strokeWidth="0.8" strokeDasharray="2 6"/>
-          <circle cx="200" cy="200" r="175" stroke="var(--color-card-border)" strokeWidth="0.6" strokeDasharray="1 4"/>
-        </svg>
-        <div className="hero-photo" style={{ 
-          border: '2px solid var(--color-card-border)', 
-          outline: '1px solid var(--color-saffron-glow)', 
-          outlineOffset: '6px', 
-          boxShadow: '0 20px 40px rgba(64, 28, 12,0.12)',
-          borderRadius: '32px',
-          position: 'relative'
-        }}>
-          <video 
-            ref={(el) => {
-              if (!el && heroVideoRef.current) {
-                heroVideoRef.current.pause();
-                heroVideoRef.current.muted = true;
-              }
-              heroVideoRef.current = el;
-            }}
-            src={getGoogleDriveDirectLink(siteConfig?.heroVideoUrl) || "/video/hero section video.mp4"} 
-            poster={getGoogleDriveDirectLink(siteConfig?.heroVideoPoster) || "/images/News/DHARA Divine Awards Ceremony.jpg"} 
+      {/* Video Banner Section */}
+      <section className="hero-banner relative w-full bg-black flex justify-center items-center" id="home-section" style={{ maxHeight: '85vh', overflow: 'hidden' }}>
+        <video 
+            ref={heroVideoRef}
+            src="/video/hero section video.mp4" 
+            poster="/images/News/DHARA Divine Awards Ceremony.jpg" 
             autoPlay
             loop 
             muted={heroVideoMuted}
             playsInline 
-            className="w-full h-full object-cover" 
+            preload="auto"
+            className="w-full h-auto max-h-[85vh] object-contain" 
           />
-          <button 
-            onClick={() => setHeroVideoMuted(!heroVideoMuted)}
-            className="absolute bottom-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/85 hover:scale-105 transition-all shadow-lg cursor-pointer"
-            title={heroVideoMuted ? "Unmute Video" : "Mute Video"}
-            aria-label={heroVideoMuted ? "Unmute Video" : "Mute Video"}
-          >
-            {heroVideoMuted ? <VolumeX className="w-4.5 h-4.5" /> : <Volume2 className="w-4.5 h-4.5" />}
-          </button>
+        
+        {/* Mute Toggle Bottom Right */}
+        <button 
+          onClick={() => setHeroVideoMuted(!heroVideoMuted)}
+          className="absolute bottom-6 right-6 z-20 w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/60 hover:scale-105 transition-all shadow-lg cursor-pointer"
+          title={heroVideoMuted ? "Unmute Video" : "Mute Video"}
+          aria-label={heroVideoMuted ? "Unmute Video" : "Mute Video"}
+        >
+          {heroVideoMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+        </button>
+      </section>
+
+      {/* Hero Content Section */}
+      <section className="hero-content relative w-full" style={{ padding: '80px 0', background: 'var(--color-warm-cream)' }}>
+        <div className="divine-glow" style={{ zIndex: 1, opacity: 0.5 }}></div>
+        <div className="ember-particles" style={{ zIndex: 2 }}>
+          <span style={{"left":"6%","animationDuration":"11s","animationDelay":"0s"}}></span>
+          <span style={{"left":"14%","animationDuration":"9s","animationDelay":"2s"}}></span>
+          <span style={{"left":"24%","animationDuration":"13s","animationDelay":"4s"}}></span>
+          <span style={{"left":"33%","animationDuration":"10s","animationDelay":"1s"}}></span>
+          <span style={{"left":"45%","animationDuration":"14s","animationDelay":"6s"}}></span>
+          <span style={{"left":"58%","animationDuration":"8s","animationDelay":"3s"}}></span>
+          <span style={{"left":"67%","animationDuration":"12s","animationDelay":"7s"}}></span>
+          <span style={{"left":"76%","animationDuration":"10s","animationDelay":"2.5s"}}></span>
+          <span style={{"left":"85%","animationDuration":"15s","animationDelay":"5s"}}></span>
+          <span style={{"left":"93%","animationDuration":"9s","animationDelay":"1.5s"}}></span>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+        
+        <div className="wrap relative z-10 w-full flex flex-col items-center text-center">
+          <div className="hero-copy" style={{ maxWidth: '800px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div className="eyebrow" style={{ color: 'var(--color-primary-accent)', fontFamily: 'var(--font-mono)', justifyContent: 'center' }}>
+              <svg className="sprout" viewBox="0 0 16 22" fill="none"><path d="M8 0c3.5 4.5 5.2 7.4 5.2 10.4a5.2 5.2 0 1 1-10.4 0C2.8 7.4 4.5 4.5 8 0z" fill="var(--color-saffron-glow)"/></svg>
+              Registered Public Non-profit Organization · Est. 2024
+            </div>
+            <h1 style={{ color: 'var(--color-deep-forest-dark)', fontFamily: 'var(--font-serif)', fontWeight: '800', textAlign: 'center' }}>
+              Dhara <em style={{ fontStyle: 'italic', fontWeight: '500', background: 'linear-gradient(120deg, var(--color-saffron-glow), var(--color-primary-accent))', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>Divine</em> Awards
+            </h1>
+            <ul className="hero-highlights font-serif" style={{ listStyle: 'none', padding: 0, margin: '24px 0 36px 0', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.25rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
+                <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '-2px' }}>✦</span>
+                <span>An annual celebration honouring selfless individuals in the path of spiritual and social service</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.25rem', lineHeight: '1.5', color: 'var(--ink-soft)' }}>
+                <span style={{ color: 'var(--color-saffron-glow)', fontSize: '1.25rem', marginTop: '-2px' }}>✦</span>
+                <span>Recognizing excellence from grassroots volunteers to thought leaders</span>
+              </li>
+            </ul>
+            <div className="hero-actions" style={{ flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
+              <button onClick={() => setActiveTab('donate')} className="btn btn-primary sparkle-shimmer-btn">Donate Now</button>
+              <button onClick={(e) => { e.preventDefault(); setActiveTab('gallery'); }} className="btn btn-ghost-dark">Explore Divine Awards →</button>
+            </div>
+            <div className="hero-stats" style={{ justifyContent: 'center', marginTop: '48px', gap: '56px' }}>
+              <div className="hero-stat">
+                <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>3</div>
+                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', tracking: '1px', color: 'var(--ink-soft)' }}>Founding Trustees</div>
+              </div>
+              <div className="hero-stat">
+                <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>40+</div>
+                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', tracking: '1px', color: 'var(--ink-soft)' }}>Community Programs</div>
+              </div>
+              <div className="hero-stat">
+                <div className="num" style={{ color: 'var(--color-saffron-glow-dark)', fontFamily: 'var(--font-serif)' }}>80G</div>
+                <div className="label" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontSize: '12px', tracking: '1px', color: 'var(--ink-soft)' }}>Tax Exemption</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
 {/* Redesigned floating glassmorphic trust banner */}
 <div className="trust-strip-wrapper">
