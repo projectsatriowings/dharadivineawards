@@ -256,13 +256,16 @@ export default function AboutUs({ siteConfig }) {
               {/* Theme Block */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-3">
                 <span className="text-[10px] uppercase tracking-wider font-mono text-[var(--color-saffron-glow)] font-bold block">
-                  Theme for 2026
+                  Theme Of Festival
                 </span>
                 <h5 className="text-xl font-bold text-[#FFD27F] font-serif">
                   "Celebrating the Unspoken Celebrities"
                 </h5>
+                <p className="text-xs font-semibold text-[#FFD27F] bg-white/10 p-2.5 rounded-xl border border-white/10">
+                  Supporting 12 Deserving Individuals with Financial Assistance of ₹25,000 Each.
+                </p>
                 <p className="text-xs text-neutral-300 leading-relaxed font-sans">
-                  The 2026 edition celebrates those whose actions are guided by values, purpose, and a deep commitment to humanity.
+                  The event celebrates those whose actions are guided by values, purpose, and a deep commitment to humanity every year.
                 </p>
               </div>
 
