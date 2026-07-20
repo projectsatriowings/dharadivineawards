@@ -119,6 +119,11 @@ const dashboardItems = [
 ];
 
 export default function HomeApp() {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace('/admin');
+  }, [router]);
+
   const { siteConfig } = useApp();
   const [activeTab, setActiveTab] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

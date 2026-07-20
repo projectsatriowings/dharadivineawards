@@ -253,6 +253,12 @@ export default function App() {
   const [showInstallBanner, setShowInstallBanner] = useState(false);
 
   useEffect(() => {
+    if (location.pathname === '/admin' || location.pathname.startsWith('/admin/') || location.pathname === '/login') {
+      window.location.href = `${API_BASE}/admin`;
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
     // Register Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
