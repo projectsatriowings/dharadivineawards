@@ -25,6 +25,7 @@ import DonorSupport from './components/DonorSupport';
 import CorporateCSR from './components/CorporateCSR';
 import AwardNominations from './components/AwardNominations';
 import ThankYouPage from './components/ThankYouPage';
+import AdminPortal from './admin/AdminPortal';
 import { fetchSiteConfig, fetchGallery, fetchEvents, getGoogleDriveDirectLink, API_BASE, staticData } from './utils/api';
 
 const dashboardCategories = [
@@ -1146,6 +1147,8 @@ export default function App() {
           <Route path="/highlights" element={<div className="animate-fade-in"><EventsActivities siteConfig={siteConfig} /></div>} />
           <Route path="/enquiry" element={<div className="animate-fade-in"><GeneralEnquiries onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
           <Route path="/thankyou" element={<div className="animate-fade-in"><ThankYouPage /></div>} />
+          <Route path="/admin" element={<div className="animate-fade-in"><AdminPortal /></div>} />
+          <Route path="/admin/*" element={<div className="animate-fade-in"><AdminPortal /></div>} />
 
           <Route path="*" element={getHomeElement()} />
         </Routes>
