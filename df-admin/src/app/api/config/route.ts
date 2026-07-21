@@ -30,31 +30,49 @@ export async function PUT(request: Request) {
     }
 
     const index = db.siteConfig.findIndex(c => c.id === 'global-config');
+    const existing = index !== -1 ? db.siteConfig[index] : {};
+
     const newConfig = {
+      ...existing,
       id: 'global-config',
-      heroVideoUrl: body.heroVideoUrl || '',
-      heroVideoPoster: body.heroVideoPoster || '',
-      heroImageUrl: body.heroImageUrl || '',
-      heroMediaOrder: body.heroMediaOrder || 'video-first',
-      eventYear: body.eventYear || '2026',
-      registrationTickets: body.registrationTickets || [],
-      homeStats: body.homeStats || [],
-      aboutStats: body.aboutStats || [],
-      homeCredentials: body.homeCredentials || [],
-      founders: body.founders || []
+      // Legacy compatibility
+      heroVideoUrl: body.heroVideoUrl ?? existing.heroVideoUrl ?? '',
+      heroVideoPoster: body.heroVideoPoster ?? existing.heroVideoPoster ?? '',
+      heroImageUrl: body.heroImageUrl ?? existing.heroImageUrl ?? '',
+      heroMediaOrder: body.heroMediaOrder ?? existing.heroMediaOrder ?? 'video-first',
+      eventYear: body.eventYear ?? existing.eventYear ?? '2026',
+      registrationTickets: body.registrationTickets ?? existing.registrationTickets ?? [],
+      homeStats: body.homeStats ?? existing.homeStats ?? [],
+      aboutStats: body.aboutStats ?? existing.aboutStats ?? [],
+      homeCredentials: body.homeCredentials ?? existing.homeCredentials ?? [],
+      founders: body.founders ?? existing.founders ?? [],
+
+      // Extended Dynamic Content Configuration
+      heroSection: body.heroSection ?? existing.heroSection ?? null,
+      aboutSection: body.aboutSection ?? existing.aboutSection ?? null,
+      visionMissionSection: body.visionMissionSection ?? existing.visionMissionSection ?? null,
+      founderMessage: body.founderMessage ?? existing.founderMessage ?? null,
+      donorConfig: body.donorConfig ?? existing.donorConfig ?? null,
+      eventRegConfig: body.eventRegConfig ?? existing.eventRegConfig ?? null,
+      sponsorshipConfig: body.sponsorshipConfig ?? existing.sponsorshipConfig ?? null,
+      volunteerConfig: body.volunteerConfig ?? existing.volunteerConfig ?? null,
+      csrConfig: body.csrConfig ?? existing.csrConfig ?? null,
+      awardConfig: body.awardConfig ?? existing.awardConfig ?? null,
+      generalEnquiriesConfig: body.generalEnquiriesConfig ?? existing.generalEnquiriesConfig ?? null,
+      razorpayConfig: body.razorpayConfig ?? existing.razorpayConfig ?? null,
     };
 
     if (index === -1) {
       db.siteConfig.push(newConfig);
     } else {
-      db.siteConfig[index] = { ...db.siteConfig[index], ...newConfig };
+      db.siteConfig[index] = newConfig;
     }
 
     db.activityLogs.unshift({
       id: `log-${Date.now()}`,
       timestamp: 'Just now',
       type: 'system',
-      message: `Admin updated global site configuration`,
+      message: `Admin updated site content and subdomain configurations`,
       user: body.user || 'Super Admin'
     });
 

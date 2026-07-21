@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
 import { submitForm } from '../utils/api';
 
-export default function GeneralEnquiries({ onSubmitSuccess }) {
+export default function GeneralEnquiries({ onSubmitSuccess, siteConfig }) {
+  const contactConfig = siteConfig?.generalEnquiriesConfig;
+  const contactEmail = contactConfig?.email || 'info@dharafoundations.in';
+  const contactPhone = contactConfig?.phone || '044-22236641';
+  const contactAddress = contactConfig?.address || 'Dhara Foundations HQ, # 44A, 3rd Street, Judge Colony, Tambaram Sanatorium, Chennai, Tamil Nadu - 600047';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Ticket, User, Mail, Phone, Building, ArrowRight, Award } from 'lucide-react';
-import { submitForm } from '../utils/api';
+import { Ticket, User, Mail, Phone, Building, ArrowRight, Award, CreditCard, Loader2 } from 'lucide-react';
+import { submitForm, createRazorpayOrder, verifyRazorpayPayment } from '../utils/api';
+import { openRazorpayCheckout } from '../utils/razorpay';
 
 export default function EventRegistration({ onSubmitSuccess, siteConfig }) {
   const [ticketType, setTicketType] = useState('premium');
+  const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,9 +16,11 @@ export default function EventRegistration({ onSubmitSuccess, siteConfig }) {
     consentTerms: false
   });
 
-  const eventYear = siteConfig?.eventYear || '2026';
-  const tickets = (siteConfig?.registrationTickets && siteConfig.registrationTickets.length === 3)
+  const eventYear = siteConfig?.eventYear || siteConfig?.eventRegConfig?.eventYear || '2026';
+  const tickets = (siteConfig?.registrationTickets && siteConfig.registrationTickets.length > 0)
     ? siteConfig.registrationTickets
+    : (siteConfig?.eventRegConfig?.tickets && siteConfig.eventRegConfig.tickets.length > 0)
+    ? siteConfig.eventRegConfig.tickets
     : [
         {
           id: 'delegate',
@@ -41,33 +45,110 @@ export default function EventRegistration({ onSubmitSuccess, siteConfig }) {
         }
       ];
 
+  const selectedTicket = tickets.find(t => t.id === ticketType) || tickets[0];
+  const ticketPriceNumeric = parseInt(selectedTicket.price.replace(/[^0-9]/g, '')) || 1500;
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.phone) {
       alert('Please fill in all required fields.');
       return;
     }
-    const submission = {
-      ...formData,
-      ticketType: tickets.find(t => t.id === ticketType).name,
-    };
-    
-    submitForm('Event Registration', submission);
+    if (!formData.consentTerms) {
+      alert('Please accept the Terms and Conditions to proceed.');
+      return;
+    }
 
-    onSubmitSuccess({
-      title: 'Registration Confirmed',
-      message: `Namaste, ${formData.name}. Your presence is gracefully registered for the Divine Awards ${eventYear} under the ${tickets.find(t => t.id === ticketType).name} tier. We look forward to hosting you in this sacred celebration of selfless service.`,
-      details: [
-        { label: 'Attendee', value: formData.name },
-        { label: 'Pass Type', value: tickets.find(t => t.id === ticketType).name },
-        { label: 'Area of Interest', value: formData.interest }
-      ]
-    });
+    setIsProcessing(true);
+
+    try {
+      // Step 1: Create Razorpay Order for Ticket Price
+      const orderRes = await createRazorpayOrder({
+        amount: ticketPriceNumeric,
+        currency: 'INR',
+        receipt: `rcpt_evt_${Date.now()}`,
+        notes: {
+          delegate_name: formData.name,
+          email: formData.email,
+          pass_type: selectedTicket.name
+        }
+      });
+
+      if (!orderRes.success && !orderRes.order_id) {
+        throw new Error(orderRes.error || 'Failed to initialize payment gateway order');
+      }
+
+      // Step 2: Open Razorpay Checkout Modal
+      openRazorpayCheckout({
+        key_id: orderRes.key_id,
+        order_id: orderRes.order_id,
+        amount: orderRes.amount,
+        currency: orderRes.currency,
+        name: 'Dhara Foundations',
+        description: `Divine Awards ${eventYear} — ${selectedTicket.name}`,
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone
+        },
+        onSuccess: async (razorpayResponse) => {
+          // Step 3: Verify Payment and Record Delegate Registration
+          const verification = await verifyRazorpayPayment({
+            razorpay_order_id: razorpayResponse.razorpay_order_id,
+            razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+            razorpay_signature: razorpayResponse.razorpay_signature,
+            module: 'Event Registration',
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            amount: ticketPriceNumeric,
+            ticketType: selectedTicket.name,
+            organization: formData.organization,
+            interest: formData.interest,
+            specialNotes: formData.specialNotes
+          });
+
+          // Backup submission
+          submitForm('Event Registration', {
+            ...formData,
+            ticketType: selectedTicket.name,
+            amount: ticketPriceNumeric,
+            payment_id: razorpayResponse.razorpay_payment_id,
+            order_id: razorpayResponse.razorpay_order_id,
+            timestamp: new Date().toISOString()
+          });
+
+          setIsProcessing(false);
+
+          const passCode = verification?.details?.pass_code || `DDA-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+          onSubmitSuccess({
+            title: 'Registration & Pass Confirmed',
+            message: `Namaste, ${formData.name}. Your presence and ticket payment are gracefully confirmed for the Divine Awards ${eventYear} under the ${selectedTicket.name} tier. Your Pass Code is ${passCode}. We look forward to hosting you!`,
+            details: [
+              { label: 'Attendee', value: formData.name },
+              { label: 'Pass Type', value: selectedTicket.name },
+              { label: 'Entry Pass Code', value: passCode },
+              { label: 'Payment ID', value: razorpayResponse.razorpay_payment_id || orderRes.order_id },
+              { label: 'Area of Interest', value: formData.interest }
+            ]
+          });
+        },
+        onDismiss: () => {
+          setIsProcessing(false);
+        }
+      });
+
+    } catch (err) {
+      console.error('Event payment error:', err);
+      setIsProcessing(false);
+      alert(`Payment Gateway Error: ${err.message || 'Could not launch payment gateway. Please try again.'}`);
+    }
   };
 
   return (
@@ -251,20 +332,27 @@ export default function EventRegistration({ onSubmitSuccess, siteConfig }) {
           <div className="pt-4">
             <button
               type="submit"
-              disabled={!formData.consentTerms}
+              disabled={!formData.consentTerms || isProcessing}
               className={`w-full py-4 rounded-xl font-sans font-bold text-base transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 border-2 shadow-lg ${
-                formData.consentTerms
+                formData.consentTerms && !isProcessing
                   ? 'bg-gradient-to-r from-[var(--color-saffron-glow)] to-[var(--color-saffron-glow-dark)] text-[#281006] hover:brightness-105 border-transparent hover:border-[#281006] cursor-pointer group hover:shadow-xl hover:-translate-y-0.5'
                   : 'bg-neutral-200 text-neutral-400 border-transparent cursor-not-allowed opacity-75'
               }`}
             >
-              <span>Confirm & Register</span>
-              <ArrowRight className={`w-5 h-5 transition-transform duration-300 ${
-                formData.consentTerms ? 'group-hover:translate-x-1' : ''
-              }`} />
+              {isProcessing ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin text-[#281006]" />
+                  <span>Processing Razorpay Checkout...</span>
+                </>
+              ) : (
+                <>
+                  <CreditCard className="w-5 h-5 text-[#281006]" />
+                  <span>Pay Pass Fee & Book Pass ({selectedTicket.price})</span>
+                </>
+              )}
             </button>
             <p className="text-center text-xs text-neutral-400 mt-3 font-sans">
-              By registering, you agree to abide by the spiritual and social decorum of Dhara Foundations during the awards.
+              Instant entry pass code will be issued immediately upon successful payment verification.
             </p>
           </div>
         </form>

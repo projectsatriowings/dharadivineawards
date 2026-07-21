@@ -1127,23 +1127,23 @@ export default function App() {
           <Route path="/home" element={getHomeElement()} />
           
           <Route path="/about" element={<div className="animate-fade-in"><AboutUs siteConfig={siteConfig} /></div>} />
-          <Route path="/vision" element={<div className="animate-fade-in"><VisionMission /></div>} />
+          <Route path="/vision" element={<div className="animate-fade-in"><VisionMission siteConfig={siteConfig} /></div>} />
           <Route path="/founder" element={<div className="animate-fade-in"><FounderMessage siteConfig={siteConfig} /></div>} />
-          <Route path="/events" element={<div className="animate-fade-in"><EventsActivities /></div>} />
-          <Route path="/gallery" element={<div className="animate-fade-in"><GalleryPage /></div>} />
-          <Route path="/news" element={<div className="animate-fade-in"><MediaCoverage onSubmitSuccess={handleFormSuccess} /></div>} />
-          <Route path="/contact" element={<div className="animate-fade-in"><GeneralEnquiries onSubmitSuccess={handleFormSuccess} /></div>} />
+          <Route path="/events" element={<div className="animate-fade-in"><EventsActivities siteConfig={siteConfig} /></div>} />
+          <Route path="/gallery" element={<div className="animate-fade-in"><GalleryPage siteConfig={siteConfig} /></div>} />
+          <Route path="/news" element={<div className="animate-fade-in"><MediaCoverage onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
+          <Route path="/contact" element={<div className="animate-fade-in"><GeneralEnquiries onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
           
           {/* Subdomain Pages */}
           <Route path="/register" element={<div className="animate-fade-in"><EventRegistration onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
-          <Route path="/sponsor" element={<div className="animate-fade-in"><Sponsorship onSubmitSuccess={handleFormSuccess} /></div>} />
-          <Route path="/volunteer" element={<div className="animate-fade-in"><Volunteer onSubmitSuccess={handleFormSuccess} /></div>} />
-          <Route path="/donate" element={<div className="animate-fade-in"><DonorSupport onSubmitSuccess={handleFormSuccess} /></div>} />
-          <Route path="/csr" element={<div className="animate-fade-in"><CorporateCSR onSubmitSuccess={handleFormSuccess} /></div>} />
-          <Route path="/nomination" element={<div className="animate-fade-in"><AwardNominations onSubmitSuccess={handleFormSuccess} /></div>} />
-          <Route path="/media" element={<div className="animate-fade-in"><MediaCoverage onSubmitSuccess={handleFormSuccess} /></div>} />
-          <Route path="/highlights" element={<div className="animate-fade-in"><EventsActivities /></div>} />
-          <Route path="/enquiry" element={<div className="animate-fade-in"><GeneralEnquiries onSubmitSuccess={handleFormSuccess} /></div>} />
+          <Route path="/sponsor" element={<div className="animate-fade-in"><Sponsorship onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
+          <Route path="/volunteer" element={<div className="animate-fade-in"><Volunteer onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
+          <Route path="/donate" element={<div className="animate-fade-in"><DonorSupport onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
+          <Route path="/csr" element={<div className="animate-fade-in"><CorporateCSR onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
+          <Route path="/nomination" element={<div className="animate-fade-in"><AwardNominations onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
+          <Route path="/media" element={<div className="animate-fade-in"><MediaCoverage onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
+          <Route path="/highlights" element={<div className="animate-fade-in"><EventsActivities siteConfig={siteConfig} /></div>} />
+          <Route path="/enquiry" element={<div className="animate-fade-in"><GeneralEnquiries onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
           <Route path="/thankyou" element={<div className="animate-fade-in"><ThankYouPage /></div>} />
 
           <Route path="*" element={getHomeElement()} />

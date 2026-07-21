@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { HeartHandshake, ShieldCheck, Mail, Phone, User, Landmark, Sparkles, Gift } from 'lucide-react';
-import { submitForm } from '../utils/api';
+import { HeartHandshake, ShieldCheck, Mail, Phone, User, Landmark, Sparkles, Gift, CreditCard, Lock, Loader2 } from 'lucide-react';
+import { submitForm, createRazorpayOrder, verifyRazorpayPayment } from '../utils/api';
+import { openRazorpayCheckout } from '../utils/razorpay';
 
-export default function DonorSupport({ onSubmitSuccess }) {
+export default function DonorSupport({ onSubmitSuccess, siteConfig }) {
   const [amountType, setAmountType] = useState('preset');
   const [selectedPreset, setSelectedPreset] = useState('1008');
   const [customAmount, setCustomAmount] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,36 +17,47 @@ export default function DonorSupport({ onSubmitSuccess }) {
     anonymous: false
   });
 
-  const presets = [
-    {
-      id: '501',
-      amount: '501',
-      label: '₹501',
-      impact: 'Meal Seva',
-      desc: 'Sponsor pure Sattvic meals and sacred prasad for a student delegate during the entire event.'
-    },
-    {
-      id: '1008',
-      amount: '1008',
-      label: '₹1,008',
-      impact: 'Sevak Support',
-      desc: 'Sponsor event souvenir kit, green handbook, and transport support for a dedicated volunteer.'
-    },
-    {
-      id: '5001',
-      amount: '5001',
-      label: '₹5,001',
-      impact: 'Kala Seva',
-      desc: 'Sponsor travel and honorarium for a traditional musician/folk artist performing at the cultural gala.'
-    },
-    {
-      id: '10008',
-      amount: '10008',
-      label: '₹10,008',
-      impact: 'Nominee Seva',
-      desc: 'Sponsor a grassroots social worker nominee’s round-trip travel, stay, and reception costs.'
-    }
-  ];
+  const presets = siteConfig?.donorConfig?.presets && siteConfig.donorConfig.presets.length > 0
+    ? siteConfig.donorConfig.presets
+    : [
+        {
+          id: '501',
+          amount: '501',
+          label: '₹501',
+          impact: 'Meal Seva',
+          desc: 'Sponsor pure Sattvic meals and sacred prasad for a student delegate during the entire event.'
+        },
+        {
+          id: '1008',
+          amount: '1008',
+          label: '₹1,008',
+          impact: 'Sevak Support',
+          desc: 'Sponsor event souvenir kit, green handbook, and transport support for a dedicated volunteer.'
+        },
+        {
+          id: '5001',
+          amount: '5001',
+          label: '₹5,001',
+          impact: 'Kala Seva',
+          desc: 'Sponsor travel and honorarium for a traditional musician/folk artist performing at the cultural gala.'
+        },
+        {
+          id: '10008',
+          amount: '10008',
+          label: '₹10,008',
+          impact: 'Nominee Seva',
+          desc: 'Sponsor a grassroots social worker nominee’s round-trip travel, stay, and reception costs.'
+        }
+      ];
+
+  const bankDetails = siteConfig?.donorConfig?.bankDetails || {
+    bankName: 'HDFC Bank',
+    accountName: 'Dhara Foundations',
+    accountNumber: '50200012345678',
+    ifsc: 'HDFC0001234',
+    branch: 'Chennai Main Branch',
+    upiId: 'dharafoundations@hdfcbank'
+  };
 
   const handleTextChange = (e) => {
     const { name, value } = e.target;
@@ -57,44 +71,109 @@ export default function DonorSupport({ onSubmitSuccess }) {
   const getFinalAmount = () => {
     if (amountType === 'preset') {
       const presetObj = presets.find(p => p.amount === selectedPreset);
-      return presetObj ? presetObj.amount : '0';
+      return presetObj ? presetObj.amount : (presets[0]?.amount || '501');
     }
     return customAmount || '0';
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const donationValue = parseFloat(getFinalAmount());
     if (donationValue <= 0) {
       alert('Please select or input a valid donation amount.');
       return;
     }
-    if (!formData.name || !formData.email || !formData.phone) {
+    if (!formData.anonymous && (!formData.name || !formData.email || !formData.phone)) {
       alert('Please fill in all required fields.');
       return;
     }
 
-    const submission = {
-      module: 'Donor Support',
-      amount: donationValue,
-      isAnonymous: formData.anonymous,
-      ...formData,
-      timestamp: new Date().toISOString()
-    };
+    setIsProcessing(true);
 
-    submitForm('Donor Support', submission);
+    try {
+      // Step 1: Create Razorpay Order
+      const orderRes = await createRazorpayOrder({
+        amount: donationValue,
+        currency: 'INR',
+        receipt: `rcpt_don_${Date.now()}`,
+        notes: {
+          donor_name: formData.name || 'Anonymous',
+          email: formData.email,
+          pan: formData.pan
+        }
+      });
 
-    const displayName = formData.anonymous ? 'Anonymous Donor' : formData.name;
+      if (!orderRes.success && !orderRes.order_id) {
+        throw new Error(orderRes.error || 'Failed to initialize payment gateway order');
+      }
 
-    onSubmitSuccess({
-      title: 'Contribution Successful (Mock)',
-      message: `Namaste, ${displayName}. Thank you for your generous offering of ₹${donationValue.toLocaleString('en-IN')}. Your contribution will directly support "${amountType === 'preset' ? presets.find(p => p.amount === selectedPreset).impact : 'Divine Awards Seva initiatives'}". May the blessings of service follow you always. An 80G tax receipt will be sent to ${formData.email} ${formData.pan ? `for PAN ${formData.pan.toUpperCase()}` : ''}.`,
-      details: [
-        { label: 'Donor', value: displayName },
-        { label: 'Contribution Amount', value: `₹${donationValue.toLocaleString('en-IN')}` },
-        { label: 'Tax Benefit Status', value: formData.pan ? '80G Eligible' : 'Standard Contribution' }
-      ]
-    });
+      // Step 2: Open Razorpay Checkout Modal
+      const displayName = formData.anonymous ? 'Anonymous Donor' : formData.name;
+
+      openRazorpayCheckout({
+        key_id: orderRes.key_id,
+        order_id: orderRes.order_id,
+        amount: orderRes.amount,
+        currency: orderRes.currency,
+        name: 'Dhara Foundations',
+        description: `Seva Contribution — ₹${donationValue.toLocaleString('en-IN')}`,
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone
+        },
+        onSuccess: async (razorpayResponse) => {
+          // Step 3: Verify Payment and Record in Database
+          const verification = await verifyRazorpayPayment({
+            razorpay_order_id: razorpayResponse.razorpay_order_id,
+            razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+            razorpay_signature: razorpayResponse.razorpay_signature,
+            module: 'Donor Support',
+            name: formData.name || 'Anonymous Donor',
+            email: formData.email,
+            phone: formData.phone,
+            amount: donationValue,
+            pan: formData.pan,
+            isAnonymous: formData.anonymous
+          });
+
+          // Backup submission
+          submitForm('Donor Support', {
+            module: 'Donor Support',
+            amount: donationValue,
+            isAnonymous: formData.anonymous,
+            payment_id: razorpayResponse.razorpay_payment_id,
+            order_id: razorpayResponse.razorpay_order_id,
+            ...formData,
+            timestamp: new Date().toISOString()
+          });
+
+          setIsProcessing(false);
+
+          const receiptId = verification?.details?.receiptNo || `REC-80G-${Date.now().toString().slice(-6)}`;
+
+          onSubmitSuccess({
+            title: 'Contribution Successful',
+            message: `Namaste, ${displayName}. Thank you for your generous offering of ₹${donationValue.toLocaleString('en-IN')}. Your contribution has been safely processed via Razorpay. Your 80G receipt number is ${receiptId}. May the blessings of service follow you always.`,
+            details: [
+              { label: 'Donor', value: displayName },
+              { label: 'Contribution Amount', value: `₹${donationValue.toLocaleString('en-IN')}` },
+              { label: 'Payment ID', value: razorpayResponse.razorpay_payment_id || orderRes.order_id },
+              { label: '80G Receipt No', value: receiptId },
+              { label: 'Tax Benefit Status', value: formData.pan ? '80G Eligible' : 'Standard Contribution' }
+            ]
+          });
+        },
+        onDismiss: () => {
+          setIsProcessing(false);
+        }
+      });
+
+    } catch (err) {
+      console.error('Payment initiation error:', err);
+      setIsProcessing(false);
+      alert(`Payment Gateway Error: ${err.message || 'Could not launch payment gateway. Please try again.'}`);
+    }
   };
 
   return (
@@ -268,9 +347,20 @@ export default function DonorSupport({ onSubmitSuccess }) {
               <div className="pt-4 border-t border-neutral-100">
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[var(--color-saffron-glow)] to-[var(--color-saffron-glow-dark)] text-[#281006] hover:brightness-105 font-sans font-bold text-base transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 border-2 border-transparent hover:border-[#281006] cursor-pointer group shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                  disabled={isProcessing}
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[var(--color-saffron-glow)] to-[var(--color-saffron-glow-dark)] text-[#281006] hover:brightness-105 font-sans font-bold text-base transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 border-2 border-transparent hover:border-[#281006] cursor-pointer group shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>Sponsor Seva: ₹{parseFloat(getFinalAmount()).toLocaleString('en-IN')}</span>
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin text-[#281006]" />
+                      <span>Initiating Razorpay Gateway...</span>
+                    </>
+                  ) : (
+                    <>
+                      <CreditCard className="w-5 h-5 text-[#281006]" />
+                      <span>Pay via Razorpay: ₹{parseFloat(getFinalAmount()).toLocaleString('en-IN')}</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
