@@ -13,12 +13,13 @@
       "pass_tier": "Premium Delegate",
       "ticket_count": 1,
       "pass_code": "DDA-2026-7471",
-      "checked_in": false,
+      "checked_in": true,
       "payment_status": "PAID",
       "payment_id": "pay_TG1qZqQQtmBJ9l",
       "order_id": "order_TG1q7HCYkdT97N",
       "amount": 3000,
-      "created_at": "2026-07-21T04:58:02.968Z"
+      "created_at": "2026-07-21T04:58:02.968Z",
+      "checkin_time": "2026-07-21T09:00:33.880Z"
     },
     {
       "id": "del-1784373962090",
@@ -52,14 +53,28 @@
       "pass_tier": "premium delegate",
       "ticket_count": 1,
       "pass_code": "DDA-2026-8138",
-      "checked_in": false,
-      "checkin_time": null,
+      "checked_in": true,
+      "checkin_time": "2026-07-21T09:00:37.528Z",
       "seat_zone": "Zone B - Seva Row 10"
     }
   ],
   "volunteers": [],
   "enquiries": [],
   "activityLogs": [
+    {
+      "id": "log-1784624437528",
+      "timestamp": "Just now",
+      "type": "checkin",
+      "message": "Gate check-in success for pass DDA-2026-8138 (Soundher S)",
+      "user": "S. Vinoth Ragavendran"
+    },
+    {
+      "id": "log-1784624433881",
+      "timestamp": "Just now",
+      "type": "checkin",
+      "message": "Gate check-in success for pass DDA-2026-7471 (Soundher S)",
+      "user": "S. Vinoth Ragavendran"
+    },
     {
       "id": "log-1784609884378",
       "timestamp": "Just now",

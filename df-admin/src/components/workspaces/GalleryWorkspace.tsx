@@ -39,9 +39,9 @@ export const GalleryWorkspace: React.FC = () => {
       return src;
     }
     if (src.startsWith('/images/')) {
-      return `http://localhost:5173${src}`;
+      return src;
     }
-    return `http://localhost:5173/images/Devine Awards images/${src}`;
+    return `/images/Devine Awards images/${src}`;
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,5 +1,20 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "https://dhara-divineawardsadmin.vercel.app/api/:path*"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "https://dhara-divineawardsadmin.vercel.app/admin/:path*"
+    },
+    {
+      "source": "/admin",
+      "destination": "https://dhara-divineawardsadmin.vercel.app/admin"
+    },
+    {
+      "source": "/((?!api|admin|assets|.*\\..*).*)",
+      "destination": "/index.html"
+    }
   ]
 }
