@@ -1,9 +1,9 @@
-Write-Host "=========================================" -ForegroundColor Gold
-Write-Host " Updating Dhara Foundations GitHub Repos" -ForegroundColor Gold
-Write-Host " Repositories:" -ForegroundColor Gold
-Write-Host " 1. https://github.com/sounderrajan-07/dhara-divine-awards.git" -ForegroundColor Gold
-Write-Host " 2. https://github.com/projectsatriowings/dharadivineawards.git" -ForegroundColor Gold
-Write-Host "=========================================" -ForegroundColor Gold
+Write-Host "=========================================" -ForegroundColor Yellow
+Write-Host " Updating Dhara Foundations GitHub Repos" -ForegroundColor Yellow
+Write-Host " Repositories:" -ForegroundColor Yellow
+Write-Host " 1. https://github.com/sounderrajan-07/dhara-divine-awards.git" -ForegroundColor Yellow
+Write-Host " 2. https://github.com/projectsatriowings/dharadivineawards.git" -ForegroundColor Yellow
+Write-Host "=========================================" -ForegroundColor Yellow
 
 # 1. Staging and Committing Changes
 Write-Host "`nStaging files..." -ForegroundColor Cyan
