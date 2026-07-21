@@ -3,6 +3,25 @@
   "donations": [],
   "delegates": [
     {
+      "id": "del-1784627610527",
+      "delegate_name": "Soundher S",
+      "email": "soundhersenthil07@gmail.com",
+      "phone": "7397523792",
+      "organization": "AMS",
+      "interest": "Education",
+      "specialNotes": "nothing",
+      "pass_tier": "Patron Pass",
+      "ticket_count": 1,
+      "pass_code": "DDA-2026-8316",
+      "checked_in": true,
+      "payment_status": "PAID",
+      "payment_id": "pay_TG6snLUP06QpjW",
+      "order_id": "order_TG6sWiUJ6HhXiO",
+      "amount": 5000,
+      "created_at": "2026-07-21T09:53:30.527Z",
+      "checkin_time": "2026-07-21T09:56:11.809Z"
+    },
+    {
       "id": "del-1784609882969",
       "delegate_name": "Soundher S",
       "email": "soundhersenthil07@gmail.com",
@@ -56,11 +75,51 @@
       "checked_in": true,
       "checkin_time": "2026-07-21T09:00:37.528Z",
       "seat_zone": "Zone B - Seva Row 10"
+    },
+    {
+      "id": "del-1784627616185",
+      "delegate_name": "Soundher S",
+      "email": "soundhersenthil07@gmail.com",
+      "phone": "7397523792",
+      "pass_tier": "patron",
+      "ticket_count": 1,
+      "pass_code": "DDA-2026-7948",
+      "checked_in": true,
+      "checkin_time": "2026-07-21T09:57:13.717Z",
+      "seat_zone": "Zone B - Seva Row 10"
     }
   ],
   "volunteers": [],
   "enquiries": [],
   "activityLogs": [
+    {
+      "id": "log-1784627833726",
+      "timestamp": "Just now",
+      "type": "checkin",
+      "message": "Gate check-in success for pass DDA-2026-7948 (Soundher S)",
+      "user": "S. Vinoth Ragavendran"
+    },
+    {
+      "id": "log-1784627771810",
+      "timestamp": "Just now",
+      "type": "checkin",
+      "message": "Gate check-in success for pass DDA-2026-8316 (Soundher S)",
+      "user": "S. Vinoth Ragavendran"
+    },
+    {
+      "id": "log-1784627616186",
+      "timestamp": "Just now",
+      "type": "checkin",
+      "message": "New Delegate pass registered for \"Soundher S\" (Pass: DDA-2026-7948)",
+      "user": "System Callback"
+    },
+    {
+      "id": "log-1784627610527",
+      "timestamp": "Just now",
+      "type": "checkin",
+      "message": "New Delegate pass booked with Razorpay for \"Soundher S\" (Pass: DDA-2026-8316)",
+      "user": "Razorpay Payment Gateway"
+    },
     {
       "id": "log-1784624437528",
       "timestamp": "Just now",
