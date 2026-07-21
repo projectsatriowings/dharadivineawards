@@ -254,7 +254,7 @@ export default function App() {
 
   useEffect(() => {
     if (location.pathname === '/admin' || location.pathname.startsWith('/admin/') || location.pathname === '/login') {
-      window.location.href = API_BASE;
+      window.location.href = 'https://dhara-admin-bice.vercel.app';
     }
   }, [location.pathname]);
 
