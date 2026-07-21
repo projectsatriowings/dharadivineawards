@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "jsx": "react-jsx",
     "strict": false,
     "noImplicitAny": false,
@@ -10,7 +10,8 @@
     "allowJs": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noEmit": true
   },
   "include": ["src/**/*", "api/**/*"]
 }

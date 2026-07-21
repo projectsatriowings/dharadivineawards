@@ -1,4 +1,4 @@
-import { readDb, writeDb } from './db.js';
+import { readDb, writeDb } from './_db.js';
 
 export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Origin', '*');
