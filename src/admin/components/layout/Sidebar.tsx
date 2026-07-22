@@ -6,13 +6,13 @@ import {
   IndianRupee, 
   QrCode, 
   Users, 
-  MessageSquare, 
   ChevronRight,
   Image as ImageIcon,
   Calendar,
   X,
   Settings,
-  Ticket
+  Ticket,
+  Youtube
 } from 'lucide-react';
 
 interface NavItem {
@@ -23,10 +23,9 @@ interface NavItem {
 }
 
 export const Sidebar: React.FC = () => {
-  const { currentTab, setCurrentTab, nominations, enquiries, sidebarOpen, setSidebarOpen } = useApp();
+  const { currentTab, setCurrentTab, nominations, sidebarOpen, setSidebarOpen } = useApp();
 
   const pendingNominations = nominations.filter(n => n.vetting_status === 'pending').length;
-  const newEnquiries = enquiries.filter(e => e.status === 'new').length;
 
   const navItems: NavItem[] = [
     { id: 'overview', label: 'Overview', icon: <LayoutDashboard size={20} /> },
@@ -40,10 +39,9 @@ export const Sidebar: React.FC = () => {
     { id: 'delegates', label: 'Event Registration', icon: <QrCode size={20} /> },
     { id: 'volunteers', label: 'Volunteer Seva', icon: <Users size={20} /> },
     { 
-      id: 'enquiries', 
-      label: 'Contact Enquiries', 
-      icon: <MessageSquare size={20} />,
-      badge: newEnquiries > 0 ? newEnquiries : undefined 
+      id: 'youtube-highlights', 
+      label: 'YouTube Highlights', 
+      icon: <Youtube size={20} />
     },
     { id: 'gallery', label: 'Gallery', icon: <ImageIcon size={20} /> },
     { id: 'events', label: 'Events & News', icon: <Calendar size={20} /> },

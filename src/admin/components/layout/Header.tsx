@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
       case 'donations': return { title: 'Donations & Sponsors Ledger', desc: 'Track financial offerings, CSR pledges, and generate Tax 80G Seva Patr receipts' };
       case 'delegates': return { title: 'Event Registration & Gate Control', desc: 'Verify ticket passes, scan barcodes, and monitor hall check-in capacity' };
       case 'volunteers': return { title: 'Volunteer Seva Roster', desc: 'Coordinate skill matrices, shifts, and venue logistics assignments' };
-      case 'enquiries': return { title: 'Contact Enquiries & Media Desk', desc: 'Respond to press pass requests, sponsor inquiries, and devotee questions' };
+      case 'youtube-highlights': return { title: 'YouTube Video Highlights', desc: 'Manage event video highlights, speeches, and devotional recordings on the home page' };
       case 'gallery': return { title: 'Gallery Management Panel', desc: 'Add new photographs, manage categories, and update promotional gallery' };
       case 'events': return { title: 'Events & News Organizer', desc: 'Manage event highlights, add new YouTube coverage videos, and log spiritual/community seva' };
       case 'event-config': return { title: 'Passes & Tickets Pricing', desc: 'Configure delegate pass pricing, corporate sponsorship tiers, and ticketing limits' };

@@ -7,7 +7,7 @@ import {
   mockStaff
 } from '../data/mockData';
 
-export type TabType = 'overview' | 'nominations' | 'donations' | 'delegates' | 'volunteers' | 'enquiries' | 'gallery' | 'events' | 'event-config' | 'settings';
+export type TabType = 'overview' | 'nominations' | 'donations' | 'delegates' | 'volunteers' | 'youtube-highlights' | 'gallery' | 'events' | 'event-config' | 'settings';
 
 interface AppContextType {
   currentTab: TabType;
