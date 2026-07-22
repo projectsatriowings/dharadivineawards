@@ -19,7 +19,7 @@ const highlightImages = [
   ...Array.from({ length: 15 }, (_, i) => `/images/Highlights1/E Dhara Divine Awards - Highlight  (${i + 43}).png`)
 ];
 
-const defaultGalleryImages = [
+export const defaultGalleryImages = [
   ...highlightImages.map(src => ({
     "src": src,
     "category": "Highlights",

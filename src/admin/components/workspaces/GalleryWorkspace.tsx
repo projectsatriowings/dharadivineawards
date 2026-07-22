@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Image as ImageIcon, Search, Plus, Trash2, X, Filter, Upload } from 'lucide-react';
+import { defaultGalleryImages } from '../../../components/GalleryPage';
 
 export const GalleryWorkspace: React.FC = () => {
   const { gallery, addGalleryImage, updateGalleryImage, deleteGalleryImage, globalSearchQuery } = useApp();
@@ -33,12 +34,22 @@ export const GalleryWorkspace: React.FC = () => {
     return cat;
   };
 
+  // Merge default hardcoded images with database-uploaded images, avoiding duplicates
+  const cleanedDefaults = defaultGalleryImages.map((img, idx) => ({
+    id: `default-img-${idx}`,
+    ...img,
+    category: cleanCategory(img.category)
+  }));
+  const dbSrcs = new Set(gallery.map(img => img.src));
+  const filteredDefaults = cleanedDefaults.filter(img => !dbSrcs.has(img.src));
+  const combinedGallery = [...filteredDefaults, ...gallery];
+
   const uniqueCategories = standardCategories;
   
   const categories = ['All', ...uniqueCategories];
   const modalCategories = uniqueCategories;
 
-  const filteredGallery = gallery.filter(img => {
+  const filteredGallery = combinedGallery.filter(img => {
     const imgCat = cleanCategory(img.category);
     const matchesCategory = selectedCategory === 'All' || imgCat === selectedCategory;
     const searchStr = (globalSearchQuery || '').toLowerCase();
@@ -133,6 +144,10 @@ export const GalleryWorkspace: React.FC = () => {
   };
 
   const handleDelete = async (id: string, captionStr: string) => {
+    if (id.startsWith('default-img-')) {
+      alert('This is a default pre-seeded image and cannot be deleted from the database. It can only be modified.');
+      return;
+    }
     if (window.confirm(`Are you sure you want to delete the image: "${captionStr}"?`)) {
       await deleteGalleryImage(id);
     }
