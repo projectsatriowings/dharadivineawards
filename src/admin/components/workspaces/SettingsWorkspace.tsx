@@ -1062,15 +1062,15 @@ export const SettingsWorkspace: React.FC = () => {
                       type="text"
                       value={preset.label}
                       onChange={(e) => handleDonorPresetChange(index, 'label', e.target.value)}
-                      placeholder="Label (e.g. ₹501)"
-                      className="bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-bold text-[#401C0C] dark:text-[#FFD27F]"
+                      placeholder="Label (e.g. ₹510)"
+                      className="flex-1 min-w-0 bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-bold text-[#401C0C] dark:text-[#FFD27F]"
                     />
                     <input
                       type="text"
                       value={preset.amount}
                       onChange={(e) => handleDonorPresetChange(index, 'amount', e.target.value)}
-                      placeholder="Numeric Amount (501)"
-                      className="bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-bold"
+                      placeholder="Numeric Amount (510)"
+                      className="flex-1 min-w-0 bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-bold"
                     />
                     <button onClick={() => removeDonorPreset(index)} className="p-1.5 text-red-400 hover:text-red-500 rounded-lg">
                       <Trash2 size={16} />
