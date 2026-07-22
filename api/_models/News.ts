@@ -9,6 +9,7 @@ export interface INews extends Document {
   image: string;
   link?: string;
   summary: string;
+  rotate?: number;
 }
 
 const NewsSchema: Schema = new Schema({
@@ -19,7 +20,8 @@ const NewsSchema: Schema = new Schema({
   mediaUrl: { type: String, default: '' },
   image: { type: String, required: true },
   link: { type: String, default: '' },
-  summary: { type: String, default: '' }
+  summary: { type: String, default: '' },
+  rotate: { type: Number, default: 0 }
 });
 
 export default mongoose.models.News || mongoose.model<INews>('News', NewsSchema);
