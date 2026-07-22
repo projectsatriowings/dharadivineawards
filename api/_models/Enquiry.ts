@@ -26,4 +26,4 @@ const EnquirySchema: Schema = new Schema({
   organization: { type: String }
 });
 
-export default (mongoose.models as any).Enquiry || mongoose.model<IEnquiry>('Enquiry', EnquirySchema);
+export default mongoose.models.Enquiry || mongoose.model<IEnquiry>('Enquiry', EnquirySchema);
