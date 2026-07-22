@@ -16,7 +16,7 @@ export function loadRazorpayScript() {
   });
 }
 
-function showDemoPaymentGateway({ amount, currency, name, description, prefill, onSuccess, onDismiss }) {
+function showDemoPaymentGateway({ order_id, amount, currency, name, description, prefill, onSuccess, onDismiss }) {
   const modalDiv = document.createElement('div');
   modalDiv.id = 'demo-payment-modal';
   modalDiv.style.cssText = `
@@ -130,7 +130,7 @@ export async function openRazorpayCheckout({
 }) {
   // If the Key ID is mock/fallback, use the custom simulation overlay
   if (!key_id || key_id === 'rzp_test_dhara_demo' || key_id.trim() === '') {
-    showDemoPaymentGateway({ amount, currency, name, description, prefill, onSuccess, onDismiss });
+    showDemoPaymentGateway({ order_id, amount, currency, name, description, prefill, onSuccess, onDismiss });
     return;
   }
 
