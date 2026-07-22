@@ -88,17 +88,22 @@ export async function readDb(): Promise<DatabaseSchema> {
         return fileData;
       }
 
-      // Self-healing: Sync news articles from db.json to MongoDB if any are missing
+      // Self-healing: Sync news articles from db.json to MongoDB if any are missing or updated
       let finalNews = news;
       const fileData = await readLocalDbFile();
-      if (fileData.news && news.length < fileData.news.length) {
-        console.log("Syncing missing news articles from db.json to MongoDB...");
-        const existingIds = new Set(news.map((n: any) => n.id));
-        const missingNews = fileData.news.filter((n: any) => !existingIds.has(n.id));
-        if (missingNews.length > 0) {
-          await News.insertMany(missingNews, { ordered: false }).catch(() => {});
-          finalNews = await (News as any).find({}).lean();
-        }
+      const needsSync = fileData.news && (
+        news.length < fileData.news.length ||
+        fileData.news.some((fn: any) => {
+          const dbItem = news.find((n: any) => n.id === fn.id);
+          return !dbItem || dbItem.rotate !== fn.rotate;
+        })
+      );
+      if (needsSync) {
+        console.log("Syncing news articles from db.json to MongoDB...");
+        await Promise.all(
+          fileData.news.map((item: any) => (News as any).findOneAndUpdate({ id: item.id }, item, { upsert: true }))
+        );
+        finalNews = await (News as any).find({}).lean();
       }
 
       return {

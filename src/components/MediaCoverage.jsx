@@ -203,7 +203,8 @@ export default function MediaCoverage({ onSubmitSuccess }) {
                         <video
                           src={art.mediaUrl}
                           preload="metadata"
-                          className="w-full h-full max-h-[360px] object-contain transition-transform duration-500 group-hover/img:scale-105"
+                          className="w-full h-full max-h-[360px] object-contain transition-transform duration-500"
+                          style={art.rotate ? { transform: `rotate(${art.rotate}deg) scale(0.5625)` } : {}}
                           muted
                           playsInline
                         />
@@ -493,6 +494,7 @@ export default function MediaCoverage({ onSubmitSuccess }) {
                 autoPlay
                 src={selectedVideo.mediaUrl} 
                 className="w-full h-full object-contain rounded-lg shadow-2xl"
+                style={selectedVideo.rotate ? { transform: `rotate(${selectedVideo.rotate}deg) scale(0.5625)` } : {}}
               />
             </div>
             {selectedVideo.summary && (
