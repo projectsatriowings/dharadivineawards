@@ -3,12 +3,12 @@ import { useApp } from '../../context/AppContext';
 import { 
   Settings, Save, Video, BarChart2, ShieldCheck, Plus, Trash2, 
   Image as ImageIcon, Users, ArrowUpDown, Home, Info, Building2, 
-  CheckCircle2, Newspaper, Edit3, ExternalLink, X, Upload, Calendar, Trophy, HelpCircle, Award
+  CheckCircle2, Newspaper, Edit3, ExternalLink, X, Upload, Calendar, Trophy, HelpCircle, Award, Briefcase
 } from 'lucide-react';
 
 export const SettingsWorkspace: React.FC = () => {
   const { siteConfig, updateSiteConfig, news, addNews, updateNews, deleteNews, globalSearchQuery } = useApp();
-  const [activeSubTab, setActiveSubTab] = useState<'home' | 'about' | 'subdomains' | 'news' | 'trustees' | 'registrations' | 'sponsors'>('home');
+  const [activeSubTab, setActiveSubTab] = useState<'home' | 'about' | 'subdomains' | 'news' | 'trustees' | 'registrations' | 'sponsors' | 'csr'>('home');
   
   // Home Section
   const [heroVideoUrl, setHeroVideoUrl] = useState('');
@@ -272,6 +272,133 @@ export const SettingsWorkspace: React.FC = () => {
     setSponsorshipPackages(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
   };
 
+  // CSR Settings States
+  const [csrWhyPartner, setCsrWhyPartner] = useState<any[]>([
+    { title: "Trusted Implementation Partner", desc: "Proven track record of executing grassroot social welfare drives with end-to-end management." },
+    { title: "Transparent Fund Utilization", desc: "Rigorous accounting audits, clear visual dashboards, and quarterly progress disclosures." },
+    { title: "Compliance with CSR Regulations", desc: "100% compliant with Section 135 rules, holding CSR-1, 12A, and 80G registrations." },
+    { title: "Experienced Project Management", desc: "Professional implementation team executing, monitoring, and scaling project milestones." },
+    { title: "Measurable Social Impact", desc: "Data-driven results and impact certificates showing clear improvement in community welfare." },
+    { title: "Regular Progress Reports", desc: "Timely delivery of compliance utilization certificates, field audit sheets, and media packages." }
+  ]);
+
+  const [csrProcess, setCsrProcess] = useState<string[]>([
+    "Consultation",
+    "Requirement Analysis",
+    "Project Planning",
+    "Implementation",
+    "Monitoring & Evaluation",
+    "Impact Reporting"
+  ]);
+
+  const [csrPartnershipModels, setCsrPartnershipModels] = useState<any[]>([
+    { title: "Project-Based Partnership", desc: "Fund a specific social initiative or infrastructure development project matching your geographical goals." },
+    { title: "Long-Term Strategic Partnership", desc: "Form multi-year CSR collaborations to adopt schools, care facilities, or villages for continuous upliftment." },
+    { title: "Employee Engagement Programs", desc: "Coordinate hands-on volunteer activities, tree plantation campaigns, and community service days for staff." },
+    { title: "Sponsorship Partnership", desc: "Directly sponsor existing educational kits, clean energy packs, and emergency healthcare drives." }
+  ]);
+
+  const [csrComplianceDocs, setCsrComplianceDocs] = useState<string[]>([
+    "CSR-1 Registration Number",
+    "12A Certificate",
+    "80G Certificate",
+    "PAN Card",
+    "Annual Reports",
+    "Audited Financial Statements"
+  ]);
+
+  const [csrComplianceDownloads, setCsrComplianceDownloads] = useState<any[]>([
+    { name: "CSR Brochure (PDF)", size: "4.2 MB" },
+    { name: "Annual Report 2024-25", size: "6.8 MB" },
+    { name: "Financial Audit Statements", size: "3.1 MB" },
+    { name: "Impact Statistics summary", size: "1.9 MB" }
+  ]);
+
+  const [csrCaseStudies, setCsrCaseStudies] = useState<any[]>([
+    {
+      title: "Vidya: Digital Classrooms in Javadhu Hills",
+      problem: "Over 85% of tribal students in Javadhu hills lacked access to basic computer literacy and internet connectivity, leading to high school dropout rates.",
+      solution: "Established 5 fully-equipped digital learning centers with solar power backups, hardware systems, and local coordinators.",
+      results: "94% drop in school dropouts, and over 1,200 tribal children trained in basic computer skills.",
+      beneficiaries: "1,200+ Students",
+      quote: "This center has opened a new world for our children. They now look forward to school every single day.",
+      author: "M. Raman, Village Head"
+    },
+    {
+      title: "Prakriti: Water Conservation in Salem District",
+      problem: "Severe seasonal water scarcity in agricultural villages caused crop failures and community migration during dry summer months.",
+      solution: "Constructed 3 check dams and desilted 5 community temple tanks to recharge the local groundwater table.",
+      results: "40% increase in seasonal crop yield and reliable groundwater access for 4 adjacent villages.",
+      beneficiaries: "3,500+ Villagers",
+      quote: "We did not have water to drink in May. Now our wells are full, and we are harvesting double crops.",
+      author: "K. Sidhan, Farmer Union Lead"
+    }
+  ]);
+
+  const [csrCorporatePartners, setCsrCorporatePartners] = useState<any[]>([
+    { name: "ABC Company", duration: "Partner since 2024", collab: "Vidya School digitisation" },
+    { name: "XYZ Corporation", duration: "Partner since 2025", collab: "Prakriti Tree Planting" },
+    { name: "Dhara Tech Solutions", duration: "Partner since 2023", collab: "Rural Healthcare Drives" },
+    { name: "Southern Enterprises", duration: "Partner since 2025", collab: "Community Water Desilting" }
+  ]);
+
+  const [csrTestimonial, setCsrTestimonial] = useState({
+    quote: "Dhara Foundations has been an excellent CSR implementation partner, delivering measurable impact and maintaining complete transparency.",
+    author: "CSR Head, ABC Company"
+  });
+
+  const handleCsrWhyPartnerChange = (index: number, field: string, value: string) => {
+    setCsrWhyPartner(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+
+  const handleCsrProcessChange = (index: number, value: string) => {
+    setCsrProcess(prev => prev.map((step, i) => i === index ? value : step));
+  };
+  const addCsrProcessStep = () => {
+    setCsrProcess(prev => [...prev, '']);
+  };
+  const removeCsrProcessStep = (index: number) => {
+    setCsrProcess(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleCsrPartnershipModelChange = (index: number, field: string, value: string) => {
+    setCsrPartnershipModels(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+
+  const handleCsrComplianceDocChange = (index: number, value: string) => {
+    setCsrComplianceDocs(prev => prev.map((doc, i) => i === index ? value : doc));
+  };
+  const addCsrComplianceDoc = () => {
+    setCsrComplianceDocs(prev => [...prev, '']);
+  };
+  const removeCsrComplianceDoc = (index: number) => {
+    setCsrComplianceDocs(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleCsrComplianceDownloadChange = (index: number, field: string, value: string) => {
+    setCsrComplianceDownloads(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+  const addCsrComplianceDownload = () => {
+    setCsrComplianceDownloads(prev => [...prev, { name: '', size: '' }]);
+  };
+  const removeCsrComplianceDownload = (index: number) => {
+    setCsrComplianceDownloads(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleCsrCaseStudyChange = (index: number, field: string, value: string) => {
+    setCsrCaseStudies(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+
+  const handleCsrCorporatePartnerChange = (index: number, field: string, value: string) => {
+    setCsrCorporatePartners(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+  const addCsrCorporatePartner = () => {
+    setCsrCorporatePartners(prev => [...prev, { name: '', duration: '', collab: '' }]);
+  };
+  const removeCsrCorporatePartner = (index: number) => {
+    setCsrCorporatePartners(prev => prev.filter((_, i) => i !== index));
+  };
+
   // News Modal State inside Site Settings
   const [showNewsModal, setShowNewsModal] = useState<boolean>(false);
   const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
@@ -345,6 +472,20 @@ export const SettingsWorkspace: React.FC = () => {
         if (sc.testimonial) setTestimonial(sc.testimonial);
         if (sc.faqs && sc.faqs.length > 0) setSponsorshipFaqs(sc.faqs);
         if (sc.packages && sc.packages.length > 0) setSponsorshipPackages(sc.packages);
+      }
+
+      if (siteConfig.csrConfig) {
+        const cc = siteConfig.csrConfig;
+        if (cc.whyPartner && cc.whyPartner.length > 0) setCsrWhyPartner(cc.whyPartner);
+        if (cc.csrProcess && cc.csrProcess.length > 0) setCsrProcess(cc.csrProcess);
+        if (cc.partnershipModels && cc.partnershipModels.length > 0) setCsrPartnershipModels(cc.partnershipModels);
+        if (cc.complianceHub) {
+          if (cc.complianceHub.docs) setCsrComplianceDocs(cc.complianceHub.docs);
+          if (cc.complianceHub.downloads) setCsrComplianceDownloads(cc.complianceHub.downloads);
+        }
+        if (cc.caseStudies && cc.caseStudies.length > 0) setCsrCaseStudies(cc.caseStudies);
+        if (cc.corporatePartners && cc.corporatePartners.length > 0) setCsrCorporatePartners(cc.corporatePartners);
+        if (cc.testimonial) setCsrTestimonial(cc.testimonial);
       }
     }
   }, [siteConfig]);
@@ -524,6 +665,18 @@ export const SettingsWorkspace: React.FC = () => {
         testimonial,
         faqs: sponsorshipFaqs,
         packages: sponsorshipPackages
+      },
+      csrConfig: {
+        whyPartner: csrWhyPartner,
+        csrProcess: csrProcess,
+        partnershipModels: csrPartnershipModels,
+        complianceHub: {
+          docs: csrComplianceDocs,
+          downloads: csrComplianceDownloads
+        },
+        caseStudies: csrCaseStudies,
+        corporatePartners: csrCorporatePartners,
+        testimonial: csrTestimonial
       }
     });
     setSaving(false);
@@ -630,6 +783,17 @@ export const SettingsWorkspace: React.FC = () => {
             }`}
           >
             <Trophy size={16} /> Sponsorships Control
+          </button>
+
+          <button
+            onClick={() => setActiveSubTab('csr')}
+            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+              activeSubTab === 'csr'
+                ? 'bg-[#401C0C] text-white shadow-md'
+                : 'bg-[#F5F3EE] dark:bg-[#242622] text-[#534436] dark:text-[#D1D5DB] hover:bg-[#EAE8E3]'
+            }`}
+          >
+            <Briefcase size={16} /> CSR Partnerships
           </button>
         </div>
       </div>
@@ -1560,6 +1724,360 @@ export const SettingsWorkspace: React.FC = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB TAB 7: CSR CONFIGURATION */}
+      {activeSubTab === 'csr' && (
+        <div className="space-y-6">
+          {/* Why Partner With Us */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-4">
+            <h3 className="font-serif text-lg font-bold text-[#401C0C] dark:text-[#F3F4F6] flex items-center gap-2">
+              <Briefcase size={18} className="text-[#D9762E]" /> Why Partner With Us (6 Cards)
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {csrWhyPartner.map((card, index) => (
+                <div key={index} className="p-4 bg-[#F9F8F6] dark:bg-[#242622] border border-[#EAE8E3] dark:border-[#30312E] rounded-2xl space-y-3">
+                  <span className="text-[10px] font-bold font-mono text-[#D9762E]">Card #{index + 1}</span>
+                  <div>
+                    <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Title</label>
+                    <input
+                      type="text"
+                      value={card.title}
+                      onChange={(e) => handleCsrWhyPartnerChange(index, 'title', e.target.value)}
+                      className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-xs font-bold focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Description</label>
+                    <textarea
+                      value={card.desc}
+                      onChange={(e) => handleCsrWhyPartnerChange(index, 'desc', e.target.value)}
+                      rows={2}
+                      className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-xs resize-none focus:outline-none"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Our CSR Process Timeline */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="font-serif text-lg font-bold text-[#401C0C] dark:text-[#F3F4F6] flex items-center gap-2">
+                <ArrowUpDown size={18} className="text-[#D9762E]" /> Our CSR Process Steps
+              </h3>
+              <button
+                type="button"
+                onClick={addCsrProcessStep}
+                className="text-[#D9762E] hover:text-[#C9A646] p-1.5 bg-[#F5F3EE] dark:bg-[#242622] rounded-lg border border-[#EAE8E3] dark:border-[#30312E] flex items-center gap-1 text-xs font-semibold"
+              >
+                <Plus size={14} /> Add Step
+              </button>
+            </div>
+            <div className="space-y-3">
+              {csrProcess.map((step, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <span className="text-xs font-mono font-bold text-[#D9762E] w-12">Step 0{index + 1}</span>
+                  <input
+                    type="text"
+                    value={step}
+                    onChange={(e) => handleCsrProcessChange(index, e.target.value)}
+                    className="flex-1 bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeCsrProcessStep(index)}
+                    className="p-2 text-red-400 hover:text-red-500"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Partnership Models */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-4">
+            <h3 className="font-serif text-lg font-bold text-[#401C0C] dark:text-[#F3F4F6] flex items-center gap-2">
+              <Building2 size={18} className="text-[#D9762E]" /> Partnership Models (4 Pathways)
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {csrPartnershipModels.map((model, index) => (
+                <div key={index} className="p-4 bg-[#F9F8F6] dark:bg-[#242622] border border-[#EAE8E3] dark:border-[#30312E] rounded-2xl space-y-3">
+                  <span className="text-[10px] font-bold font-mono text-[#D9762E]">Model #{index + 1}</span>
+                  <div>
+                    <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Model Name</label>
+                    <input
+                      type="text"
+                      value={model.title}
+                      onChange={(e) => handleCsrPartnershipModelChange(index, 'title', e.target.value)}
+                      className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-xs font-bold focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Description</label>
+                    <textarea
+                      value={model.desc}
+                      onChange={(e) => handleCsrPartnershipModelChange(index, 'desc', e.target.value)}
+                      rows={2}
+                      className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-xs resize-none focus:outline-none"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Compliance & Documentation Hub */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-6">
+            <h3 className="font-serif text-lg font-bold text-[#401C0C] dark:text-[#F3F4F6] flex items-center gap-2">
+              <ShieldCheck size={18} className="text-[#D9762E]" /> Compliance & Documentation Hub
+            </h3>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Docs checklist */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="block text-[10px] uppercase font-bold text-[#867463]">Compliance Checklist</label>
+                  <button
+                    type="button"
+                    onClick={addCsrComplianceDoc}
+                    className="text-[#D9762E] hover:text-[#C9A646] p-1.5 bg-[#F5F3EE] dark:bg-[#242622] rounded-lg border border-[#EAE8E3] dark:border-[#30312E] flex items-center gap-1 text-[10px] font-semibold"
+                  >
+                    <Plus size={12} /> Add Item
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {csrComplianceDocs.map((doc, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={doc}
+                        onChange={(e) => handleCsrComplianceDocChange(index, e.target.value)}
+                        className="flex-1 bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-xs focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeCsrComplianceDoc(index)}
+                        className="p-1 text-red-400 hover:text-red-500"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Downloads list */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="block text-[10px] uppercase font-bold text-[#867463]">Download Files Section</label>
+                  <button
+                    type="button"
+                    onClick={addCsrComplianceDownload}
+                    className="text-[#D9762E] hover:text-[#C9A646] p-1.5 bg-[#F5F3EE] dark:bg-[#242622] rounded-lg border border-[#EAE8E3] dark:border-[#30312E] flex items-center gap-1 text-[10px] font-semibold"
+                  >
+                    <Plus size={12} /> Add File
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {csrComplianceDownloads.map((file, index) => (
+                    <div key={index} className="flex items-center gap-2 bg-[#F9F8F6] dark:bg-[#242622] p-2 border border-[#EAE8E3] dark:border-[#30312E] rounded-2xl">
+                      <div className="flex-1 grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={file.name}
+                          onChange={(e) => handleCsrComplianceDownloadChange(index, 'name', e.target.value)}
+                          placeholder="File Name"
+                          className="bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-[11px] focus:outline-none"
+                        />
+                        <input
+                          type="text"
+                          value={file.size}
+                          onChange={(e) => handleCsrComplianceDownloadChange(index, 'size', e.target.value)}
+                          placeholder="e.g. 4.2 MB"
+                          className="bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-[11px] focus:outline-none"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeCsrComplianceDownload(index)}
+                        className="p-1 text-red-400 hover:text-red-500"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Success Stories & Case Studies */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-4">
+            <h3 className="font-serif text-lg font-bold text-[#401C0C] dark:text-[#F3F4F6] flex items-center gap-2">
+              <Newspaper size={18} className="text-[#D9762E]" /> Success Stories & Case Studies (2 Cases)
+            </h3>
+            <div className="grid grid-cols-1 gap-6">
+              {csrCaseStudies.map((caseStudy, index) => (
+                <div key={index} className="p-5 border border-[#EAE8E3] dark:border-[#30312E] rounded-2xl space-y-3 bg-[#FDFDFD] dark:bg-[#1D1E1B]">
+                  <span className="text-[10px] font-bold font-mono text-[#D9762E]">Case Study #{index + 1}</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="md:col-span-2">
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Title</label>
+                      <input
+                        type="text"
+                        value={caseStudy.title}
+                        onChange={(e) => handleCsrCaseStudyChange(index, 'title', e.target.value)}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#D9762E] rounded-xl p-2.5 text-xs font-bold focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Problem Statement</label>
+                      <textarea
+                        value={caseStudy.problem}
+                        onChange={(e) => handleCsrCaseStudyChange(index, 'problem', e.target.value)}
+                        rows={3}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs resize-none focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Solution Implemented</label>
+                      <textarea
+                        value={caseStudy.solution}
+                        onChange={(e) => handleCsrCaseStudyChange(index, 'solution', e.target.value)}
+                        rows={3}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs resize-none focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Results Achieved</label>
+                      <textarea
+                        value={caseStudy.results}
+                        onChange={(e) => handleCsrCaseStudyChange(index, 'results', e.target.value)}
+                        rows={3}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs resize-none focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Testimonial Quote</label>
+                      <textarea
+                        value={caseStudy.quote}
+                        onChange={(e) => handleCsrCaseStudyChange(index, 'quote', e.target.value)}
+                        rows={3}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs resize-none focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Testimonial Author</label>
+                      <input
+                        type="text"
+                        value={caseStudy.author}
+                        onChange={(e) => handleCsrCaseStudyChange(index, 'author', e.target.value)}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-xs focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Beneficiary Impact Tag</label>
+                      <input
+                        type="text"
+                        value={caseStudy.beneficiaries}
+                        onChange={(e) => handleCsrCaseStudyChange(index, 'beneficiaries', e.target.value)}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2 text-xs focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Our Corporate Partners & Testimonial */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-6">
+            <div className="flex justify-between items-center">
+              <h3 className="font-serif text-lg font-bold text-[#401C0C] dark:text-[#F3F4F6] flex items-center gap-2">
+                <Users size={18} className="text-[#D9762E]" /> Our Corporate Partners Logos
+              </h3>
+              <button
+                type="button"
+                onClick={addCsrCorporatePartner}
+                className="text-[#D9762E] hover:text-[#C9A646] p-1.5 bg-[#F5F3EE] dark:bg-[#242622] rounded-lg border border-[#EAE8E3] dark:border-[#30312E] flex items-center gap-1 text-xs font-semibold"
+              >
+                <Plus size={14} /> Add Partner
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {csrCorporatePartners.map((partner, index) => (
+                <div key={index} className="p-4 bg-[#F9F8F6] dark:bg-[#242622] border border-[#EAE8E3] dark:border-[#30312E] rounded-2xl space-y-3 relative">
+                  <button
+                    type="button"
+                    onClick={() => removeCsrCorporatePartner(index)}
+                    className="absolute top-3 right-3 p-1 text-red-400 hover:text-red-500 rounded"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                  <span className="text-[10px] font-bold font-mono text-[#D9762E]">Partner #{index + 1}</span>
+                  <div className="grid grid-cols-1 gap-2">
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Company Name</label>
+                      <input
+                        type="text"
+                        value={partner.name}
+                        onChange={(e) => handleCsrCorporatePartnerChange(index, 'name', e.target.value)}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#404040] rounded px-2.5 py-1.5 text-xs font-bold focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Partnership Since</label>
+                      <input
+                        type="text"
+                        value={partner.duration}
+                        onChange={(e) => handleCsrCorporatePartnerChange(index, 'duration', e.target.value)}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#404040] rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-semibold text-[#867463] mb-1">Collaboration Details</label>
+                      <input
+                        type="text"
+                        value={partner.collab}
+                        onChange={(e) => handleCsrCorporatePartnerChange(index, 'collab', e.target.value)}
+                        className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#404040] rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Testimonial Quote */}
+            <div className="border-t border-[#EAE8E3] dark:border-[#30312E] pt-6 space-y-4">
+              <h4 className="font-serif text-md font-bold text-[#401C0C] dark:text-[#F3F4F6]">CSR Testimonial Quote</h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:col-span-3">
+                  <label className="block text-[10px] uppercase font-semibold text-[#867463] mb-1">Quote Text</label>
+                  <textarea
+                    value={csrTestimonial.quote}
+                    onChange={(e) => setCsrTestimonial(prev => ({ ...prev, quote: e.target.value }))}
+                    rows={3}
+                    className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-3 text-xs resize-none focus:outline-none focus:border-[#D9762E]"
+                  />
+                </div>
+                <div className="md:col-span-3">
+                  <label className="block text-[10px] uppercase font-semibold text-[#867463] mb-1">Author Name & Role</label>
+                  <input
+                    type="text"
+                    value={csrTestimonial.author}
+                    onChange={(e) => setCsrTestimonial(prev => ({ ...prev, author: e.target.value }))}
+                    className="w-full bg-white dark:bg-[#1B1C19] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D9762E]"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

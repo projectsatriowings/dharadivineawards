@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Briefcase, Building, ShieldCheck, Mail, Phone, User, Landmark, 
   HelpCircle, ArrowRight, CheckCircle, FileText, Download, Calendar, 
   Check, BookOpen, Sprout, Globe, Activity, Award, Star, ChevronDown, 
   ChevronUp, ShieldAlert, Award as AwardIcon, Users
 } from 'lucide-react';
-import { submitForm } from '../utils/api';
+import { submitForm, fetchSiteConfig } from '../utils/api';
 
 export default function CorporateCSR({ onSubmitSuccess }) {
   const [formData, setFormData] = useState({
@@ -20,6 +20,98 @@ export default function CorporateCSR({ onSubmitSuccess }) {
 
   const [openFaq, setOpenFaq] = useState(null);
   const [activeCaseStudy, setActiveCaseStudy] = useState(0);
+  const [config, setConfig] = useState(null);
+  
+  useEffect(() => {
+    fetchSiteConfig().then(data => {
+      if (data && data.csrConfig) {
+        setConfig(data.csrConfig);
+      }
+    });
+  }, []);
+
+  const defaultWhyPartner = [
+    { title: "Trusted Implementation Partner", desc: "Proven track record of executing grassroot social welfare drives with end-to-end management." },
+    { title: "Transparent Fund Utilization", desc: "Rigorous accounting audits, clear visual dashboards, and quarterly progress disclosures." },
+    { title: "Compliance with CSR Regulations", desc: "100% compliant with Section 135 rules, holding CSR-1, 12A, and 80G registrations." },
+    { title: "Experienced Project Management", desc: "Professional implementation team executing, monitoring, and scaling project milestones." },
+    { title: "Measurable Social Impact", desc: "Data-driven results and impact certificates showing clear improvement in community welfare." },
+    { title: "Regular Progress Reports", desc: "Timely delivery of compliance utilization certificates, field audit sheets, and media packages." }
+  ];
+
+  const defaultCsrProcess = [
+    "Consultation",
+    "Requirement Analysis",
+    "Project Planning",
+    "Implementation",
+    "Monitoring & Evaluation",
+    "Impact Reporting"
+  ];
+
+  const defaultPartnershipModels = [
+    { title: "Project-Based Partnership", desc: "Fund a specific social initiative or infrastructure development project matching your geographical goals." },
+    { title: "Long-Term Strategic Partnership", desc: "Form multi-year CSR collaborations to adopt schools, care facilities, or villages for continuous upliftment." },
+    { title: "Employee Engagement Programs", desc: "Coordinate hands-on volunteer activities, tree plantation campaigns, and community service days for staff." },
+    { title: "Sponsorship Partnership", desc: "Directly sponsor existing educational kits, clean energy packs, and emergency healthcare drives." }
+  ];
+
+  const defaultComplianceHub = {
+    docs: [
+      "CSR-1 Registration Number",
+      "12A Certificate",
+      "80G Certificate",
+      "PAN Card",
+      "Annual Reports",
+      "Audited Financial Statements"
+    ],
+    downloads: [
+      { name: "CSR Brochure (PDF)", size: "4.2 MB" },
+      { name: "Annual Report 2024-25", size: "6.8 MB" },
+      { name: "Financial Audit Statements", size: "3.1 MB" },
+      { name: "Impact Statistics summary", size: "1.9 MB" }
+    ]
+  };
+
+  const defaultCaseStudies = [
+    {
+      title: "Vidya: Digital Classrooms in Javadhu Hills",
+      problem: "Over 85% of tribal students in Javadhu hills lacked access to basic computer literacy and internet connectivity, leading to high school dropout rates.",
+      solution: "Established 5 fully-equipped digital learning centers with solar power backups, hardware systems, and local coordinators.",
+      results: "94% drop in school dropouts, and over 1,200 tribal children trained in basic computer skills.",
+      beneficiaries: "1,200+ Students",
+      quote: "This center has opened a new world for our children. They now look forward to school every single day.",
+      author: "M. Raman, Village Head"
+    },
+    {
+      title: "Prakriti: Water Conservation in Salem District",
+      problem: "Severe seasonal water scarcity in agricultural villages caused crop failures and community migration during dry summer months.",
+      solution: "Constructed 3 check dams and desilted 5 community temple tanks to recharge the local groundwater table.",
+      results: "40% increase in seasonal crop yield and reliable groundwater access for 4 adjacent villages.",
+      beneficiaries: "3,500+ Villagers",
+      quote: "We did not have water to drink in May. Now our wells are full, and we are harvesting double crops.",
+      author: "K. Sidhan, Farmer Union Lead"
+    }
+  ];
+
+  const defaultCorporatePartners = [
+    { name: "ABC Company", duration: "Partner since 2024", collab: "Vidya School digitisation" },
+    { name: "XYZ Corporation", duration: "Partner since 2025", collab: "Prakriti Tree Planting" },
+    { name: "Dhara Tech Solutions", duration: "Partner since 2023", collab: "Rural Healthcare Drives" },
+    { name: "Southern Enterprises", duration: "Partner since 2025", collab: "Community Water Desilting" }
+  ];
+
+  const defaultTestimonial = {
+    quote: "Dhara Foundations has been an excellent CSR implementation partner, delivering measurable impact and maintaining complete transparency.",
+    author: "CSR Head, ABC Company"
+  };
+
+  const activeWhyPartner = config?.whyPartner || defaultWhyPartner;
+  const activeCsrProcess = config?.csrProcess || defaultCsrProcess;
+  const activePartnershipModels = config?.partnershipModels || defaultPartnershipModels;
+  const activeComplianceHub = config?.complianceHub || defaultComplianceHub;
+  const caseStudies = config?.caseStudies || defaultCaseStudies;
+  const activeCorporatePartners = config?.corporatePartners || defaultCorporatePartners;
+  const activeTestimonial = config?.testimonial || defaultTestimonial;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,26 +173,7 @@ export default function CorporateCSR({ onSubmitSuccess }) {
     });
   };
 
-  const caseStudies = [
-    {
-      title: "Vidya: Digital Classrooms in Javadhu Hills",
-      problem: "Over 85% of tribal students in Javadhu hills lacked access to basic computer literacy and internet connectivity, leading to high school dropout rates.",
-      solution: "Established 5 fully-equipped digital learning centers with solar power backups, hardware systems, and local coordinators.",
-      results: "94% drop in school dropouts, and over 1,200 tribal children trained in basic computer skills.",
-      beneficiaries: "1,200+ Students",
-      quote: "This center has opened a new world for our children. They now look forward to school every single day.",
-      author: "M. Raman, Village Head"
-    },
-    {
-      title: "Prakriti: Water Conservation in Salem District",
-      problem: "Severe seasonal water scarcity in agricultural villages caused crop failures and community migration during dry summer months.",
-      solution: "Constructed 3 check dams and desilted 5 community temple tanks to recharge the local groundwater table.",
-      results: "40% increase in seasonal crop yield and reliable groundwater access for 4 adjacent villages.",
-      beneficiaries: "3,500+ Villagers",
-      quote: "We did not have water to drink in May. Now our wells are full, and we are harvesting double crops.",
-      author: "S. Palanisamy, Farmer"
-    }
-  ];
+
 
   const faqs = [
     {
@@ -212,15 +285,8 @@ export default function CorporateCSR({ onSubmitSuccess }) {
               Why Partner With Us?
             </h2>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
-              {[
-                { title: "Trusted Implementation Partner", desc: "Proven track record of executing grassroot social welfare drives with end-to-end management." },
-                { title: "Transparent Fund Utilization", desc: "Rigorous accounting audits, clear visual dashboards, and quarterly progress disclosures." },
-                { title: "Compliance with CSR Regulations", desc: "100% compliant with Section 135 rules, holding CSR-1, 12A, and 80G registrations." },
-                { title: "Experienced Project Management", desc: "Professional implementation team executing, monitoring, and scaling project milestones." },
-                { title: "Measurable Social Impact", desc: "Data-driven results and impact certificates showing clear improvement in community welfare." },
-                { title: "Regular Progress Reports", desc: "Timely delivery of compliance utilization certificates, field audit sheets, and media packages." }
-              ].map((item, idx) => (
+            <div style={{ display: 'grid', gap: '24px' }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {activeWhyPartner.map((item, idx) => (
                 <div key={idx} className="premium-interactive-card" style={{ padding: '24px' }}>
                   <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontSize: '17px', fontWeight: 'bold', marginBottom: '8px' }}>
                     {item.title}
@@ -386,14 +452,7 @@ export default function CorporateCSR({ onSubmitSuccess }) {
             gap: '20px',
             position: 'relative'
           }} className="flex-col md:flex-row">
-            {[
-              "Consultation",
-              "Requirement Analysis",
-              "Project Planning",
-              "Implementation",
-              "Monitoring & Evaluation",
-              "Impact Reporting"
-            ].map((step, idx, arr) => (
+            {activeCsrProcess.map((step, idx, arr) => (
               <React.Fragment key={idx}>
                 <div className="glassmorphism-card" style={{ 
                   padding: '20px 30px', 
@@ -435,12 +494,7 @@ export default function CorporateCSR({ onSubmitSuccess }) {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '24px' }}>
-          {[
-            { title: "Project-Based Partnership", desc: "Fund a specific social initiative or infrastructure development project matching your geographical goals." },
-            { title: "Long-Term Strategic Partnership", desc: "Form multi-year CSR collaborations to adopt schools, care facilities, or villages for continuous upliftment." },
-            { title: "Employee Engagement Programs", desc: "Coordinate hands-on volunteer activities, tree plantation campaigns, and community service days for staff." },
-            { title: "Sponsorship Partnership", desc: "Directly sponsor existing educational kits, clean energy packs, and emergency healthcare drives." }
-          ].map((model, idx) => (
+          {activePartnershipModels.map((model, idx) => (
             <div key={idx} className="glassmorphism-card" style={{ padding: '28px', borderRadius: '20px', border: '1px solid rgba(217,203,176,0.35)', background: '#fff' }}>
               <h4 style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-deep-forest-dark)', fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>
                 {model.title}
@@ -487,14 +541,7 @@ export default function CorporateCSR({ onSubmitSuccess }) {
             </p>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-              {[
-                "CSR-1 Registration Number",
-                "12A Certificate",
-                "80G Certificate",
-                "PAN Card",
-                "Annual Reports",
-                "Audited Financial Statements"
-              ].map((doc, idx) => (
+              {activeComplianceHub.docs.map((doc, idx) => (
                 <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--color-deep-forest-dark)' }}>
                   <Check className="w-4 h-4 text-[#401C0C] flex-shrink-0" />
                   <span>{doc}</span>
@@ -515,12 +562,7 @@ export default function CorporateCSR({ onSubmitSuccess }) {
             </h4>
             
             <div style={{ display: 'grid', gap: '12px' }}>
-              {[
-                { name: "CSR Brochure (PDF)", size: "4.2 MB" },
-                { name: "Annual Report 2024-25", size: "6.8 MB" },
-                { name: "Financial Audit Statements", size: "3.1 MB" },
-                { name: "Impact Statistics summary", size: "1.9 MB" }
-              ].map((file, idx) => (
+              {activeComplianceHub.downloads.map((file, idx) => (
                 <div 
                   key={idx} 
                   onClick={() => handleDownload(file.name)}
@@ -665,12 +707,7 @@ export default function CorporateCSR({ onSubmitSuccess }) {
             
             {/* Logos Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-              {[
-                { name: "ABC Company", duration: "Partner since 2024", collab: "Vidya School digitisation" },
-                { name: "XYZ Corporation", duration: "Partner since 2025", collab: "Prakriti Tree Planting" },
-                { name: "Dhara Tech Solutions", duration: "Partner since 2023", collab: "Rural Healthcare Drives" },
-                { name: "Southern Enterprises", duration: "Partner since 2025", collab: "Community Water Desilting" }
-              ].map((partner, idx) => (
+              {activeCorporatePartners.map((partner, idx) => (
                 <div key={idx} style={{ 
                   background: '#fff', 
                   border: '1px solid rgba(0,0,0,0.06)', 
@@ -696,10 +733,10 @@ export default function CorporateCSR({ onSubmitSuccess }) {
               <span style={{ fontSize: '60px', color: 'rgba(240, 194, 102, 0.25)', position: 'absolute', left: '20px', top: '10px', lineHeight: 1 }}>“</span>
               <div style={{ position: 'relative', zIndex: 2 }}>
                 <p style={{ fontStyle: 'italic', color: 'var(--ink)', fontSize: '16px', lineHeight: '1.6', marginBottom: '20px' }}>
-                  "Dhara Foundations has been an excellent CSR implementation partner, delivering measurable impact and maintaining complete transparency."
+                  "{activeTestimonial.quote}"
                 </p>
                 <h5 style={{ margin: 0, fontSize: '15px', fontWeight: 'bold', color: 'var(--color-deep-forest-dark)' }}>
-                  – CSR Head, ABC Company
+                  – {activeTestimonial.author}
                 </h5>
               </div>
             </div>
