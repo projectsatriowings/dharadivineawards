@@ -346,10 +346,8 @@ const defaultGalleryImages = [
 
 export default function GalleryPage() {
   const cleanCategory = (cat) => {
-    if (cat === '1. Spiritual Piller' || cat === 'Spiritual Pillars') return '1. Spiritual Pillars';
-    if (cat === '2. Institutions and Organisation' || cat === '2. Institution/Organizations') return '2. Institutions and Organisations';
-    if (cat === '3. Individuals/Professionals') return '3. Individuals and Professionals';
-    if (cat === 'Guest Dignitaries') return 'Highlights';
+    if (cat === '1. Spiritual Piller') return '1. Spiritual Pillars';
+    if (cat === '2. Institutions and Organisation') return '2. Institutions and Organisations';
     return cat;
   };
 
