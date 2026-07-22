@@ -283,9 +283,9 @@ export default function MediaCoverage({ onSubmitSuccess }) {
 
       {/* Press Kit Content */}
       {activeSubTab === 'kit' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
+        <div className="max-w-2xl mx-auto w-full animate-fade-in">
           {/* Press Kits */}
-          <div className="lg:col-span-6 bg-white rounded-3xl border border-[#D9CBB0]/60 p-6 md:p-8 space-y-6 shadow-sm">
+          <div className="bg-white rounded-3xl border border-[#D9CBB0]/60 p-6 md:p-8 space-y-6 shadow-sm">
             <h3 className="text-xl font-bold text-[var(--color-deep-forest-dark)] font-serif border-b border-neutral-100 pb-2 mb-2 flex items-center">
               <FileDown className="w-5 h-5 text-[var(--color-saffron-glow)] mr-2" />
               Download Press Kits
@@ -323,118 +323,6 @@ export default function MediaCoverage({ onSubmitSuccess }) {
                 Broadcasters and independent videographers must obtain an official filming pass. Unauthorized tripods or heavy telephoto lenses are not permitted in the inner prayer hall.
               </div>
             </div>
-          </div>
-
-          {/* Press Pass Form */}
-          <div className="lg:col-span-6 bg-white rounded-3xl border border-[#D9CBB0]/60 p-6 md:p-8 space-y-4 shadow-sm">
-            <h3 className="text-xl font-bold text-[var(--color-deep-forest-dark)] font-serif border-b border-neutral-100 pb-2 mb-2 flex items-center">
-              <Newspaper className="w-5 h-5 text-[var(--color-saffron-glow)] mr-2" />
-              Apply for Press Pass
-            </h3>
-
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-bold text-neutral-600 mb-1">Full Name *</label>
-                <div className="relative">
-                  <User className="absolute left-3.5 top-3.5 w-3.5 h-3.5 text-neutral-400" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter full name"
-                    value={formData.name}
-                    onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
-                    className="w-full pl-9 pr-4 py-2.5 bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-bold text-neutral-600 mb-1">Media House / Publication *</label>
-                <div className="relative">
-                  <Landmark className="absolute left-3.5 top-3.5 w-3.5 h-3.5 text-neutral-400" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="The National Chronicle / Seva Vani"
-                    value={formData.outlet}
-                    onChange={(e) => setFormData(p => ({ ...p, outlet: e.target.value }))}
-                    className="w-full pl-9 pr-4 py-2.5 bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-bold text-neutral-600 mb-1">Press ID Card No *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="PIB-78901"
-                    value={formData.idNumber}
-                    onChange={(e) => setFormData(p => ({ ...p, idNumber: e.target.value }))}
-                    className="w-full p-2.5 bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none uppercase"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-bold text-neutral-600 mb-1">Coverage Type</label>
-                  <select
-                    value={formData.coverageType}
-                    onChange={(e) => setFormData(p => ({ ...p, coverageType: e.target.value }))}
-                    className="w-full p-2.5 bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none"
-                  >
-                    <option value="online">Online / Digital</option>
-                    <option value="print">Print Newspaper</option>
-                    <option value="tv">TV Broadcaster</option>
-                    <option value="photo">Photographer</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-bold text-neutral-600 mb-1">Work Email *</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="press@domain.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
-                    className="w-full p-2.5 bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-bold text-neutral-600 mb-1">Mobile Phone *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Enter phone number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData(p => ({ ...p, phone: e.target.value }))}
-                    className="w-full p-2.5 bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-bold text-neutral-600 mb-1">Special Requirements</label>
-                <textarea
-                  rows="2"
-                  placeholder="AV pod split-feeds, stage interview slots, etc."
-                  value={formData.message}
-                  onChange={(e) => setFormData(p => ({ ...p, message: e.target.value }))}
-                  className="w-full p-2.5 bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none font-sans"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-[var(--color-saffron-glow)] to-[var(--color-saffron-glow-dark)] text-[#281006] hover:brightness-105 font-sans font-bold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 cursor-pointer uppercase tracking-wider"
-              >
-                Submit Accreditation
-              </button>
-            </form>
           </div>
         </div>
       )}
