@@ -16,11 +16,20 @@ export const GalleryWorkspace: React.FC = () => {
   const [featured, setFeatured] = useState<boolean>(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const standardCategories = ['Highlights', '1. Spiritual Piller', '2. Institution/Organizations', '3. Individuals/Professionals', '4. Grass Route Eminents', '5. Community Seva'];
+  const standardCategories = [
+    'Highlights', 
+    '1. Spiritual Pillars', 
+    '2. Institutions and Organisations', 
+    '3. Individuals and Professionals', 
+    '4. Grass Route Eminents', 
+    '5. Community Seva'
+  ];
   const cleanCategory = (cat: string) => {
     if (!cat) return 'Highlights';
     if (cat === 'Guest Dignitaries') return 'Highlights';
-    if (cat === 'Spiritual Pillars') return '1. Spiritual Piller';
+    if (cat === 'Spiritual Pillars' || cat === '1. Spiritual Piller') return '1. Spiritual Pillars';
+    if (cat === '2. Institution/Organizations' || cat === '2. Institutions and Organisation') return '2. Institutions and Organisations';
+    if (cat === '3. Individuals/Professionals') return '3. Individuals and Professionals';
     return cat;
   };
 
