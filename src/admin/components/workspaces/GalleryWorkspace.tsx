@@ -22,8 +22,7 @@ export const GalleryWorkspace: React.FC = () => {
     '1. Spiritual Pillars', 
     '2. Institutions and Organisations', 
     '3. Individuals and Professionals', 
-    '4. Grass Route Eminents', 
-    '5. Community Seva'
+    '4. Grass Route Eminents'
   ];
   const cleanCategory = (cat: string) => {
     if (!cat) return 'Highlights';
