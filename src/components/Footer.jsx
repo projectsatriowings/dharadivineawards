@@ -49,7 +49,6 @@ export default function Footer({ setActiveTab, handleNavClick }) {
                 <li><a href="/csr" onClick={(e) => { e.preventDefault(); setActiveTab('csr'); }}>CSR Partnership</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveTab('news'); }}>News</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveTab('contact'); }}>Contact</a></li>
-                <li><a href="/admin" onClick={(e) => { e.preventDefault(); setActiveTab('admin'); }}>Admin Portal</a></li>
               </ul>
             </div>
             

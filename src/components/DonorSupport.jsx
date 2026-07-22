@@ -21,9 +21,9 @@ export default function DonorSupport({ onSubmitSuccess, siteConfig }) {
     ? siteConfig.donorConfig.presets
     : [
         {
-          id: '501',
-          amount: '501',
-          label: '₹501',
+          id: '510',
+          amount: '510',
+          label: '₹510',
           impact: 'Meal Seva',
           desc: 'Sponsor pure Sattvic meals and sacred prasad for a student delegate during the entire event.'
         },

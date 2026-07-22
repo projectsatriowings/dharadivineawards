@@ -38,7 +38,7 @@ export const SettingsWorkspace: React.FC = () => {
 
   // Subdomains & Dynamic Forms Config
   const [donorPresets, setDonorPresets] = useState<{ amount: string; label: string; impact: string; desc: string }[]>([
-    { amount: '501', label: '₹501', impact: 'Meal Seva', desc: 'Sponsor pure Sattvic meals and sacred prasad for a student delegate.' },
+    { amount: '510', label: '₹510', impact: 'Meal Seva', desc: 'Sponsor pure Sattvic meals and sacred prasad for a student delegate.' },
     { amount: '1008', label: '₹1,008', impact: 'Sevak Support', desc: 'Sponsor event souvenir kit, green handbook, and transport support.' },
     { amount: '5001', label: '₹5,001', impact: 'Kala Seva', desc: 'Sponsor travel and honorarium for traditional musician/folk artist.' },
     { amount: '10008', label: '₹10,008', impact: 'Nominee Seva', desc: 'Sponsor a grassroots social worker nominee round-trip travel.' }

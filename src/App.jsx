@@ -146,7 +146,7 @@ export default function App() {
   const [dashboardCategory, setDashboardCategory] = useState('seva');
   const [subdomain, setSubdomain] = useState('');
   const [homeActiveVideoId, setHomeActiveVideoId] = useState(null);
-  const [heroVideoMuted, setHeroVideoMuted] = useState(true);
+  const [heroVideoMuted, setHeroVideoMuted] = useState(false);
   const heroVideoRef = React.useRef(null);
   const heroObserverRef = React.useRef(null);
   
@@ -266,6 +266,10 @@ export default function App() {
     }
 
     const handleBeforeInstallPrompt = (e) => {
+      // Don't intercept on admin routes to prevent DevTools warnings
+      if (window.location.pathname.includes('/admin')) {
+        return;
+      }
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallBtn(true);

@@ -3,8 +3,6 @@ import { FileDown, Newspaper, Camera, Mail, Phone, User, Landmark, Send, CheckCi
 import { submitForm, fetchNews } from '../utils/api';
 
 export default function MediaCoverage({ onSubmitSuccess }) {
-  const [activeSubTab, setActiveSubTab] = useState('news');
-  const [mediaTypeFilter, setMediaTypeFilter] = useState('all');
   const [newsArticles, setNewsArticles] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -117,49 +115,9 @@ export default function MediaCoverage({ onSubmitSuccess }) {
         <div className="w-24 h-1 bg-[var(--color-saffron-glow)] mx-auto rounded-full"></div>
       </div>
 
-      {/* News Media Sub-Filter Tabs */}
       <div className="space-y-8 animate-fade-in">
-        <div className="flex items-center justify-center gap-2 flex-wrap bg-[#F5F3EE] p-1.5 rounded-2xl max-w-md mx-auto border border-[#D9CBB0]/40">
-          <button
-            onClick={() => setMediaTypeFilter('all')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              mediaTypeFilter === 'all'
-                ? 'bg-[#401C0C] text-white shadow-sm'
-                : 'text-[#534436] hover:text-[#401C0C]'
-            }`}
-          >
-            All News & Media ({newsArticles.length})
-          </button>
-          <button
-            onClick={() => setMediaTypeFilter('image')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              mediaTypeFilter === 'image'
-                ? 'bg-[#401C0C] text-white shadow-sm'
-                : 'text-[#534436] hover:text-[#401C0C]'
-            }`}
-          >
-            <Newspaper size={14} /> Newspaper Coverage ({newsArticles.filter(n => n.type !== 'video').length})
-          </button>
-          <button
-            onClick={() => setMediaTypeFilter('video')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              mediaTypeFilter === 'video'
-                ? 'bg-[#401C0C] text-white shadow-sm'
-                : 'text-[#534436] hover:text-[#401C0C]'
-            }`}
-          >
-            <Video size={14} /> Video Coverage ({newsArticles.filter(n => n.type === 'video' || n.mediaUrl).length})
-          </button>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {newsArticles
-            .filter(art => {
-              if (mediaTypeFilter === 'image') return art.type !== 'video';
-              if (mediaTypeFilter === 'video') return art.type === 'video' || !!art.mediaUrl;
-              return true;
-            })
-            .map((art, idx) => {
+          {newsArticles.map((art, idx) => {
               const isVideo = art.type === 'video' || !!art.mediaUrl;
               return (
                 <div

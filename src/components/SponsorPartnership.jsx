@@ -96,7 +96,7 @@ export default function SponsorPartnership({ onSubmitSuccess }) {
 
   const donorPresets = [
     {
-      amount: '501',
+      amount: '510',
       impact: 'Meal Seva',
       desc: 'Sponsor pure Sattvic meals and sacred prasad for a student delegate during the entire event.'
     },
