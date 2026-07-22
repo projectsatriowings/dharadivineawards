@@ -432,7 +432,7 @@ export default function MediaCoverage({ onSubmitSuccess }) {
 
       {/* Full-Screen Lightbox Modal for Uncut Newspaper Image Viewing */}
       {selectedImage && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-8 animate-fade-in" onClick={() => setSelectedImage(null)}>
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-[9999] flex items-center justify-center p-4 sm:p-8 animate-fade-in" onClick={() => setSelectedImage(null)}>
           <div className="relative max-w-5xl w-full max-h-[90vh] bg-[#121310] border border-white/20 rounded-3xl overflow-hidden flex flex-col p-4 sm:p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
@@ -464,7 +464,7 @@ export default function MediaCoverage({ onSubmitSuccess }) {
 
       {/* Full-Screen Video Player Lightbox Modal */}
       {selectedVideo && (
-        <div className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-8 animate-fade-in" onClick={() => setSelectedVideo(null)}>
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-md z-[9999] flex items-center justify-center p-4 sm:p-8 animate-fade-in" onClick={() => setSelectedVideo(null)}>
           <div className="relative max-w-4xl w-full bg-[#121310] border border-white/20 rounded-3xl overflow-hidden flex flex-col p-4 sm:p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
