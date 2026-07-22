@@ -209,7 +209,7 @@
     {
       "id": "home-img-0",
       "src": "/images/Devine Awards images/devine awrds-57.jpg",
-      "category": "Highlights",
+      "category": "Guest Dignitaries",
       "caption": "Grand Assembly of Chief Guests & Spiritual Dignitaries",
       "priority": 100,
       "featured": true
@@ -217,7 +217,7 @@
     {
       "id": "home-img-1",
       "src": "/images/Home section/Hon'ble Justice Shri T.N Vallinayagam(Rtd).jpg",
-      "category": "Highlights",
+      "category": "Guest Dignitaries",
       "caption": "Hon'ble Justice Shri T.N. Vallinayagam (Rtd.)",
       "priority": 99,
       "featured": true
@@ -225,7 +225,7 @@
     {
       "id": "home-img-2",
       "src": "/images/Home section/Hon'ble justice Shri G.R Swaminathan  Avl..jpg",
-      "category": "Highlights",
+      "category": "Guest Dignitaries",
       "caption": "Hon'ble Justice Shri G.R. Swaminathan Avl.",
       "priority": 98,
       "featured": true
@@ -233,7 +233,7 @@
     {
       "id": "home-img-3",
       "src": "/images/Home section/Shri.N.Gopalaswami IAS(Rtd).jpg",
-      "category": "Highlights",
+      "category": "Guest Dignitaries",
       "caption": "Shri N. Gopalaswami IAS (Rtd.)",
       "priority": 97,
       "featured": true
@@ -241,7 +241,7 @@
     {
       "id": "home-img-4",
       "src": "/images/Home section/Sri Sendalangara Shenbaga Mannar Sampath Kumara Ramanuja Jeeyar Swamigal.jpg",
-      "category": "1. Spiritual Piller",
+      "category": "Spiritual Pillars",
       "caption": "Sri Sendalangara Shenbaga Mannar Sampath Kumara Ramanuja Jeeyar Swamigal",
       "priority": 96,
       "featured": true
@@ -249,7 +249,7 @@
     {
       "id": "home-img-5",
       "src": "/images/Home section/Sri la Sri Thirunavukkarasu Desika Parmacharya Swamigal.jpg",
-      "category": "1. Spiritual Piller",
+      "category": "Spiritual Pillars",
       "caption": "Sri la Sri Thirunavukkarasu Desika Paramacharya Swamigal",
       "priority": 95,
       "featured": true
@@ -257,7 +257,7 @@
     {
       "id": "home-img-6",
       "src": "/images/Home section/Dhara Divine Moment.jpeg",
-      "category": "Highlights",
+      "category": "Guest Dignitaries",
       "caption": "Shri S. Vinoth Ragavendran M.E. - Founder & President",
       "priority": 94,
       "featured": true

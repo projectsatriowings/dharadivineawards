@@ -17,17 +17,25 @@ export const GalleryWorkspace: React.FC = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const standardCategories = ['Highlights', '1. Spiritual Piller', '2. Institution/Organizations', '3. Individuals/Professionals', '4. Grass Route Eminents', '5. Community Seva'];
-  const uniqueCategories = Array.from(new Set([...standardCategories, ...gallery.map(img => img.category).filter(Boolean)]));
+  const cleanCategory = (cat: string) => {
+    if (!cat) return 'Highlights';
+    if (cat === 'Guest Dignitaries') return 'Highlights';
+    if (cat === 'Spiritual Pillars') return '1. Spiritual Piller';
+    return cat;
+  };
+
+  const uniqueCategories = standardCategories;
   
   const categories = ['All', ...uniqueCategories];
   const modalCategories = uniqueCategories;
 
   const filteredGallery = gallery.filter(img => {
-    const matchesCategory = selectedCategory === 'All' || img.category === selectedCategory;
+    const imgCat = cleanCategory(img.category);
+    const matchesCategory = selectedCategory === 'All' || imgCat === selectedCategory;
     const searchStr = (globalSearchQuery || '').toLowerCase();
     const matchesSearch = !searchStr || 
       (img.caption || '').toLowerCase().includes(searchStr) ||
-      (img.category || '').toLowerCase().includes(searchStr);
+      (imgCat || '').toLowerCase().includes(searchStr);
     return matchesCategory && matchesSearch;
   });
 
@@ -108,7 +116,7 @@ export const GalleryWorkspace: React.FC = () => {
   const handleEditClick = (img: any) => {
     setEditingId(img.id);
     setImageUrl(img.src);
-    setCategory(img.category);
+    setCategory(cleanCategory(img.category));
     setCaption(img.caption);
     setPriority(img.priority || 0);
     setFeatured(img.featured || false);
@@ -193,7 +201,7 @@ export const GalleryWorkspace: React.FC = () => {
                 />
                 
                 <span className="absolute top-3 left-3 bg-[#401C0C] text-[#FFD27F] text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-sm">
-                  {img.category}
+                  {cleanCategory(img.category)}
                 </span>
 
                 {/* Delete overlay button */}

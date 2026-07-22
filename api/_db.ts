@@ -117,34 +117,6 @@ export async function readDb(): Promise<DatabaseSchema> {
         }
       }
 
-      // Self-healing: Sync gallery items from db.json to MongoDB (including additions, updates, and deletions)
-      let finalGallery = gallery;
-      if (fileData.gallery) {
-        // 1. Delete items in MongoDB that are no longer in db.json
-        const localIds = new Set(fileData.gallery.map((g: any) => g.id));
-        const itemsToDelete = gallery.filter((g: any) => !localIds.has(g.id));
-        if (itemsToDelete.length > 0) {
-          console.log("Deleting removed gallery items from MongoDB...");
-          await Promise.all(
-            itemsToDelete.map((item: any) => (Gallery as any).deleteOne({ id: item.id }))
-          );
-        }
-
-        // 2. Sync any missing or updated gallery items from db.json
-        const needsSync = gallery.length !== fileData.gallery.length || fileData.gallery.some((fg: any) => {
-          const dbItem = gallery.find((g: any) => g.id === fg.id);
-          return !dbItem || dbItem.category !== fg.category || dbItem.caption !== fg.caption || dbItem.src !== fg.src;
-        });
-
-        if (needsSync || itemsToDelete.length > 0) {
-          console.log("Syncing gallery images from db.json to MongoDB...");
-          await Promise.all(
-            fileData.gallery.map((item: any) => (Gallery as any).findOneAndUpdate({ id: item.id }, item, { upsert: true }))
-          );
-          finalGallery = await (Gallery as any).find({}).lean();
-        }
-      }
-
       return {
         nominations,
         donations,
@@ -152,7 +124,7 @@ export async function readDb(): Promise<DatabaseSchema> {
         volunteers,
         enquiries,
         activityLogs,
-        gallery: finalGallery,
+        gallery,
         events,
         siteConfig,
         news: finalNews
