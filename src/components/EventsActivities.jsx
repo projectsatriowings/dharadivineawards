@@ -11,6 +11,7 @@ const iconMap = {
 
 export default function EventsActivities() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All Videos');
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [dynamicEvents, setDynamicEvents] = useState([]);
   const [eventStats, setEventStats] = useState([
@@ -548,10 +549,10 @@ export default function EventsActivities() {
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <span className="text-xs font-mono font-bold text-[var(--color-primary-accent)] uppercase tracking-[3px]">
-          Divine Awards Highlights
+          Divine Awards Videos
         </span>
         <h2 className="text-4xl sm:text-5xl font-bold text-[var(--color-deep-forest-dark)] font-serif leading-tight">
-          Dhara Divine Awards Highlights
+          Dhara Divine Awards Videos
         </h2>
         <div className="w-24 h-1 bg-[var(--color-saffron-glow)] mx-auto rounded-full"></div>
         <p className="text-sm text-[var(--ink-soft)] leading-relaxed pt-2">
@@ -587,36 +588,49 @@ export default function EventsActivities() {
 
       {/* Media Grid Section */}
       <div className="space-y-12 pt-8">
-        {/* Search Bar & Title */}
-        <div className="flex flex-col md:flex-row gap-6 items-center justify-between border-b border-[#D9CBB0]/60 pb-6">
-          <div className="space-y-1 self-start">
-            <h3 className="text-2xl sm:text-3xl font-bold text-[var(--color-deep-forest-dark)] font-serif">YouTube Video Highlights</h3>
-            <p className="text-xs sm:text-sm text-[var(--ink-soft)] font-sans">
-              Explore ceremonial speeches, devotional performances, and divine awardee moments categorized by seva mission.
-            </p>
+        {/* Filters Bar */}
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between p-4 bg-white/70 backdrop-blur-md rounded-3xl border border-[#D9CBB0]/60 shadow-sm max-w-5xl mx-auto w-full">
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+            <input
+              type="text"
+              placeholder="Search videos..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 text-xs bg-neutral-50 border border-[#D9CBB0]/40 rounded-2xl focus:outline-none focus:border-[var(--color-primary-accent)] focus:ring-1 focus:ring-[var(--color-primary-accent)] transition-all font-sans"
+            />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 items-center w-full md:w-auto">
-            {/* Search Box */}
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-400" />
-              <input
-                type="text"
-                placeholder="Search by title, seva or description..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 text-xs bg-neutral-50 border border-[#D9CBB0]/40 rounded-xl focus:outline-none focus:border-[var(--color-primary-accent)]"
-              />
-            </div>
-            <span className="px-3.5 py-1.5 rounded-full bg-[#F4EFE6] text-[var(--color-deep-forest)] text-xs font-mono font-bold border border-[#D9CBB0]/50 shadow-sm shrink-0">
-              {allMedia.filter(matchesSearch).length} {allMedia.filter(matchesSearch).length === 1 ? 'Video' : 'Videos'}
-            </span>
+          <div className="flex flex-wrap gap-1.5 justify-center">
+            {[
+              'All Videos',
+              'Recent Updates & Events',
+              'Spiritual Pillars',
+              'Institutions and Organisations',
+              'Individuals and Professionals',
+              'Grass Route Eminents'
+            ].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-1.5 rounded-xl text-[11px] font-sans font-bold transition-all duration-200 ${
+                  selectedCategory === cat
+                    ? 'bg-[var(--color-deep-forest)] text-white shadow-sm'
+                    : 'bg-white border border-[#D9CBB0]/40 text-[var(--color-deep-forest-dark)] hover:border-[var(--color-primary-accent)]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Sections Display */}
         <div className="space-y-16">
-          {sections.map((sec) => {
+          {(selectedCategory === 'All Videos'
+            ? sections
+            : sections.filter(sec => sec.title === selectedCategory)
+          ).map((sec) => {
             const sectionItems = sec.videos
               .map(vid => ({
                 id: vid.id,

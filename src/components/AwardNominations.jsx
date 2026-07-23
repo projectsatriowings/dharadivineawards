@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Award, User, FileText, ArrowRight, ArrowLeft, Mail, Phone, MapPin, Check, X } from 'lucide-react';
 import { submitForm } from '../utils/api';
 
-export default function AwardNominations({ onSubmitSuccess }) {
+export default function AwardNominations({ onSubmitSuccess, siteConfig }) {
+  const eventYear = siteConfig?.eventYear || siteConfig?.eventRegConfig?.eventYear || '2026';
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     nominatorName: '',
@@ -159,40 +160,32 @@ export default function AwardNominations({ onSubmitSuccess }) {
       {/* 1. Hero Section */}
       <section style={{ 
         position: 'relative', 
-        background: 'linear-gradient(135deg, var(--color-deep-forest) 0%, var(--color-deep-forest-dark) 100%)',
-        color: '#fff',
-        padding: '100px 20px',
+        padding: '80px 20px 40px',
         textAlign: 'center',
         overflow: 'hidden',
-        marginBottom: '48px'
+        marginBottom: '24px'
       }}>
-        {/* Glow Effects */}
-        <div style={{
-          position: 'absolute', top: '-150px', right: '-150px',
-          width: '500px', height: '500px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(243, 167, 18, 0.15) 0%, transparent 70%)',
-          pointerEvents: 'none'
-        }} />
-        
         <div className="wrap" style={{ position: 'relative', zIndex: 2 }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            background: 'rgba(217, 166, 70, 0.15)',
-            border: '1px solid rgba(217, 166, 70, 0.3)',
+            background: 'var(--color-primary-accent-bg, rgba(217, 166, 70, 0.1))',
+            border: '2px solid var(--color-saffron-glow)',
             borderRadius: '999px',
-            padding: '6px 18px',
-            marginBottom: '24px'
+            padding: '8px 24px',
+            marginBottom: '24px',
+            boxShadow: '0 4px 12px rgba(217, 166, 70, 0.15)',
+            transform: 'scale(1.05)'
           }}>
-            <Award className="w-4 h-4 text-[#F3A712]" />
+            <Award className="w-4 h-4 text-[var(--color-primary-accent)]" />
             <span style={{ 
-              color: '#F9DCA2', 
+              color: 'var(--color-deep-forest-dark)', 
               fontFamily: 'var(--font-mono)', 
-              letterSpacing: '1px', 
-              fontSize: '11px',
+              letterSpacing: '1.5px', 
+              fontSize: '13px',
               textTransform: 'uppercase',
-              fontWeight: '700'
+              fontWeight: '800'
             }}>
               Honoring Selfless Souls
             </span>
@@ -203,15 +196,15 @@ export default function AwardNominations({ onSubmitSuccess }) {
             fontSize: 'clamp(36px, 5.5vw, 56px)', 
             lineHeight: '1.15', 
             maxWidth: '920px',
-            margin: '0 auto 24px',
+            margin: '0 auto 20px',
             fontWeight: 'bold',
-            color: '#ffffff'
+            color: 'var(--color-deep-forest-dark)'
           }}>
-            Divine Awards 2025 Nominations
+            Divine Awards {eventYear} Nominations
           </h1>
 
           <p style={{ 
-            color: '#D5E5CD', 
+            color: 'var(--ink-soft)', 
             fontSize: '18px', 
             maxWidth: '740px', 
             margin: '0 auto',

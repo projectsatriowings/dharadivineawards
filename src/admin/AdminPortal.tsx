@@ -11,6 +11,7 @@ import { VolunteersWorkspace } from './components/workspaces/VolunteersWorkspace
 import { YoutubeWorkspace } from './components/workspaces/YoutubeWorkspace';
 import { GalleryWorkspace } from './components/workspaces/GalleryWorkspace';
 import { EventConfigWorkspace } from './components/workspaces/EventConfigWorkspace';
+import { SubdomainsWorkspace } from './components/workspaces/SubdomainsWorkspace';
 import { SettingsWorkspace } from './components/workspaces/SettingsWorkspace';
 import LoginView from './components/auth/LoginView';
 
@@ -29,6 +30,7 @@ const DashboardContent: React.FC = () => {
         {currentTab === 'youtube-highlights' && <YoutubeWorkspace />}
         {currentTab === 'gallery' && <GalleryWorkspace />}
         {currentTab === 'event-config' && <EventConfigWorkspace />}
+        {currentTab === 'subdomains' && <SubdomainsWorkspace />}
         {currentTab === 'settings' && <SettingsWorkspace />}
       </div>
     </main>

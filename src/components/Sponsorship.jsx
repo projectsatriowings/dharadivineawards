@@ -6,7 +6,8 @@ import {
 } from 'lucide-react';
 import { submitForm, fetchSiteConfig } from '../utils/api';
 
-export default function Sponsorship({ onSubmitSuccess }) {
+export default function Sponsorship({ onSubmitSuccess, siteConfig }) {
+  const eventYear = siteConfig?.eventYear || siteConfig?.eventRegConfig?.eventYear || '2026';
   const [selectedTier, setSelectedTier] = useState('title');
   const [openFaq, setOpenFaq] = useState(null);
   const [config, setConfig] = useState(null);
@@ -191,7 +192,7 @@ export default function Sponsorship({ onSubmitSuccess }) {
 
     onSubmitSuccess({
       title: 'Sponsorship Proposal Received',
-      message: `Namaste. Dhara Foundations acknowledges your corporate sponsorship interest for the Divine Awards 2025. We have logged your request from ${formData.companyName} for the ${packageName}. Our partnerships coordination lead will reach out to Mr./Ms. ${formData.contactPerson} at ${formData.email} to discuss branding integrations and draft the MOU.`,
+      message: `Namaste. Dhara Foundations acknowledges your corporate sponsorship interest for the Divine Awards ${eventYear}. We have logged your request from ${formData.companyName} for the ${packageName}. Our partnerships coordination lead will reach out to Mr./Ms. ${formData.contactPerson} at ${formData.email} to discuss branding integrations and draft the MOU.`,
       details: [
         { label: 'Corporate Entity', value: formData.companyName },
         { label: 'Contact Representative', value: formData.contactPerson },
@@ -206,47 +207,33 @@ export default function Sponsorship({ onSubmitSuccess }) {
       {/* 1. Hero Section with Luxury Overlay */}
       <section style={{ 
         position: 'relative', 
-        background: 'linear-gradient(135deg, #401C0C 0%, #281006 100%)',
-        color: '#fff',
-        padding: '120px 20px',
+        padding: '80px 20px 40px',
         textAlign: 'center',
         overflow: 'hidden'
       }}>
-        {/* Abstract Gold Background Shapes */}
-        <div style={{
-          position: 'absolute', top: '-10%', right: '-5%',
-          width: '600px', height: '600px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(217, 166, 70, 0.12) 0%, transparent 65%)',
-          pointerEvents: 'none'
-        }} />
-        <div style={{
-          position: 'absolute', bottom: '-20%', left: '-10%',
-          width: '500px', height: '500px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(217, 166, 70, 0.08) 0%, transparent 60%)',
-          pointerEvents: 'none'
-        }} />
-
         <div className="wrap" style={{ position: 'relative', zIndex: 2 }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            background: 'rgba(217, 166, 70, 0.15)',
-            border: '1px solid rgba(217, 166, 70, 0.3)',
+            background: 'var(--color-primary-accent-bg, rgba(217, 166, 70, 0.1))',
+            border: '2px solid var(--color-saffron-glow)',
             borderRadius: '999px',
-            padding: '6px 18px',
-            marginBottom: '24px'
+            padding: '8px 24px',
+            marginBottom: '24px',
+            boxShadow: '0 4px 12px rgba(217, 166, 70, 0.15)',
+            transform: 'scale(1.05)'
           }}>
-            <Trophy className="w-4 h-4 text-[#F3A712]" />
+            <Trophy className="w-4 h-4 text-[var(--color-primary-accent)]" />
             <span style={{ 
-              color: '#F9DCA2', 
+              color: 'var(--color-deep-forest-dark)', 
               fontFamily: 'var(--font-mono)', 
-              letterSpacing: '1px', 
-              fontSize: '11px',
+              letterSpacing: '1.5px', 
+              fontSize: '13px',
               textTransform: 'uppercase',
-              fontWeight: '700'
+              fontWeight: '800'
             }}>
-              Divine Awards 2025 Partnership
+              Divine Awards {eventYear} Partnership
             </span>
           </div>
           
@@ -257,16 +244,16 @@ export default function Sponsorship({ onSubmitSuccess }) {
             maxWidth: '920px',
             margin: '0 auto 24px',
             fontWeight: 'bold',
-            color: '#ffffff'
+            color: '#401C0C'
           }}>
-            Partner With Purpose. <br />Sponsor the Divine Awards 2025.
+            Partner With Purpose. <br />Sponsor the Divine Awards {eventYear}.
           </h1>
           
           <p style={{ 
-            color: '#D5E5CD', 
-            fontSize: '19px', 
+            color: 'var(--ink-soft)', 
+            fontSize: '18px', 
             maxWidth: '720px', 
-            margin: '0 auto 48px',
+            margin: '0 auto 36px',
             lineHeight: '1.6',
             fontWeight: '400'
           }}>
@@ -277,7 +264,7 @@ export default function Sponsorship({ onSubmitSuccess }) {
             <button onClick={handleScrollToForm} className="btn btn-primary sparkle-shimmer-btn" style={{ padding: '16px 36px', fontSize: '15px' }}>
               Become a Sponsor
             </button>
-            <button onClick={handleContactEmail} className="btn btn-light" style={{ padding: '16px 30px' }}>
+            <button onClick={handleContactEmail} className="btn btn-secondary" style={{ padding: '16px 30px', background: 'white', border: '1px solid rgba(64, 28, 12, 0.25)', color: '#401C0C' }}>
               Contact Our Team
             </button>
           </div>
@@ -335,7 +322,7 @@ export default function Sponsorship({ onSubmitSuccess }) {
                 Join an Elite Network
               </h4>
               <p style={{ color: 'var(--ink-soft)', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-                Align your brand with local and global leaders at the prestigious Divine Awards 2025.
+                Align your brand with local and global leaders at the prestigious Divine Awards {eventYear}.
               </p>
             </div>
           </div>
@@ -354,7 +341,7 @@ export default function Sponsorship({ onSubmitSuccess }) {
             </div>
             
             <h3 style={{ fontFamily: 'var(--font-serif)', color: '#401C0C', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold', marginTop: '10px' }}>
-              About Divine Awards 2025
+              About Divine Awards {eventYear}
             </h3>
             <p style={{ color: 'var(--ink-soft)', fontSize: '14.5px', lineHeight: '1.6', marginBottom: '24px' }}>
               The Divine Awards recognize and celebrate outstanding social changemakers making profound impact:

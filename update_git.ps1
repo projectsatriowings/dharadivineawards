@@ -10,7 +10,7 @@ Write-Host "`n[1/4] Staging files..." -ForegroundColor Yellow
 git add .
 
 Write-Host "[2/4] Creating commit..." -ForegroundColor Yellow
-git commit -m "Unified single-project architecture: /admin page route, root serverless API, and cleaned structure"
+git commit -m "Admin customizations: theme toggle, standalone subdomains workspace, YouTube video category filtering, transparent headers with dynamic year, and mandatory volunteer referrer validation"
 
 # 2. Pushing to Default Origin Remote
 Write-Host "`n[3/4] Pushing to default remote (origin)..." -ForegroundColor Yellow

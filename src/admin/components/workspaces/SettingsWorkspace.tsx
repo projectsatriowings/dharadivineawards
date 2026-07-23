@@ -8,7 +8,7 @@ import {
 
 export const SettingsWorkspace: React.FC = () => {
   const { siteConfig, updateSiteConfig, news, addNews, updateNews, deleteNews, globalSearchQuery } = useApp();
-  const [activeSubTab, setActiveSubTab] = useState<'home' | 'about' | 'subdomains' | 'news' | 'trustees' | 'registrations' | 'sponsors' | 'csr'>('home');
+  const [activeSubTab, setActiveSubTab] = useState<'home' | 'about' | 'news' | 'trustees' | 'registrations' | 'sponsors' | 'csr'>('home');
   
   // Home Section
   const [heroVideoUrl, setHeroVideoUrl] = useState('');
@@ -721,16 +721,7 @@ export const SettingsWorkspace: React.FC = () => {
               <Info size={15} /> About Us Settings
             </button>
 
-            <button
-              onClick={() => setActiveSubTab('subdomains')}
-              className={`px-4 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 shrink-0 lg:w-full ${
-                activeSubTab === 'subdomains'
-                  ? 'bg-[#401C0C] text-white shadow-md'
-                  : 'bg-[#F5F3EE] dark:bg-[#242622] text-[#534436] dark:text-[#D1D5DB] hover:bg-[#EAE8E3]'
-              }`}
-            >
-              <Building2 size={15} /> Subdomains Control
-            </button>
+
 
             <button
               onClick={() => setActiveSubTab('news')}
@@ -809,7 +800,6 @@ export const SettingsWorkspace: React.FC = () => {
               <h3 className="font-serif text-lg font-bold text-[#1B1C19] dark:text-[#F3F4F6] flex items-center gap-2 mt-0.5">
                 {activeSubTab === 'home' && <><Home className="text-[#C9A646]" size={18} /> Home Page Settings</>}
                 {activeSubTab === 'about' && <><Info className="text-[#C9A646]" size={18} /> About Us Settings</>}
-                {activeSubTab === 'subdomains' && <><Building2 className="text-[#C9A646]" size={18} /> Subdomains & Registration Control</>}
                 {activeSubTab === 'news' && <><Newspaper className="text-[#C9A646]" size={18} /> News & Press Articles</>}
                 {activeSubTab === 'trustees' && <><Users className="text-[#C9A646]" size={18} /> Trustees & Founders Directory</>}
                 {activeSubTab === 'registrations' && <><ShieldCheck className="text-[#C9A646]" size={18} /> Legal Certificates & Registrations</>}
@@ -1007,240 +997,7 @@ export const SettingsWorkspace: React.FC = () => {
         </div>
       )}
 
-      {/* SUB TAB: SUBDOMAINS & DYNAMIC FORMS CONTROL */}
-      {activeSubTab === 'subdomains' && (
-        <div className="space-y-6">
-          {/* Razorpay Gateway Settings */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-4">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <h3 className="font-serif text-xl font-bold flex items-center gap-2 text-[#401C0C] dark:text-[#F3F4F6]">
-                <ShieldCheck className="text-[#D9762E]" size={20} /> Razorpay Payment Gateway Configuration
-              </h3>
-              <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                razorpayKeyId.startsWith('rzp_')
-                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
-                  : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
-              }`}>
-                {razorpayKeyId.startsWith('rzp_live') ? '● Live Gateway Active' : razorpayKeyId.startsWith('rzp_test') ? '● Test Key Active' : '● Action Required'}
-              </span>
-            </div>
-            
-            <p className="text-xs text-[#867463] dark:text-[#9CA3AF]">
-              Enter your official Razorpay Key ID from your Razorpay Dashboard (API Keys &amp; Webhooks). This key powers payments on the Donate page and Event Registration pass booking.
-            </p>
 
-            <div>
-              <label className="block text-xs font-bold text-[#401C0C] dark:text-[#F3F4F6] mb-1">
-                Razorpay Key ID (e.g. rzp_test_XXXXXXXXXXXXXX or rzp_live_XXXXXXXXXXXXXX)
-              </label>
-              <input
-                type="text"
-                value={razorpayKeyId}
-                onChange={(e) => setRazorpayKeyId(e.target.value)}
-                placeholder="rzp_test_1234567890abcdef"
-                className="w-full bg-[#F5F3EE] dark:bg-[#242622] text-[#1B1C19] dark:text-[#F3F4F6] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-3 text-sm font-mono focus:outline-none focus:border-[#401C0C]"
-              />
-            </div>
-          </div>
-
-          {/* Donate Page Settings */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-5">
-            <div className="flex justify-between items-center">
-              <h3 className="font-serif text-xl font-bold flex items-center gap-2 text-[#401C0C] dark:text-[#F3F4F6]">
-                <Building2 className="text-[#C9A646]" size={20} /> Donate Subdomain — Giving Gateway & Presets
-              </h3>
-              <button onClick={addDonorPreset} className="text-[#D9762E] hover:text-[#C9A646] p-1.5 bg-[#F5F3EE] dark:bg-[#242622] rounded-lg border border-[#EAE8E3] dark:border-[#30312E] flex items-center gap-1 text-xs font-semibold">
-                <Plus size={14} /> Add Preset Tier
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {donorPresets.map((preset, index) => (
-                <div key={index} className="p-4 bg-[#F9F8F6] dark:bg-[#242622] border border-[#EAE8E3] dark:border-[#30312E] rounded-2xl space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <input
-                      type="text"
-                      value={preset.label}
-                      onChange={(e) => handleDonorPresetChange(index, 'label', e.target.value)}
-                      placeholder="Label (e.g. ₹510)"
-                      className="flex-1 min-w-0 bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-bold text-[#401C0C] dark:text-[#FFD27F]"
-                    />
-                    <input
-                      type="text"
-                      value={preset.amount}
-                      onChange={(e) => handleDonorPresetChange(index, 'amount', e.target.value)}
-                      placeholder="Numeric Amount (510)"
-                      className="flex-1 min-w-0 bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-bold"
-                    />
-                    <button onClick={() => removeDonorPreset(index)} className="p-1.5 text-red-400 hover:text-red-500 rounded-lg">
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                  <input
-                    type="text"
-                    value={preset.impact}
-                    onChange={(e) => handleDonorPresetChange(index, 'impact', e.target.value)}
-                    placeholder="Impact Category (e.g. Meal Seva)"
-                    className="w-full bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-semibold"
-                  />
-                  <textarea
-                    rows={2}
-                    value={preset.desc}
-                    onChange={(e) => handleDonorPresetChange(index, 'desc', e.target.value)}
-                    placeholder="Impact Description..."
-                    className="w-full bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Bank Details */}
-            <div className="pt-4 border-t border-[#F5F3EE] dark:border-[#2E302A] space-y-4">
-              <h4 className="font-semibold text-sm text-[#401C0C] dark:text-[#F3F4F6]">Direct Bank Transfer & UPI Settings</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-xs text-[#867463] mb-1">Bank Name</label>
-                  <input
-                    type="text"
-                    value={bankDetails.bankName}
-                    onChange={(e) => setBankDetails(prev => ({ ...prev, bankName: e.target.value }))}
-                    className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-[#867463] mb-1">Account Holder Name</label>
-                  <input
-                    type="text"
-                    value={bankDetails.accountName}
-                    onChange={(e) => setBankDetails(prev => ({ ...prev, accountName: e.target.value }))}
-                    className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-[#867463] mb-1">Account Number</label>
-                  <input
-                    type="text"
-                    value={bankDetails.accountNumber}
-                    onChange={(e) => setBankDetails(prev => ({ ...prev, accountNumber: e.target.value }))}
-                    className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-[#867463] mb-1">IFSC Code</label>
-                  <input
-                    type="text"
-                    value={bankDetails.ifsc}
-                    onChange={(e) => setBankDetails(prev => ({ ...prev, ifsc: e.target.value }))}
-                    className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-[#867463] mb-1">Branch</label>
-                  <input
-                    type="text"
-                    value={bankDetails.branch}
-                    onChange={(e) => setBankDetails(prev => ({ ...prev, branch: e.target.value }))}
-                    className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-[#867463] mb-1">UPI ID</label>
-                  <input
-                    type="text"
-                    value={bankDetails.upiId}
-                    onChange={(e) => setBankDetails(prev => ({ ...prev, upiId: e.target.value }))}
-                    className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Event Registration Ticket Passes Settings */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-5">
-            <h3 className="font-serif text-xl font-bold flex items-center gap-2 text-[#401C0C] dark:text-[#F3F4F6]">
-              <Calendar className="text-[#C9A646]" size={20} /> Event Registration — Ticket Tiers & Pricing Pass Config
-            </h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {registrationTickets.map((ticket, index) => (
-                <div key={ticket.id || index} className="p-4 bg-[#F9F8F6] dark:bg-[#242622] border border-[#EAE8E3] dark:border-[#30312E] rounded-2xl space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#D9762E]">{ticket.id}</span>
-                    <input
-                      type="text"
-                      value={ticket.price}
-                      onChange={(e) => handleTicketChange(index, 'price', e.target.value)}
-                      placeholder="₹1,500"
-                      className="w-24 bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-1.5 text-xs font-bold text-center"
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    value={ticket.name}
-                    onChange={(e) => handleTicketChange(index, 'name', e.target.value)}
-                    placeholder="Tier Name (e.g. Premium Delegate)"
-                    className="w-full bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs font-bold"
-                  />
-                  <textarea
-                    rows={2}
-                    value={ticket.description}
-                    onChange={(e) => handleTicketChange(index, 'description', e.target.value)}
-                    placeholder="Short description..."
-                    className="w-full bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs"
-                  />
-                  <div>
-                    <label className="block text-[10px] uppercase font-bold text-[#867463] mb-1">Included Features (Comma Separated)</label>
-                    <textarea
-                      rows={2}
-                      value={ticket.features}
-                      onChange={(e) => handleTicketChange(index, 'features', e.target.value)}
-                      placeholder="Feature 1, Feature 2..."
-                      className="w-full bg-white dark:bg-[#1B1C19] border border-[#E4E2DD] dark:border-[#404040] rounded-lg p-2 text-xs"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* General Contact Info */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm space-y-4">
-            <h3 className="font-serif text-xl font-bold flex items-center gap-2 text-[#401C0C] dark:text-[#F3F4F6]">
-              <Edit3 className="text-[#C9A646]" size={20} /> Contact & General Enquiries Info
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs text-[#867463] mb-1">Official Contact Email</label>
-                <input
-                  type="email"
-                  value={contactInfo.email}
-                  onChange={(e) => setContactInfo(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-[#867463] mb-1">Helpdesk Phone Number</label>
-                <input
-                  type="text"
-                  value={contactInfo.phone}
-                  onChange={(e) => setContactInfo(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label className="block text-xs text-[#867463] mb-1">Office Address</label>
-                <input
-                  type="text"
-                  value={contactInfo.address}
-                  onChange={(e) => setContactInfo(prev => ({ ...prev, address: e.target.value }))}
-                  className="w-full bg-[#F5F3EE] dark:bg-[#242622] border border-[#E4E2DD] dark:border-[#30312E] rounded-xl p-2.5 text-xs font-medium"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* SUB TAB 3: NEWS SECTION SETTINGS */}
       {activeSubTab === 'news' && (

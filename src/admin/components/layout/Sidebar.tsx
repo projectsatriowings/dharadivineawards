@@ -11,7 +11,8 @@ import {
   Calendar,
   X,
   Settings,
-  Ticket
+  Ticket,
+  Building2
 } from 'lucide-react';
 
 interface NavItem {
@@ -39,7 +40,7 @@ export const Sidebar: React.FC = () => {
     { id: 'volunteers', label: 'Volunteer Seva', icon: <Users size={20} /> },
     { 
       id: 'youtube-highlights', 
-      label: 'YouTube Highlights', 
+      label: 'YouTube Video', 
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '20px', height: '20px' }}>
           <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.518 3.5 12 3.5 12 3.5s-7.518 0-9.388.555A3.003 3.003 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.482 20.5 12 20.5 12 20.5s7.518 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
@@ -48,6 +49,7 @@ export const Sidebar: React.FC = () => {
     },
     { id: 'gallery', label: 'Gallery', icon: <ImageIcon size={20} /> },
     { id: 'event-config', label: 'Passes & Tickets', icon: <Ticket size={20} /> },
+    { id: 'subdomains', label: 'Subdomains Control', icon: <Building2 size={20} /> },
     { id: 'settings', label: 'Site Settings', icon: <Settings size={20} /> },
   ];
 

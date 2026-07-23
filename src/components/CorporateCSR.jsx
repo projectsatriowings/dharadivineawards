@@ -7,7 +7,8 @@ import {
 } from 'lucide-react';
 import { submitForm, fetchSiteConfig } from '../utils/api';
 
-export default function CorporateCSR({ onSubmitSuccess }) {
+export default function CorporateCSR({ onSubmitSuccess, siteConfig }) {
+  const eventYear = siteConfig?.eventYear || siteConfig?.eventRegConfig?.eventYear || '2026';
   const [formData, setFormData] = useState({
     companyName: '',
     contactName: '',
@@ -200,33 +201,36 @@ export default function CorporateCSR({ onSubmitSuccess }) {
       {/* 1. Hero Section */}
       <section style={{ 
         position: 'relative', 
-        background: 'linear-gradient(135deg, var(--color-deep-forest) 0%, var(--color-deep-forest-dark) 100%)',
-        color: '#fff',
-        padding: '100px 20px',
+        padding: '80px 20px 40px',
         textAlign: 'center',
         overflow: 'hidden'
       }}>
-        {/* Glow Effects */}
-        <div style={{
-          position: 'absolute', top: '-150px', right: '-150px',
-          width: '500px', height: '500px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(243, 167, 18, 0.15) 0%, transparent 70%)',
-          pointerEvents: 'none'
-        }} />
-        
         <div className="wrap" style={{ position: 'relative', zIndex: 2 }}>
-          <span style={{ 
-            color: 'var(--color-saffron-glow)', 
-            fontFamily: 'var(--font-mono)', 
-            letterSpacing: '2px', 
-            fontSize: '13px',
-            textTransform: 'uppercase',
-            fontWeight: 'bold',
-            display: 'block',
-            marginBottom: '16px'
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'var(--color-primary-accent-bg, rgba(217, 166, 70, 0.1))',
+            border: '2px solid var(--color-saffron-glow)',
+            borderRadius: '999px',
+            padding: '8px 24px',
+            marginBottom: '24px',
+            boxShadow: '0 4px 12px rgba(217, 166, 70, 0.15)',
+            transform: 'scale(1.05)'
           }}>
-            Corporate Social Responsibility
-          </span>
+            <Briefcase className="w-4 h-4 text-[var(--color-primary-accent)]" />
+            <span style={{ 
+              color: 'var(--color-deep-forest-dark)', 
+              fontFamily: 'var(--font-mono)', 
+              letterSpacing: '1.5px', 
+              fontSize: '13px',
+              textTransform: 'uppercase',
+              fontWeight: '800'
+            }}>
+              Corporate Social Responsibility
+            </span>
+          </div>
+
           <h1 style={{ 
             fontFamily: 'var(--font-serif)', 
             fontSize: 'clamp(32px, 5vw, 52px)', 
@@ -234,13 +238,13 @@ export default function CorporateCSR({ onSubmitSuccess }) {
             maxWidth: '850px',
             margin: '0 auto 12px',
             fontWeight: '600',
-            color: '#ffffff'
+            color: 'var(--color-deep-forest-dark)'
           }}>
             Empowering Communities Through Meaningful CSR Partnerships
           </h1>
           <p style={{
             fontStyle: 'italic',
-            color: 'var(--color-saffron-glow)',
+            color: 'var(--color-primary-accent)',
             fontSize: '20px',
             fontWeight: '500',
             margin: '0 auto 24px',
@@ -250,10 +254,10 @@ export default function CorporateCSR({ onSubmitSuccess }) {
             "Let's Build Sustainable Change Together"
           </p>
           <p style={{ 
-            color: '#D5E5CD', 
+            color: 'var(--ink-soft)', 
             fontSize: '18px', 
             maxWidth: '680px', 
-            margin: '0 auto 40px',
+            margin: '0 auto 36px',
             lineHeight: '1.6'
           }}>
             Partner with Dhara Foundations to create sustainable impact in education, rural development, environmental conservation, and social welfare.
@@ -263,12 +267,12 @@ export default function CorporateCSR({ onSubmitSuccess }) {
             <button onClick={handleScrollToForm} className="btn btn-primary sparkle-shimmer-btn">
               Become a CSR Partner
             </button>
-            <button onClick={handleScheduleMeeting} className="btn btn-light">
-              <Calendar className="w-4 h-4 mr-2" />
+            <button onClick={handleScheduleMeeting} className="btn btn-secondary" style={{ background: 'white', border: '1px solid rgba(64, 28, 12, 0.25)', color: '#401C0C', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <Calendar className="w-4 h-4" />
               Schedule a Meeting
             </button>
-            <button onClick={() => handleDownload('CSR Brochure')} className="btn btn-ghost" style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
-              <Download className="w-4 h-4 mr-2" />
+            <button onClick={() => handleDownload('CSR Brochure')} className="btn btn-secondary" style={{ background: 'white', border: '1px solid rgba(64, 28, 12, 0.25)', color: '#401C0C', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <Download className="w-4 h-4" />
               Download CSR Brochure
             </button>
           </div>

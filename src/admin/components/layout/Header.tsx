@@ -69,6 +69,14 @@ export const Header: React.FC = () => {
         {/* Right: Notifications, Theme Switcher & User */}
         <div className="flex items-center gap-2.5 sm:gap-5">
 
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            className="p-2 rounded-xl bg-[#F5F3EE] dark:bg-[#1B1C19] text-[#534436] dark:text-[#D1D5DB] hover:text-[#401C0C] dark:hover:text-[#FFD27F] hover:bg-[#EAE8E3] dark:hover:bg-[#2E302A] transition-all cursor-pointer"
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
 
           {/* Notifications Bell */}
           <div className="relative">

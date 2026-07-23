@@ -6,8 +6,9 @@ import {
 } from 'lucide-react';
 import { submitForm } from '../utils/api';
 
-export default function Volunteer({ onSubmitSuccess }) {
+export default function Volunteer({ onSubmitSuccess, siteConfig }) {
   const [openFaq, setOpenFaq] = useState(null);
+  const eventYear = siteConfig?.eventYear || siteConfig?.eventRegConfig?.eventYear || '2026';
   
   const [formData, setFormData] = useState({
     fullName: '',
@@ -141,7 +142,7 @@ export default function Volunteer({ onSubmitSuccess }) {
 
     onSubmitSuccess({
       title: 'Volunteer Application Received',
-      message: `Dhanyavaad, Mr./Ms. ${formData.fullName}. Your offer of self-less service (Seva) for the Divine Awards 2025 has been registered. You have selected preferred role as ${roleName}. Our volunteer coordinator will review your skills and dates of availability to invite you for the upcoming orientation session.`,
+      message: `Dhanyavaad, Mr./Ms. ${formData.fullName}. Your offer of self-less service (Seva) for the Divine Awards ${eventYear} has been registered. You have selected preferred role as ${roleName}. Our volunteer coordinator will review your skills and dates of availability to invite you for the upcoming orientation session.`,
       details: [
         { label: 'Volunteer Name', value: formData.fullName },
         { label: 'Preferred Role', value: roleName },
@@ -156,38 +157,31 @@ export default function Volunteer({ onSubmitSuccess }) {
       {/* 1. Hero Section */}
       <section style={{ 
         position: 'relative', 
-        background: 'linear-gradient(135deg, #401C0C 0%, #281006 100%)',
-        color: '#fff',
-        padding: '120px 20px',
+        padding: '80px 20px 40px',
         textAlign: 'center',
         overflow: 'hidden'
       }}>
-        <div style={{
-          position: 'absolute', top: '-10%', right: '-5%',
-          width: '600px', height: '600px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(217, 166, 70, 0.12) 0%, transparent 65%)',
-          pointerEvents: 'none'
-        }} />
-        
         <div className="wrap" style={{ position: 'relative', zIndex: 2 }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            background: 'rgba(217, 166, 70, 0.15)',
-            border: '1px solid rgba(217, 166, 70, 0.3)',
+            background: 'var(--color-primary-accent-bg, rgba(217, 166, 70, 0.1))',
+            border: '2px solid var(--color-saffron-glow)',
             borderRadius: '999px',
-            padding: '6px 18px',
-            marginBottom: '24px'
+            padding: '8px 24px',
+            marginBottom: '24px',
+            boxShadow: '0 4px 12px rgba(217, 166, 70, 0.15)',
+            transform: 'scale(1.05)'
           }}>
-            <Heart className="w-4 h-4 text-[#F3A712]" />
+            <Heart className="w-4 h-4 text-[var(--color-primary-accent)]" />
             <span style={{ 
-              color: '#F9DCA2', 
+              color: 'var(--color-deep-forest-dark)', 
               fontFamily: 'var(--font-mono)', 
-              letterSpacing: '1px', 
-              fontSize: '11px',
+              letterSpacing: '1.5px', 
+              fontSize: '13px',
               textTransform: 'uppercase',
-              fontWeight: '700'
+              fontWeight: '800'
             }}>
               Join the Seva Team
             </span>
@@ -200,16 +194,16 @@ export default function Volunteer({ onSubmitSuccess }) {
             maxWidth: '920px',
             margin: '0 auto 24px',
             fontWeight: 'bold',
-            color: '#ffffff'
+            color: '#401C0C'
           }}>
             Become a Volunteer – Serve with Purpose
           </h1>
 
           <p style={{ 
-            color: '#D5E5CD', 
-            fontSize: '19px', 
+            color: 'var(--ink-soft)', 
+            fontSize: '18px', 
             maxWidth: '740px', 
-            margin: '0 auto 48px',
+            margin: '0 auto 36px',
             lineHeight: '1.6'
           }}>
             "Seva is the highest form of worship." Become the hands that support the celebration of spiritual and humanitarian excellence and help create a meaningful impact in society.
@@ -219,7 +213,7 @@ export default function Volunteer({ onSubmitSuccess }) {
             <button onClick={handleScrollToForm} className="btn btn-primary sparkle-shimmer-btn" style={{ padding: '16px 36px', fontSize: '15px' }}>
               Register as a Volunteer
             </button>
-            <button onClick={handleLearnMore} className="btn btn-light" style={{ padding: '16px 30px' }}>
+            <button onClick={handleLearnMore} className="btn btn-secondary" style={{ padding: '16px 30px', background: 'white', border: '1px solid rgba(64, 28, 12, 0.25)', color: '#401C0C' }}>
               Learn More
             </button>
           </div>
@@ -242,7 +236,7 @@ export default function Volunteer({ onSubmitSuccess }) {
             <ul style={{ display: 'grid', gap: '20px', padding: 0, margin: 0, listStyle: 'none' }}>
               {[
                 "Serve society and make a positive impact.",
-                "Be part of the prestigious Divine Awards 2025.",
+                `Be part of the prestigious Divine Awards ${eventYear}.`,
                 "Develop leadership and teamwork skills.",
                 "Network with social leaders and changemakers.",
                 "Gain event management and community service experience.",
@@ -867,10 +861,11 @@ export default function Volunteer({ onSubmitSuccess }) {
               </div>
 
               <div style={{ marginTop: '20px' }}>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#401C0C', marginBottom: '8px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Who referred you to join as a volunteer? (Optional)</label>
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#401C0C', marginBottom: '8px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Who referred you to join as a volunteer? *</label>
                 <input
                   type="text"
                   name="referredBy"
+                  required
                   placeholder="e.g. Friend Name, Social Media post, NGO partner"
                   value={formData.referredBy}
                   onChange={handleChange}

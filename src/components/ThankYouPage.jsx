@@ -2,7 +2,8 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckCircle, Share2, Sparkles, Home, Printer, Heart, Ticket, Award, MessageSquare, Landmark, Clock, Calendar, ShieldCheck } from 'lucide-react';
 
-export default function ThankYouPage() {
+export default function ThankYouPage({ siteConfig }) {
+  const eventYear = siteConfig?.eventYear || siteConfig?.eventRegConfig?.eventYear || '2026';
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -11,7 +12,7 @@ export default function ThankYouPage() {
     title: 'Submission Received',
     message: 'Namaste. Your submission has been successfully received by Dhara Foundations. Thank you for participating in our mission of Seva and culture preservation.',
     details: [
-      { label: 'Platform', value: 'Dhara Divine Awards 2025' },
+      { label: 'Platform', value: `Dhara Divine Awards ${eventYear}` },
       { label: 'Status', value: 'Completed' }
     ]
   };
@@ -49,7 +50,7 @@ export default function ThankYouPage() {
   ];
 
   const randomQuote = devotionalQuotes[0]; 
-  const shareText = encodeURIComponent("I just participated in the Dhara Foundations Divine Awards 2025! Join this celebration of selfless service.");
+  const shareText = encodeURIComponent(`I just participated in the Dhara Foundations Divine Awards ${eventYear}! Join this celebration of selfless service.`);
   const shareUrl = encodeURIComponent("https://dharafoundations.in");
 
   // Get current date formatted
@@ -167,7 +168,7 @@ export default function ThankYouPage() {
                   <Ticket className="w-3.5 h-3.5" />
                   <span>Official Delegate Entry Pass</span>
                 </div>
-                <h3 className="text-lg font-serif text-[#0E3A2F] font-bold">Dhara Divine Awards 2025</h3>
+                <h3 className="text-lg font-serif text-[#0E3A2F] font-bold">Dhara Divine Awards {eventYear}</h3>
               </div>
 
               {/* Delegate details grid */}

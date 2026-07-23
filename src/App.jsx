@@ -1153,7 +1153,7 @@ export default function App() {
           <Route path="/media" element={<div className="animate-fade-in"><MediaCoverage onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
           <Route path="/highlights" element={<div className="animate-fade-in"><EventsActivities siteConfig={siteConfig} /></div>} />
           <Route path="/enquiry" element={<div className="animate-fade-in"><GeneralEnquiries onSubmitSuccess={handleFormSuccess} siteConfig={siteConfig} /></div>} />
-          <Route path="/thankyou" element={<div className="animate-fade-in"><ThankYouPage /></div>} />
+          <Route path="/thankyou" element={<div className="animate-fade-in"><ThankYouPage siteConfig={siteConfig} /></div>} />
           <Route path="/admin" element={<div className="animate-fade-in"><AdminPortal /></div>} />
           <Route path="/admin/*" element={<div className="animate-fade-in"><AdminPortal /></div>} />
 

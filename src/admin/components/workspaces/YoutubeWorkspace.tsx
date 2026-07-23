@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Search, Plus, Trash2, X, Edit3, Play, Star, Save, Award } from 'lucide-react';
+import { Search, Plus, Trash2, X, Edit3, Play, Star, Save, Award, Filter } from 'lucide-react';
 
 const Youtube: React.FC<React.SVGProps<SVGSVGElement> & { size?: number | string }> = ({ size = 24, ...props }) => (
   <svg
@@ -41,6 +41,7 @@ export const YoutubeWorkspace: React.FC = () => {
   const { events, addEvent, updateEvent, deleteEvent, globalSearchQuery, siteConfig, updateSiteConfig } = useApp();
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   // Statistics editor states
   const [eventStats, setEventStats] = useState([
@@ -154,7 +155,7 @@ export const YoutubeWorkspace: React.FC = () => {
           <h2 className="font-serif text-2xl font-bold text-[#1B1C19] dark:text-[#F3F4F6] flex items-center gap-2">
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#FF0000] shrink-0">
               <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.518 3.5 12 3.5 12 3.5s-7.518 0-9.388.555A3.003 3.003 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.482 20.5 12 20.5 12 20.5s7.518 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg> YouTube Video Highlights
+            </svg> YouTube Video
           </h2>
           <p className="text-xs text-[#867463] dark:text-[#9CA3AF] mt-1">
             Publish and manage video broadcasts, speeches, and devotional recordings on the home page.
@@ -168,19 +169,42 @@ export const YoutubeWorkspace: React.FC = () => {
           }}
           className="px-4 py-2.5 rounded-xl bg-[#D9762E] hover:bg-[#b85e1b] text-white text-xs font-bold flex items-center gap-2 shadow-md transition-all cursor-pointer shrink-0 self-start md:self-auto"
         >
-          <Plus size={16} /> Add Video Highlight
+          <Plus size={16} /> Add YouTube Video
         </button>
+      </div>
+
+      {/* Filter Bar */}
+      <div className="p-4 rounded-2xl bg-white dark:bg-[#1B1C19] border border-[#EAE8E3] dark:border-[#30312E] shadow-sm flex items-center gap-2 flex-wrap">
+        <span className="text-xs font-semibold text-[#867463] dark:text-[#9CA3AF] mr-2 flex items-center gap-1">
+          <Filter size={14} /> Filter Category:
+        </span>
+        {['All', 'Recent Updates & Events', 'Spiritual Pillars', 'Institutions and Organisations', 'Individuals and Professionals', 'Grass Route Eminents'].map(cat => (
+          <button
+            key={cat}
+            onClick={() => setSelectedCategory(cat)}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+              selectedCategory === cat
+                ? 'bg-[#401C0C] dark:bg-[#FFD27F] text-white dark:text-[#401C0C] font-bold shadow-sm'
+                : 'bg-[#F5F3EE] dark:bg-[#242622] text-[#534436] dark:text-[#D1D5DB] hover:bg-[#EAE8E3]'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
 
       {/* Categorized Video List */}
       <div className="space-y-10">
-        {[
-          'Recent Updates & Events',
-          'Spiritual Pillars',
-          'Institutions and Organisations',
-          'Individuals and Professionals',
-          'Grass Route Eminents'
-        ].map(cat => {
+        {(selectedCategory === 'All'
+          ? [
+              'Recent Updates & Events',
+              'Spiritual Pillars',
+              'Institutions and Organisations',
+              'Individuals and Professionals',
+              'Grass Route Eminents'
+            ]
+          : [selectedCategory]
+        ).map(cat => {
           const catVideos = filteredVideos.filter(vid => normalizeCategory(vid.category) === cat);
 
           if (catVideos.length === 0) return null;
@@ -259,7 +283,7 @@ export const YoutubeWorkspace: React.FC = () => {
 
         {filteredVideos.length === 0 && (
           <div className="py-16 text-center bg-white dark:bg-[#1B1C19] rounded-3xl border border-dashed border-[#E4E2DD] dark:border-[#30312E] text-xs text-[#867463] italic">
-            No video highlights found. Click "Add Video Highlight" to add one.
+            No YouTube videos found. Click "Add YouTube Video" to add one.
           </div>
         )}
       </div>
@@ -272,7 +296,7 @@ export const YoutubeWorkspace: React.FC = () => {
               <h3 className="font-serif text-xl font-bold text-[#1B1C19] dark:text-[#F3F4F6] flex items-center gap-2">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#FF0000] shrink-0">
                   <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.518 3.5 12 3.5 12 3.5s-7.518 0-9.388.555A3.003 3.003 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.482 20.5 12 20.5 12 20.5s7.518 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg> {editingId ? 'Edit YouTube Highlight' : 'Add YouTube Highlight'}
+                </svg> {editingId ? 'Edit YouTube Video' : 'Add YouTube Video'}
               </h3>
               <button
                 onClick={() => setShowAddModal(false)}
@@ -371,7 +395,7 @@ export const YoutubeWorkspace: React.FC = () => {
                   type="submit"
                   className="px-6 py-2.5 rounded-xl bg-[#401C0C] text-white text-xs font-bold hover:bg-[#5C2913] cursor-pointer shadow-md"
                 >
-                  {editingId ? 'Update Highlight' : 'Add Highlight'}
+                  {editingId ? 'Update Video' : 'Add Video'}
                 </button>
               </div>
             </form>
@@ -383,10 +407,10 @@ export const YoutubeWorkspace: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 className="font-serif text-lg font-bold text-[#1B1C19] dark:text-[#F3F4F6] flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#D9762E]" /> Event Highlights Statistics & Metrics
+              <Award className="w-5 h-5 text-[#D9762E]" /> Event Video Statistics & Metrics
             </h3>
             <p className="text-xs text-[#867463] dark:text-[#9CA3AF] mt-1">
-              Configure the 4 statistics cards shown at the top of the event video highlight page.
+              Configure the 4 statistics cards shown at the top of the event video page.
             </p>
           </div>
           <button
