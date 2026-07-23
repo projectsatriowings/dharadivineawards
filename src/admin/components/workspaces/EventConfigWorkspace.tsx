@@ -40,7 +40,6 @@ export const EventConfigWorkspace: React.FC = () => {
           features: Array.isArray(t.features) ? t.features.join(', ') : (t.features || '')
         })));
       }
-      }
     }
   }, [siteConfig]);
 
