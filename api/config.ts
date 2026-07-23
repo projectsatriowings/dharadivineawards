@@ -43,6 +43,7 @@ export default async function handler(req: any, res: any) {
         heroMediaOrder: body.heroMediaOrder ?? existing.heroMediaOrder ?? 'video-first',
         eventYear: body.eventYear ?? existing.eventYear ?? '2026',
         registrationTickets: body.registrationTickets ?? existing.registrationTickets ?? [],
+        eventStats: body.eventStats ?? existing.eventStats ?? [],
         homeStats: body.homeStats ?? existing.homeStats ?? [],
         aboutStats: body.aboutStats ?? existing.aboutStats ?? [],
         homeCredentials: body.homeCredentials ?? existing.homeCredentials ?? [],

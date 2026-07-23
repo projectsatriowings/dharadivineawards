@@ -8,6 +8,7 @@ export interface ISiteConfig extends Document {
   heroMediaOrder?: 'video-first' | 'image-first';
   eventYear?: string;
   registrationTickets?: any[];
+  eventStats?: any[];
   homeStats?: any[];
   aboutStats?: any[];
   homeCredentials?: any[];
