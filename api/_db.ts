@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import Nomination from './_models/Nomination.js';
 import Donation from './_models/Donation.js';
@@ -11,6 +12,9 @@ import Gallery from './_models/Gallery.js';
 import SiteConfig from './_models/SiteConfig.js';
 import ActivityLog from './_models/ActivityLog.js';
 import News from './_models/News.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export interface DatabaseSchema {
   nominations: any[];
@@ -27,7 +31,7 @@ export interface DatabaseSchema {
 
 const DEFAULT_MONGO_URI = 'mongodb+srv://soundhers38_db_user:MbGcn2fyLnReShxx@cluster0.yripibj.mongodb.net/dhara_db?retryWrites=true&w=majority&appName=Cluster0';
 
-const dbPath = path.join(process.cwd(), 'data', 'db.json');
+const dbPath = path.join(__dirname, '..', 'data', 'db.json');
 let isConnected = false;
 
 async function connectMongo() {
@@ -88,32 +92,21 @@ export async function readDb(): Promise<DatabaseSchema> {
         return fileData;
       }
 
-      // Self-healing: Sync news articles from db.json to MongoDB (including additions, updates, and deletions)
+      // Migrate initial news if MongoDB news collection is empty
       let finalNews = news;
-      const fileData = await readLocalDbFile();
-      if (fileData.news) {
-        // 1. Delete articles in MongoDB that are no longer in db.json
-        const localIds = new Set(fileData.news.map((n: any) => n.id));
-        const itemsToDelete = news.filter((n: any) => !localIds.has(n.id));
-        if (itemsToDelete.length > 0) {
-          console.log("Deleting removed news articles from MongoDB...");
-          await Promise.all(
-            itemsToDelete.map((item: any) => (News as any).deleteOne({ id: item.id }))
-          );
-        }
-
-        // 2. Sync any missing or updated articles from db.json
-        const needsSync = news.length !== fileData.news.length || fileData.news.some((fn: any) => {
-          const dbItem = news.find((n: any) => n.id === fn.id);
-          return !dbItem || dbItem.rotate !== fn.rotate || dbItem.title !== fn.title || dbItem.mediaUrl !== fn.mediaUrl;
-        });
-
-        if (needsSync || itemsToDelete.length > 0) {
-          console.log("Syncing news articles from db.json to MongoDB...");
-          await Promise.all(
-            fileData.news.map((item: any) => (News as any).findOneAndUpdate({ id: item.id }, item, { upsert: true }))
-          );
-          finalNews = await (News as any).find({}).lean();
+      if (!news || news.length === 0) {
+        console.log("News database is empty. Auto-migrating initial news from db.json...");
+        try {
+          const fileData = await readLocalDbFile();
+          if (fileData.news && fileData.news.length > 0) {
+            await Promise.all(
+              fileData.news.map((item: any) => (News as any).findOneAndUpdate({ id: item.id }, item, { upsert: true }))
+            );
+            console.log(`Successfully migrated ${fileData.news.length} news articles from db.json to MongoDB.`);
+            finalNews = await (News as any).find({}).lean();
+          }
+        } catch (e) {
+          console.error("Failed to migrate news from db.json:", e);
         }
       }
 
@@ -199,7 +192,32 @@ export async function writeDb(data: DatabaseSchema): Promise<void> {
 
   if (mongoAvailable) {
     try {
+      // Collect IDs of current items to preserve
+      const nominationIds = (data.nominations || []).map(item => item.id);
+      const donationIds = (data.donations || []).map(item => item.id);
+      const delegateIds = (data.delegates || []).map(item => item.id);
+      const volunteerIds = (data.volunteers || []).map(item => item.id);
+      const enquiryIds = (data.enquiries || []).map(item => item.id);
+      const activityLogIds = (data.activityLogs || []).map(item => item.id);
+      const galleryIds = (data.gallery || []).map(item => item.id);
+      const eventIds = (data.events || []).map(item => item.id);
+      const siteConfigIds = (data.siteConfig || []).map(item => item.id);
+      const newsIds = (data.news || []).map(item => item.id);
+
       await Promise.all([
+        // Delete items from MongoDB that are no longer in the provided arrays
+        Nomination.deleteMany({ id: { $nin: nominationIds } }),
+        Donation.deleteMany({ id: { $nin: donationIds } }),
+        Delegate.deleteMany({ id: { $nin: delegateIds } }),
+        Volunteer.deleteMany({ id: { $nin: volunteerIds } }),
+        Enquiry.deleteMany({ id: { $nin: enquiryIds } }),
+        ActivityLog.deleteMany({ id: { $nin: activityLogIds } }),
+        Gallery.deleteMany({ id: { $nin: galleryIds } }),
+        Event.deleteMany({ id: { $nin: eventIds } }),
+        SiteConfig.deleteMany({ id: { $nin: siteConfigIds } }),
+        News.deleteMany({ id: { $nin: newsIds } }),
+
+        // Upsert existing items
         ...data.nominations.map(item => (Nomination as any).findOneAndUpdate({ id: item.id }, item, { upsert: true })),
         ...data.donations.map(item => (Donation as any).findOneAndUpdate({ id: item.id }, item, { upsert: true })),
         ...data.delegates.map(item => (Delegate as any).findOneAndUpdate({ id: item.id }, item, { upsert: true })),

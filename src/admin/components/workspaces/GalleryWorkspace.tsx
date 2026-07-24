@@ -72,26 +72,38 @@ export const GalleryWorkspace: React.FC = () => {
     if (!file) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.success) {
-        setImageUrl(data.url);
-      } else {
-        alert('Upload failed: ' + (data.error || 'Unknown error'));
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64 = reader.result as string;
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            base64,
+            name: file.name
+          })
+        });
+        const data = await res.json();
+        if (data.success && data.url) {
+          setImageUrl(data.url);
+        } else {
+          alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Upload failed');
+      } finally {
+        setUploading(false);
       }
-    } catch (err) {
-      console.error(err);
-      alert('Upload failed');
-    } finally {
+    };
+    reader.onerror = () => {
+      alert('Failed to read file');
       setUploading(false);
-    }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

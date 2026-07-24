@@ -16,7 +16,10 @@ export default async function handler(req: any, res: any) {
       if (!db.gallery || db.gallery.length <= 50) {
         const fs = await import('fs');
         const path = await import('path');
-        const galleryPagePath = path.join(process.cwd(), 'src', 'components', 'GalleryPage.jsx');
+        const { fileURLToPath } = await import('url');
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        const galleryPagePath = path.join(__dirname, '..', 'src', 'components', 'GalleryPage.jsx');
         if (fs.existsSync(galleryPagePath)) {
           const content = fs.readFileSync(galleryPagePath, 'utf8');
           const startIdx = content.indexOf('const defaultGalleryImages = [');

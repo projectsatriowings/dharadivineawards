@@ -1,5 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,7 +26,7 @@ export default async function handler(req: any, res: any) {
       const base64Data = body.base64.replace(/^data:image\/\w+;base64,/, "");
       const buffer = Buffer.from(base64Data, 'base64');
       const filename = `${Date.now()}_${body.name}`;
-      const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+      const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
       
       await fs.mkdir(uploadDir, { recursive: true });
       const filePath = path.join(uploadDir, filename);

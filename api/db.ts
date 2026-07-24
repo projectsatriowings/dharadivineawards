@@ -1,6 +1,10 @@
 import { readDb, writeDb } from './_db.js';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function migrateGalleryIfNeeded() {
   try {
@@ -11,7 +15,7 @@ async function migrateGalleryIfNeeded() {
     }
 
     console.log('Dynamic server-side gallery migration started...');
-    const galleryPagePath = path.join(process.cwd(), 'src', 'components', 'GalleryPage.jsx');
+    const galleryPagePath = path.join(__dirname, '..', 'src', 'components', 'GalleryPage.jsx');
     if (!fs.existsSync(galleryPagePath)) {
       console.log('GalleryPage.jsx not found at', galleryPagePath);
       return db;

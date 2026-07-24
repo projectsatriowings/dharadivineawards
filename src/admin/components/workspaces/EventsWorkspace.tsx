@@ -96,20 +96,39 @@ export const EventsWorkspace: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (data.url) {
-        setImageUrl(data.url);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64 = reader.result as string;
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            base64,
+            name: file.name
+          })
+        });
+        const data = await res.json();
+        if (data.success && data.url) {
+          setImageUrl(data.url);
+        } else {
+          alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        console.error('Upload failed:', err);
+        setImageUrl(URL.createObjectURL(file));
+      } finally {
+        setUploading(false);
       }
-    } catch (err) {
-      console.error('Upload failed:', err);
-      setImageUrl(URL.createObjectURL(file));
-    } finally {
+    };
+    reader.onerror = () => {
+      alert('Failed to read file');
       setUploading(false);
-    }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleEditClick = (ev: any) => {
